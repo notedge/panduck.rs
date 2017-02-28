@@ -1,14 +1,27 @@
-[workspace]
-members = ["projects/*"]
-default-members = [
-    "projects/from-markdown",
-    "projects/from-html",
-    "projects/from-org-mode",
-    "projects/from-richtext",
-]
-exclude = [
-    "projects/.DS_Store",
-]
+[package]
+name = "panduck"
+version = "0.1.0"
+authors = ["Aster <192607617@qq.com>"]
+description = "..."
+repository = "..."
+readme = "Readme.md"
+license = "MPL-2.0"
+edition = "2018"
+
+[dependencies]
+notedown_ast = "0.7.2"
+
+
+markdown = "0.3"
+
+html5ever = "0.13.0"
+html5ever-atoms = "0.2.0"
+
+[dev-dependencies]
+
+[features]
+default = []
+
 
 [profile.release]
 lto = true

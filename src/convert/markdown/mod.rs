@@ -1,12 +1,51 @@
-use crate::{Highlighter, ListView, SmartLink, AST};
+use crate::{AST};
 use markdown::{tokenize, Block, ListItem, Span};
+use crate::ToNotedown;
 
 
-
-pub fn markdown_parse(input: &str) -> AST {
-    AST::from(tokenize(input))
+impl ToNotedown for Vec<Block> {
+    fn to_notedown(&self) -> AST {
+        unimplemented!()
+    }
 }
 
+impl ToNotedown for Block {
+    fn to_notedown(&self) -> AST {
+        match self {
+            Block::Header(_, _) => {unimplemented!()}
+            Block::Paragraph(_) => {unimplemented!()}
+            Block::Blockquote(_) => {unimplemented!()}
+            Block::CodeBlock(_, _) => {unimplemented!()}
+            Block::OrderedList(_, _) => {unimplemented!()}
+            Block::UnorderedList(_) => {unimplemented!()}
+            Block::Raw(_) => {unimplemented!()}
+            Block::Hr => {unimplemented!()}
+        }
+    }
+}
+
+impl ToNotedown for Vec<Span> {
+    fn to_notedown(&self) -> AST {
+        unimplemented!()
+    }
+}
+
+impl ToNotedown for Span {
+    fn to_notedown(&self) -> AST {
+        match self {
+            Span::Break => {unimplemented!()}
+            Span::Text(_) => {unimplemented!()}
+            Span::Code(_) => {unimplemented!()}
+            Span::Link(_, _, _) => {unimplemented!()}
+            Span::Image(_, _, _) => {unimplemented!()}
+            Span::Emphasis(_) => {unimplemented!()}
+            Span::Strong(_) => {unimplemented!()}
+        }
+    }
+}
+
+
+/*
 impl From<Vec<Block>> for AST {
     fn from(v: Vec<Block>) -> Self {
         AST::Statements(v.into_iter().map(Into::into).collect())
@@ -82,3 +121,4 @@ impl From<ListItem> for AST {
         }
     }
 }
+*/
