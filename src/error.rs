@@ -1,5 +1,6 @@
 pub enum Error {
     IOError(String),
+    Unknown(String)
 }
 
 pub type Result<T> = std::result::Result<T, Error>;

@@ -9,13 +9,11 @@ license = "MPL-2.0"
 edition = "2018"
 
 [dependencies]
-notedown_ast = "0.7.2"
+notedown_ast = "0.7.5"
 
 
 markdown = "0.3"
-
-html5ever = "0.13.0"
-html5ever-atoms = "0.2.0"
+anyhow = "1.0"
 html_parser = "0.4"
 
 [dev-dependencies]
