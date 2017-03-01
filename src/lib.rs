@@ -1,9 +1,9 @@
 mod convert;
-mod traits;
-mod parse;
 mod error;
+mod parse;
+mod traits;
 
+pub use error::{Error, Result};
 pub use notedown_ast::AST;
-pub use traits::ToNotedown;
 pub use parse::*;
-pub use error::{Error,Result};
+pub use traits::ToNotedown;

@@ -1,6 +1,8 @@
+mod html;
+mod jupyter;
 mod markdown;
 
 #[test]
-fn ready(){
+fn ready() {
     println!("it works!")
 }

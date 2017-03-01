@@ -1,7 +1,7 @@
-use panduck::parse_markdown;
+use panduck::{parse_html};
 
 #[test]
 fn test() {
-    let ast = parse_markdown("text");
+    let ast = parse_html("<p>s</p>");
     println!("{:#?}", ast.unwrap_or_default())
 }
