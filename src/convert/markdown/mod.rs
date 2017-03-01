@@ -3,7 +3,7 @@ use markdown::{tokenize, Block, ListItem, Span};
 
 impl ToNotedown for Vec<Block> {
     fn to_notedown(&self) -> AST {
-        unimplemented!()
+        AST::Statements(self.iter().map(ToNotedown::to_notedown).collect())
     }
 }
 
@@ -24,7 +24,16 @@ impl ToNotedown for Block {
 
 impl ToNotedown for Vec<Span> {
     fn to_notedown(&self) -> AST {
-        unimplemented!()
+        let mut out = vec![];
+        for node in self {
+            let ast = node.to_notedown();
+            match ast {
+                AST::None => continue,
+                AST::Statements(v) => out.extend(v),
+                _ => out.push(ast),
+            }
+        }
+        return AST::Statements(out);
     }
 }
 
