@@ -10,11 +10,13 @@ edition = "2018"
 
 [dependencies]
 notedown_ast = "0.7.5"
-
+serde = "1.0"
+serde_json="1.0"
 
 markdown = "0.3"
 anyhow = "1.0"
 html_parser = "0.4"
+
 
 [dev-dependencies]
 
