@@ -5,15 +5,25 @@ Conversion tool by rust, inspired by [pandoc]().
 
 ## Formats
 
+###
+
 - [x] Markdown
 - [x] HTML
-- [x] Jupyter
+- [x] Jupyter(ipynb)
 - [ ] Wiki
 - [ ] Org-mode
 - [ ] Rich Text Format(rtf)
 - [ ] Office Word(docx)
 - [x] CSV/TSV
-- [ ] Office Excel(xlsx)
+- [ ] Office Excel(xls, xlsx, xlsm, xlsb, xla, xlam)
+- [ ] Open Document Spread Sheets(ods)
+- [ ] TeX
+- [ ] BibTeX
+
+### 
+
+- Text(txt)
+
 
 
 ## Developers

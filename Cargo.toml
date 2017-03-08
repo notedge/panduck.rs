@@ -1,15 +1,16 @@
 [package]
 name = "panduck"
-version = "0.2.0"
+version = "0.2.2"
 authors = ["Aster <192607617@qq.com>"]
 description = "..."
-repository = "..."
+repository = "https://github.com/GalAster/panduck"
 readme = "Readme.md"
 license = "MPL-2.0"
 edition = "2018"
 
 [dependencies]
-notedown_ast = "0.7.6"
+notedown_ast = "0.7.7"
+
 anyhow = "1.0"
 
 serde = "1.0"
