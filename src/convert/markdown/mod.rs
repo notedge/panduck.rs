@@ -1,6 +1,5 @@
-use crate::{ToNotedown, AST};
+use crate::{ToNotedown, AST,SmartLink};
 use markdown::{Block, ListItem, Span};
-use notedown_ast::SmartLink;
 
 impl ToNotedown for Vec<Block> {
     fn to_notedown(&self) -> AST {
@@ -51,7 +50,7 @@ impl ToNotedown for Span {
             Span::Link(text, url, title) => {
                 let link = SmartLink::Hyperlinks {
                     from: text.into(),
-                    to: url.into(),
+                    to: Some(url.into()),
                     alt: title.as_ref().map(Into::into),
                     bind: None,
                 };

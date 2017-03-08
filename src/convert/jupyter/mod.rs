@@ -1,12 +1,12 @@
-use crate::parse_markdown;
-use anyhow::{Error, Result};
-use notedown_ast::AST;
+use crate::{parse_markdown,AST};
+use crate::{Result};
 use serde_json::{Map, Value};
+use crate::error::Error::ParseError;
 
 pub fn jupyter_from_json(root: &Value) -> Result<AST> {
     match root {
         Value::Object(o) => Ok(jupyter_root(o)),
-        _ => Err(Error::msg("Not a valid jupyter json")),
+        _ => Err(ParseError(String::from("Not a valid jupyter json"))),
     }
 }
 

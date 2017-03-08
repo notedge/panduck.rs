@@ -1,25 +1,24 @@
 [package]
 name = "panduck"
-version = "0.2.2"
+version = "0.3.0"
 authors = ["Aster <192607617@qq.com>"]
-description = "..."
+description = "Conversion tool by rust, inspired by pandoc"
 repository = "https://github.com/GalAster/panduck"
 readme = "Readme.md"
 license = "MPL-2.0"
 edition = "2018"
 
 [dependencies]
-notedown_ast = "0.7.7"
-
+notedown_parser = "0.7.0"
 anyhow = "1.0"
-
 serde = "1.0"
 serde_json="1.0"
-
+# md, markdown
 markdown = "0.3"
-
+# html
 html_parser = "0.4"
-
+# rtf
+rtf-grimoire = "0.1"
 
 [dev-dependencies]
 

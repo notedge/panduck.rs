@@ -1,8 +1,13 @@
 use crate::{convert::jupyter_from_json, Result, ToNotedown};
 use html_parser::Dom;
 use markdown::tokenize;
-use notedown_ast::AST;
+use notedown_parser::{AST, ParserConfig};
 use serde_json::Value;
+
+pub fn parse_notedown(input: &str)-> Result<AST> {
+    let cfg = ParserConfig::default();
+    Ok(cfg.parse(input)?)
+}
 
 pub fn parse_markdown(input: &str) -> Result<AST> {
     Ok(tokenize(input).to_notedown())

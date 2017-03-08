@@ -1,6 +1,6 @@
 use crate::ToNotedown;
 use html_parser::{Dom, DomVariant, Element, Node};
-use notedown_ast::{TextRange, AST};
+use notedown_parser::{TextRange, AST};
 
 impl ToNotedown for Dom {
     fn to_notedown(&self) -> AST {

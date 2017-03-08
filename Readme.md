@@ -5,11 +5,11 @@ Conversion tool by rust, inspired by [pandoc]().
 
 ## Formats
 
-###
+### Conversion
 
 - [x] Markdown
 - [x] HTML
-- [x] Jupyter(ipynb)
+- [ ] Jupyter(ipynb)
 - [ ] Wiki
 - [ ] Org-mode
 - [ ] Rich Text Format(rtf)
@@ -20,7 +20,7 @@ Conversion tool by rust, inspired by [pandoc]().
 - [ ] TeX
 - [ ] BibTeX
 
-### 
+### Highlights
 
 - Text(txt)
 
