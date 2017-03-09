@@ -1,4 +1,4 @@
-use crate::{ToNotedown, AST,SmartLink};
+use crate::{SmartLink, ToNotedown, AST};
 use markdown::{Block, ListItem, Span};
 
 impl ToNotedown for Vec<Block> {

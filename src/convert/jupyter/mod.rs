@@ -1,7 +1,5 @@
-use crate::{parse_markdown,AST};
-use crate::{Result};
+use crate::{error::Error::ParseError, parse_markdown, Result, AST};
 use serde_json::{Map, Value};
-use crate::error::Error::ParseError;
 
 pub fn jupyter_from_json(root: &Value) -> Result<AST> {
     match root {

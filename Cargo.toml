@@ -1,6 +1,6 @@
 [package]
 name = "panduck"
-version = "0.3.0"
+version = "0.3.2"
 authors = ["Aster <192607617@qq.com>"]
 description = "Conversion tool by rust, inspired by pandoc"
 repository = "https://github.com/GalAster/panduck"
@@ -19,6 +19,11 @@ markdown = "0.3"
 html_parser = "0.4"
 # rtf
 rtf-grimoire = "0.1"
+# wiki
+parse_wiki_text = "0.1"
+
+
+
 
 [dev-dependencies]
 

@@ -2,6 +2,7 @@
 pub enum Error {
     IOError(String),
     ParseError(String),
+    UnsupportedFormat(String),
     Unknown(String),
 }
 
