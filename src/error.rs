@@ -24,9 +24,13 @@ impl From<notedown_parser::Error> for Error {
     }
 }
 
-impl From<anyhow::Error> for Error {
-    fn from(e: anyhow::Error) -> Self {
-        Self::Unknown(format!("{}", e))
+impl From<html_parser::Error> for Error {
+    fn from(e: html_parser::Error) -> Self {
+        match e {
+            html_parser::Error::Parsing(s) => Self::ParseError(format!("{}", s)),
+            html_parser::Error::IO(s) => Self::IOError(format!("{}", s)),
+            _ => Self::Unknown(format!("{}", e)),
+        }
     }
 }
 

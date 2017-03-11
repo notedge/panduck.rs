@@ -9,14 +9,13 @@ license = "MPL-2.0"
 edition = "2018"
 
 [dependencies]
-notedown_parser = "0.7.0"
-anyhow = "1.0"
+notedown_parser = "0.7"
 serde = "1.0"
 serde_json="1.0"
 # md, markdown
 markdown = "0.3"
 # html
-html_parser = "0.4"
+html_parser = "0.5"
 # rtf
 rtf-grimoire = "0.1"
 # wiki
