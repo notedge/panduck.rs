@@ -1,5 +1,6 @@
 use crate::{error::Error::ParseError, parse_markdown, Result, AST};
 use serde_json::{Map, Value};
+use super::*;
 
 pub fn jupyter_from_json(root: &Value) -> Result<AST> {
     match root {
@@ -14,7 +15,7 @@ fn jupyter_root(dict: &Map<String, Value>) -> AST {
             return jupyter_cells(v);
         }
     }
-    AST::Statements(vec![])
+    AST::statements(vec![],EMPTY_RANGE)
 }
 
 fn jupyter_cells(cells: &Vec<Value>) -> AST {
@@ -24,7 +25,7 @@ fn jupyter_cells(cells: &Vec<Value>) -> AST {
             out.extend(jupyter_cell(o))
         }
     }
-    AST::Statements(out)
+    AST::statements(out,EMPTY_RANGE)
 }
 
 fn jupyter_cell(dict: &Map<String, Value>) -> Vec<AST> {
