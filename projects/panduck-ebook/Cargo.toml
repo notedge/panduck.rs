@@ -1,0 +1,19 @@
+[package]
+name = "fluent-fmt"
+version = "0.1.1"
+authors = ["Aster <192607617@qq.com>"]
+description = "Configurable formatter for fluent `ftl` file"
+repository = "https://github.com/doki-land/doki-system-fluent"
+readme = "../../readme.md"
+license = "MPL-2.0"
+edition = "2018"
+include = [
+    "src/**/*",
+    "Cargo.toml",
+]
+
+
+[dependencies]
+arc-rs = {version = "0.5", optional = true}
+fluent-syntax = "0.11"
+

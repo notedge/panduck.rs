@@ -1,0 +1,13 @@
+[package]
+name = "fluent-missing"
+version = "0.1.0"
+authors = ["Aster <192607617@qq.com>"]
+description = "Compare and find missing fields in a language"
+repository = "https://github.com/doki-land/doki-system-fluent"
+readme = "../../readme.md"
+license = "MPL-2.0"
+edition = "2018"
+
+[dependencies]
+fluent-bundle = "0.15"
+fluent-templates = "0.6"
