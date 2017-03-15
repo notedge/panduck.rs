@@ -1,9 +1,10 @@
 use crate::{convert::jupyter_from_json, error::Error::UnsupportedFormat, Result, ToNotedown};
 use html_parser::Dom;
 use markdown::tokenize;
-use notedown_parser::{ParserConfig, AST};
+use notedown_parser::{ParserConfig};
 use serde_json::Value;
 use std::{fs::read_to_string, path::Path};
+use crate::convert::AST;
 
 pub fn parse_by_ext(file: impl AsRef<Path>) -> Result<AST> {
     let ext = file.as_ref().extension().unwrap_or_default().to_str().unwrap_or_default();

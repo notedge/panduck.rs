@@ -1,4 +1,4 @@
-use crate::{error::Error::ParseError, parse_markdown, Result, AST};
+use crate::{error::Error::ParseError, parse_markdown, Result};
 use serde_json::{Map, Value};
 use super::*;
 
@@ -15,7 +15,7 @@ fn jupyter_root(dict: &Map<String, Value>) -> AST {
             return jupyter_cells(v);
         }
     }
-    AST::statements(vec![],EMPTY_RANGE)
+    ASTKind::statements(vec![],).into()
 }
 
 fn jupyter_cells(cells: &Vec<Value>) -> AST {
@@ -25,7 +25,7 @@ fn jupyter_cells(cells: &Vec<Value>) -> AST {
             out.extend(jupyter_cell(o))
         }
     }
-    AST::statements(out,EMPTY_RANGE)
+    ASTKind::statements(out,).into()
 }
 
 fn jupyter_cell(dict: &Map<String, Value>) -> Vec<AST> {

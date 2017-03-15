@@ -1,19 +1,20 @@
-use crate::{SmartLink, ToNotedown, AST};
+use crate::{SmartLink, ToNotedown, };
 use markdown::{Block, ListItem, Span};
-use super::*;
+use notedown_parser::ASTKind;
+use crate::convert::AST;
 
 
 impl ToNotedown for Vec<Block> {
     fn to_notedown(&self) -> AST {
-        AST::statements(self.iter().map(ToNotedown::to_notedown).collect(), EMPTY_RANGE)
+        ASTKind::statements(self.iter().map(ToNotedown::to_notedown).collect(), ).into()
     }
 }
 
 impl ToNotedown for Block {
     fn to_notedown(&self) -> AST {
         match self {
-            Block::Header(content, level) => AST::header( content.to_notedown().to_vec(), *level, EMPTY_RANGE),
-            Block::Paragraph(p) => AST::paragraph(p.to_notedown().to_vec(),EMPTY_RANGE),
+            Block::Header(content, level) => AST::header( content.to_notedown().to_vec(), *level, ),
+            Block::Paragraph(p) => AST::paragraph(p.to_notedown().to_vec(),),
             Block::CodeBlock(_, _) => unimplemented!(),
             Block::Raw(_) => unimplemented!(),
             Block::Hr => unimplemented!(),
@@ -32,13 +33,13 @@ impl ToNotedown for Vec<Span> {
         let mut out = vec![];
         for node in self {
             let ast = node.to_notedown();
-            match ast.kind() {
+            match ast.kind {
                 ASTKind::None => continue,
                 ASTKind::Statements(v) => out.extend(v),
                 _ => out.push(ast),
             }
         }
-        return AST::statements(out, EMPTY_RANGE);
+        return AST::statements(out, );
     }
 }
 
@@ -47,7 +48,7 @@ impl ToNotedown for Span {
         let r = Default::default();
         match self {
             Span::Break => unimplemented!(),
-            Span::Text(t) => AST::text(t.to_owned(), "text", EMPTY_RANGE),
+            Span::Text(t) => AST::text(t.to_owned(), "text", ),
             Span::Code(code) => {
                 AST::Highlight { lang: String::from("txt"), code: code.to_owned(), inline: true, high_line: vec![], r }
             }
@@ -69,7 +70,7 @@ impl ToNotedown for Span {
 
 impl ToNotedown for Vec<ListItem> {
     fn to_notedown(&self) -> AST {
-        AST::statements(self.iter().map(ToNotedown::to_notedown).collect(), EMPTY_RANGE)
+        AST::statements(self.iter().map(ToNotedown::to_notedown).collect(), )
     }
 }
 
@@ -77,7 +78,7 @@ impl ToNotedown for ListItem {
     fn to_notedown(&self) -> AST {
         match self {
             ListItem::Simple(s) => s.to_notedown(),
-            ListItem::Paragraph(p) => AST::paragraph(p.to_notedown().to_vec(),EMPTY_RANGE),
+            ListItem::Paragraph(p) => AST::paragraph(p.to_notedown().to_vec(),),
         }
     }
 }

@@ -1,4 +1,4 @@
-use notedown_parser::AST;
+use crate::convert::AST;
 
 pub trait ToNotedown {
     fn to_notedown(&self) -> AST;

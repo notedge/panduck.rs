@@ -1,6 +1,6 @@
 [package]
-name = "fluent-fmt"
-version = "0.1.1"
+name = "panduck-ebook"
+version = "0.1.0"
 authors = ["Aster <192607617@qq.com>"]
 description = "Configurable formatter for fluent `ftl` file"
 repository = "https://github.com/doki-land/doki-system-fluent"
