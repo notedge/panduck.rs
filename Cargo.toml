@@ -3,6 +3,7 @@
 members = ["projects/*"]
 default-members = [
     "projects/panduck-core",
+    "projects/panduck-cli",
     "projects/panduck-pdf",
     "projects/panduck-ebook",
 ]

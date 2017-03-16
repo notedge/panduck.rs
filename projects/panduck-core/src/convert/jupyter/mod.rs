@@ -15,7 +15,7 @@ fn jupyter_root(dict: &Map<String, Value>) -> AST {
             return jupyter_cells(v);
         }
     }
-    ASTKind::statements(vec![],).into()
+    AST::statements(vec![],)
 }
 
 fn jupyter_cells(cells: &Vec<Value>) -> AST {
@@ -25,7 +25,7 @@ fn jupyter_cells(cells: &Vec<Value>) -> AST {
             out.extend(jupyter_cell(o))
         }
     }
-    ASTKind::statements(out,).into()
+    AST::statements(out,)
 }
 
 fn jupyter_cell(dict: &Map<String, Value>) -> Vec<AST> {

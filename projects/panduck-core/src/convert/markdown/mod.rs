@@ -1,7 +1,6 @@
-use crate::{SmartLink, ToNotedown, };
 use markdown::{Block, ListItem, Span};
-use notedown_parser::ASTKind;
-use crate::convert::AST;
+use notedown_parser::{ASTKind, SmartLink};
+use crate::{ToNotedown, AST};
 
 
 impl ToNotedown for Vec<Block> {
@@ -13,8 +12,8 @@ impl ToNotedown for Vec<Block> {
 impl ToNotedown for Block {
     fn to_notedown(&self) -> AST {
         match self {
-            Block::Header(content, level) => AST::header( content.to_notedown().to_vec(), *level, ),
-            Block::Paragraph(p) => AST::paragraph(p.to_notedown().to_vec(),),
+            Block::Header(content, level) => AST::header( content.to_notedown_list(), *level, ),
+            Block::Paragraph(p) => AST::paragraph(p.to_notedown_list(),),
             Block::CodeBlock(_, _) => unimplemented!(),
             Block::Raw(_) => unimplemented!(),
             Block::Hr => unimplemented!(),
@@ -30,6 +29,10 @@ impl ToNotedown for Block {
 
 impl ToNotedown for Vec<Span> {
     fn to_notedown(&self) -> AST {
+        AST::statements(self.to_notedown_list())
+    }
+
+    fn to_notedown_list(&self) -> Vec<AST> {
         let mut out = vec![];
         for node in self {
             let ast = node.to_notedown();
@@ -39,7 +42,7 @@ impl ToNotedown for Vec<Span> {
                 _ => out.push(ast),
             }
         }
-        return AST::statements(out, );
+        return out;
     }
 }
 
@@ -50,7 +53,7 @@ impl ToNotedown for Span {
             Span::Break => unimplemented!(),
             Span::Text(t) => AST::text(t.to_owned(), "text", ),
             Span::Code(code) => {
-                AST::Highlight { lang: String::from("txt"), code: code.to_owned(), inline: true, high_line: vec![], r }
+                AST::highlight { lang: String::from("txt"), code: code.to_owned(), inline: true, high_line: vec![], r }
             }
             Span::Link(text, url, title) => {
                 let link = SmartLink::Hyperlinks {
@@ -59,7 +62,7 @@ impl ToNotedown for Span {
                     alt: title.as_ref().map(Into::into),
                     bind: None,
                 };
-                AST::Link { inner: link, r }
+                AST::link { inner: link, r }
             }
             Span::Image(_, _, _) => unimplemented!(),
             Span::Emphasis(_) => unimplemented!(),

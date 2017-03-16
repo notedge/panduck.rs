@@ -3,15 +3,9 @@ mod jupyter;
 mod markdown;
 mod rich_text;
 mod wiki;
+mod notedown;
 
 pub use jupyter::jupyter_from_json;
-use notedown_parser::{ASTKind, ASTNode};
+use notedown_parser::{ASTNode};
 
-#[derive(Debug, Clone, Eq, PartialEq)]
-pub struct AST(pub ASTKind<AST>);
-
-impl Default for AST {
-    fn default() -> Self {
-        Self(ASTKind::default())
-    }
-}
+pub type AST = ASTNode<()>;

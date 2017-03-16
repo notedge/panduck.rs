@@ -19,7 +19,7 @@ pub fn parse_by_ext(file: impl AsRef<Path>) -> Result<AST> {
 }
 
 pub fn parse_notedown(input: &str) -> Result<AST> {
-    Ok(ParserConfig::default().parse(input)?)
+    Ok(AST::from(ParserConfig::default().parse(input)?))
 }
 
 pub fn parse_markdown(input: &str) -> Result<AST> {
