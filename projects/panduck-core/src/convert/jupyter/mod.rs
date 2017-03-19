@@ -1,6 +1,7 @@
 use crate::{error::Error::ParseError, parse_markdown, Result};
 use serde_json::{Map, Value};
 use super::*;
+use notedown_parser::ASTKind;
 
 pub fn jupyter_from_json(root: &Value) -> Result<AST> {
     match root {
@@ -47,8 +48,11 @@ fn jupyter_markdown(dict: &Value) -> Vec<AST> {
         _ => vec![],
     };
     if let Ok(o) = parse_markdown(&lines.join("\n")) {
-        if let AST::Statements(v) = o {
-            return v;
+        match o.kind {
+            ASTKind::Statements(v) => {
+                return v;
+            }
+            _ => {}
         }
     }
     vec![]

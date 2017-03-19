@@ -2,7 +2,7 @@ use crate::{ToNotedown, AST};
 use notedown_parser::{ASTNode, ASTKind};
 use notedown_parser::utils::LSPMetaInfo;
 
-impl ToNotedown for notedown_parser::AST {
+impl ToNotedown for ASTNode<LSPMetaInfo> {
     fn to_notedown(&self) -> AST {
         self.kind.to_notedown()
     }

@@ -1,10 +1,10 @@
-use notedown_ast::AST;
-use panduck::parse_jupyter;
+use panduck_core::AST;
+use panduck_core::parse_jupyter;
 
 #[test]
 fn empty() {
     let ast = parse_jupyter("{}").unwrap();
-    assert_eq!(ast, AST::Statements(vec![]))
+    assert_eq!(ast, AST::statements(vec![]))
 }
 
 #[test]
