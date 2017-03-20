@@ -8,3 +8,6 @@ default-members = [
     "projects/panduck-ebook",
 ]
 
+[profile.release]
+lto = true
+opt-level = "s"
