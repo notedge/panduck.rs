@@ -9,3 +9,4 @@ license = "MPL-2.0"
 edition = "2018"
 
 [dependencies]
+panduck-core = "0.1.0"

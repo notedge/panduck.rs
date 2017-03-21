@@ -1,4 +1,3 @@
-mod formatter;
 
 #[test]
 fn ready() {

@@ -51,12 +51,12 @@ impl ToNotedown for ASTKind<ASTNode<LSPMetaInfo>> {
                 kind: ASTKind::None,
                 meta: ()
             }}
-            ASTKind::Raw(_) => {AST {
-                kind: ASTKind::None,
+            ASTKind::Raw(string) => {AST {
+                kind: ASTKind::Raw(string.to_owned()),
                 meta: ()
             }}
-            ASTKind::Code(_) => {AST {
-                kind: ASTKind::None,
+            ASTKind::Code(string) => {AST {
+                kind: ASTKind::Code(string.to_owned()),
                 meta: ()
             }}
             ASTKind::Italic(_) => {AST {
@@ -83,16 +83,16 @@ impl ToNotedown for ASTKind<ASTNode<LSPMetaInfo>> {
                 kind: ASTKind::None,
                 meta: ()
             }}
-            ASTKind::MathInline(_) => {AST {
-                kind: ASTKind::None,
+            ASTKind::MathInline(string) => {AST {
+                kind: ASTKind::MathInline(string.to_owned()),
                 meta: ()
             }}
-            ASTKind::MathDisplay(_) => {AST {
-                kind: ASTKind::None,
+            ASTKind::MathDisplay(string) => {AST {
+                kind: ASTKind::MathDisplay(string.to_owned()),
                 meta: ()
             }}
-            ASTKind::Escaped(_) => {AST {
-                kind: ASTKind::None,
+            ASTKind::Escaped(e) => {AST {
+                kind: ASTKind::Escaped(*e),
                 meta: ()
             }}
             ASTKind::Link(_) => {AST {
