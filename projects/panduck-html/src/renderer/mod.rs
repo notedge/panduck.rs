@@ -1,17 +1,17 @@
-mod table_view;
-mod writers;
-
-use crate::{nodes::Header, ASTKind, ASTNode, ASTNodes, CodeNode, ListView, MathKind, MathNode, StyleKind, TextNode, TableView};
 use std::{
     fmt,
     fmt::{Arguments, Write},
 };
+use notedown_ast::nodes::Header;
+use notedown_ast::{ASTKind, ASTNode, ASTNodes, nodes::{CodeNode, ListView, MathKind, MathNode, StyleKind, TableView, TextNode}};
+pub use self::plain::PlainHTML;
+pub use self::pretty::PrettyHTML;
 
-pub trait WriteHTML {
-    fn write_html(&self, f: &mut HTMLRenderer) -> fmt::Result;
-}
+mod pretty;
+mod plain;
 
 pub struct HTMLRenderer {
+    xhtml: bool,
     math_renderer: Option<fn(&MathNode) -> String>,
     code_renderer: Option<fn(&CodeNode) -> String>,
     buffer: String,
@@ -19,7 +19,7 @@ pub struct HTMLRenderer {
 
 impl Default for HTMLRenderer {
     fn default() -> Self {
-        Self { math_renderer: None, code_renderer: None, buffer: String::new() }
+        Self { xhtml: false, math_renderer: None, code_renderer: None, buffer: String::new() }
     }
 }
 
@@ -38,9 +38,14 @@ impl Write for HTMLRenderer {
 }
 
 impl HTMLRenderer {
-    pub fn render(&mut self, node: &ASTNode) -> String {
+    pub fn render_plain(&mut self, node: &ASTNode) -> String {
         self.buffer.clear();
-        node.write_html(self);
+        node.plain_html(self);
+        return self.buffer.to_owned();
+    }
+    pub fn render_pretty(&mut self, node: &ASTNode) -> String {
+        self.buffer.clear();
+        node.pretty_html(self);
         return self.buffer.to_owned();
     }
 }
