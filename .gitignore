@@ -1,12 +1,15 @@
 # OS
-.DS_Store/**/*
+.DS_Store/
+*.nb
+time-travel.sh
 
 # IDE
-.vscode/**/*
-.vs/**/*
-.idea/**/*
+.vscode/
+.vs/
+.idea/
 *.iml
 
 # Rust
-target/**/*
+target/
 Cargo.lock
+
