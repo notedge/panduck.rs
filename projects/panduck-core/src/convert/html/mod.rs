@@ -3,6 +3,9 @@ use html_parser::{Dom, DomVariant, Element, Node};
 use notedown_parser::{ASTKind, ASTNode};
 use crate::convert::{ AST};
 
+pub fn parse_html(text: &str) -> Result<AST> {
+    Ok(Dom::parse(text)?.to_notedown())
+}
 
 
 impl ToNotedown for Dom {

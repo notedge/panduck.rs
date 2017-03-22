@@ -1,6 +1,18 @@
-use crate::{ToNotedown, AST};
-use notedown_parser::{ASTNode, ASTKind};
+use super::*;
+
+use notedown_parser::{ASTNode, ASTKind, ParserConfig};
 use notedown_parser::utils::LSPMetaInfo;
+
+
+pub fn register_notedown(r: &mut ExtensionRegistrar) {
+    let ext = vec!["note"];
+    let parser = |input| Ok(ParserConfig::default().parse(input)?.to_notedown());
+    let new = ExtensionHandler {
+        try_extension: BTreeSet::from_iter(ext.iter().map(String::from)),
+        parser,
+    };
+    r.insert(new)
+}
 
 impl ToNotedown for ASTNode<LSPMetaInfo> {
     fn to_notedown(&self) -> AST {

@@ -2,6 +2,9 @@ use markdown::{Block, ListItem, Span};
 use notedown_parser::{ASTKind, SmartLink};
 use crate::{ToNotedown, AST};
 
+pub fn parse_markdown(input: &str) -> Result<AST> {
+    Ok(tokenize(input).to_notedown())
+}
 
 impl ToNotedown for Vec<Block> {
     fn to_notedown(&self) -> AST {
