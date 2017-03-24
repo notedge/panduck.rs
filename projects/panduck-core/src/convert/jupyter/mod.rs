@@ -1,16 +1,12 @@
 use super::*;
 use crate::{error::Error::ParseError, parse_markdown, Result};
-use serde_json::{Map, Value};
-use super::*;
 use notedown_parser::ASTKind;
+use serde_json::{Map, Value};
 
 pub fn register_jupyter(r: &mut ExtensionRegistrar) {
     let ext = vec!["note"];
     let parser = |input| Ok(ParserConfig::default().parse(input)?.to_notedown());
-    let new = ExtensionHandler {
-        try_extension: BTreeSet::from_iter(ext.iter().map(String::from)),
-        parser,
-    };
+    let new = ExtensionHandler { try_extension: BTreeSet::from_iter(ext.iter().map(String::from)), parser };
     r.insert(new)
 }
 
@@ -18,7 +14,6 @@ pub fn parse_jupyter(text: &str) -> Result<AST> {
     let v: Value = serde_json::from_str(text)?;
     Ok(jupyter_from_json(&v)?)
 }
-
 
 pub fn jupyter_from_json(root: &Value) -> Result<AST> {
     match root {
@@ -33,7 +28,7 @@ fn jupyter_root(dict: &Map<String, Value>) -> AST {
             return jupyter_cells(v);
         }
     }
-    AST::statements(vec![],)
+    AST::statements(vec![])
 }
 
 fn jupyter_cells(cells: &Vec<Value>) -> AST {
@@ -43,7 +38,7 @@ fn jupyter_cells(cells: &Vec<Value>) -> AST {
             out.extend(jupyter_cell(o))
         }
     }
-    AST::statements(out,)
+    AST::statements(out)
 }
 
 fn jupyter_cell(dict: &Map<String, Value>) -> Vec<AST> {

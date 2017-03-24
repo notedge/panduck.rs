@@ -1,5 +1,4 @@
-use panduck_core::AST;
-use panduck_core::parse_jupyter;
+use panduck_core::{parse_jupyter, AST};
 
 #[test]
 fn empty() {

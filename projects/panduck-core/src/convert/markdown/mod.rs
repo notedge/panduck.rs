@@ -1,6 +1,6 @@
+use crate::{ToNotedown, AST};
 use markdown::{Block, ListItem, Span};
 use notedown_parser::{ASTKind, SmartLink};
-use crate::{ToNotedown, AST};
 
 pub fn parse_markdown(input: &str) -> Result<AST> {
     Ok(tokenize(input).to_notedown())

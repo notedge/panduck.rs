@@ -1,5 +1,4 @@
-use panduck_core::AST;
-use panduck_core::parse_markdown;
+use panduck_core::{parse_markdown, AST};
 
 #[test]
 fn empty() {

@@ -2,11 +2,7 @@ use super::*;
 
 impl From<std::io::Error> for PanduckError {
     fn from(e: std::io::Error) -> Self {
-        Self {
-            kind: PanduckErrorKind::IOError(e),
-            file: None,
-            range: (0, 0)
-        }
+        Self { kind: PanduckErrorKind::IOError(e), file: None, range: (0, 0) }
     }
 }
 
@@ -19,5 +15,3 @@ impl From<notedown_parser::Error> for PanduckError {
         }
     }
 }
-
-

@@ -1,5 +1,4 @@
-use panduck_core::AST;
-use panduck_core::parse_html;
+use panduck_core::{parse_html, AST};
 
 #[test]
 fn empty() {

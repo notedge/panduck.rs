@@ -1,14 +1,15 @@
-use std::collections::{BTreeMap, BTreeSet};
-use std::fs::read_to_string;
-use std::path::Path;
-use std::rc::Rc;
-use crate::{AST, PanduckError, Result};
+use crate::{PanduckError, Result, AST};
+use std::{
+    collections::{BTreeMap, BTreeSet},
+    fs::read_to_string,
+    path::Path,
+    rc::Rc,
+};
 
 pub struct ExtensionRegistrar {
     arena: Vec<Rc<ExtensionHandler>>,
     inner: BTreeMap<String, BTreeSet<Rc<ExtensionHandler>>>,
 }
-
 
 pub struct ExtensionHandler {
     try_extension: BTreeSet<String>,
@@ -23,9 +24,7 @@ impl ExtensionRegistrar {
             let new = Rc::clone(&handler);
             let ptr = self.inner.get_mut(&i);
             match ptr {
-                Some(s) => {
-                    s.insert(new)
-                }
+                Some(s) => s.insert(new),
                 None => {
                     let mut s = BTreeSet::new();
                     s.insert(new);
@@ -36,8 +35,8 @@ impl ExtensionRegistrar {
     }
     pub fn get(&self, ext: &str) -> &BTreeSet<Rc<ExtensionHandler>> {
         match self.inner.get(ext) {
-            None => { &BTreeSet::new() }
-            Some(s) => { s }
+            None => &BTreeSet::new(),
+            Some(s) => s,
         }
     }
     pub fn parse_by_ext(&self, file: impl AsRef<Path>) -> Result<AST> {
@@ -51,12 +50,8 @@ impl ExtensionRegistrar {
             }
         }
         let mut error = PanduckError::unsupported_file(ext);
-        error.set_path()
+        error.set_path();
 
-        return Err(error)
+        return Err(error);
     }
 }
-
-
-
-
