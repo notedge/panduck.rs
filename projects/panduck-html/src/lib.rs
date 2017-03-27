@@ -1,3 +1,3 @@
 mod renderer;
 
-pub use renderer::{HTMLRenderer, PrettyHTML, PlainHTML};
+pub use renderer::{HTMLRenderer, PlainHTML, PrettyHTML};
