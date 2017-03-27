@@ -1,13 +1,14 @@
 use super::*;
 
-
 impl PlainHTML for TextNode {
     fn plain_html(&self, f: &mut HTMLRenderer) -> fmt::Result {
-        match self {
-            TextNode::Normal(v) => { f.write_str(v) }
-            TextNode::Raw(v) => { f.write_str(v) }
-            TextNode::Escaped(v) => { f.write_char(*v) }
-        }
+        let raw = match self {
+            TextNode::Normal(v) => v.to_owned(),
+            TextNode::Raw(v) => v.to_owned(),
+            TextNode::Escaped(v) => v.to_string(),
+        };
+
+        html_escape::encode_text(raw)
     }
 }
 

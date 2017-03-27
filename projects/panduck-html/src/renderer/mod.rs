@@ -1,14 +1,15 @@
+pub use self::{plain::PlainHTML, pretty::PrettyHTML};
+use notedown_ast::{
+    nodes::{CodeNode, Header, ListView, MathKind, MathNode, StyleKind, TableView, TextNode},
+    ASTKind, ASTNode, ASTNodes,
+};
 use std::{
     fmt,
     fmt::{Arguments, Write},
 };
-use notedown_ast::nodes::Header;
-use notedown_ast::{ASTKind, ASTNode, ASTNodes, nodes::{CodeNode, ListView, MathKind, MathNode, StyleKind, TableView, TextNode}};
-pub use self::plain::PlainHTML;
-pub use self::pretty::PrettyHTML;
 
-mod pretty;
 mod plain;
+mod pretty;
 
 pub struct HTMLRenderer {
     xhtml: bool,

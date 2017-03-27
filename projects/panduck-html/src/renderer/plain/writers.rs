@@ -1,8 +1,5 @@
 use super::*;
 
-
-
-
 impl PlainHTML for MathNode {
     fn plain_html(&self, f: &mut HTMLRenderer) -> fmt::Result {
         if let Some(renderer) = f.math_renderer {

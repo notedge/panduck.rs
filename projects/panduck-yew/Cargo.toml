@@ -1,6 +1,6 @@
 [package]
-name = "panduck-html"
-version = "0.1.0"
+name = "panduck-yew"
+version = "0.18.0"
 authors = ["Aster <192607617@qq.com>"]
 description = "use panduck to generate pdfs"
 repository = "https://github.com/oovm/panduck"
@@ -9,8 +9,8 @@ license = "MPL-2.0"
 edition = "2018"
 
 [dependencies]
-notedown_ast = "0.12.2"
-html-escape = "0.2.9"
+notedown_ast = "0.12.1"
+yew = "0.18.0"
 
 [dev-dependencies]
 # panduck-core = {version = "0.1", path = "../panduck-core"}

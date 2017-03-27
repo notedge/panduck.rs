@@ -1,10 +1,9 @@
 use super::*;
-use notedown_ast::nodes::{Literal, Delimiter, SmartLink};
-use notedown_ast::nodes::StyleNode;
+use notedown_ast::nodes::{Delimiter, Literal, SmartLink, StyleNode};
 
 mod table_view;
-mod writers;
 mod text;
+mod writers;
 
 pub trait PlainHTML {
     fn plain_html(&self, f: &mut HTMLRenderer) -> fmt::Result;
@@ -59,22 +58,16 @@ impl PlainHTML for ASTKind {
 impl PlainHTML for Delimiter {
     fn plain_html(&self, f: &mut HTMLRenderer) -> fmt::Result {
         match self {
-            Delimiter::HorizontalRule => {
-                match f.xhtml {
-                    true => { f.write_str("<hr>") }
-                    false => { f.write_str("<hr/>") }
-                }
-            }
+            Delimiter::HorizontalRule => match f.xhtml {
+                true => f.write_str("<hr>"),
+                false => f.write_str("<hr/>"),
+            },
         }
     }
 }
 
-
-
-
 impl PlainHTML for SmartLink {
     fn plain_html(&self, f: &mut HTMLRenderer) -> fmt::Result {
-todo!()
+        todo!()
     }
 }
-
