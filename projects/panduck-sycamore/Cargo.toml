@@ -10,7 +10,11 @@ edition = "2018"
 
 [dependencies]
 notedown_ast = "0.12.3"
-sycamore = "0.6.3"
+
+
+[dependencies.sycamore]
+version = "0.6.3"
+features = ["ssr"]
 
 [dev-dependencies]
 # panduck-core = {version = "0.1", path = "../panduck-core"}
