@@ -4,7 +4,6 @@ pub mod utils;
 
 mod errors;
 
-pub use convert::{ToNotedown, AST};
+// pub use notedown_ast;
+pub use convert::{ToNotedown};
 pub use errors::{PanduckError, Result};
-pub use notedown_parser::{CommandKind, SmartLink};
-pub use parse::{parse_by_ext, parse_html, parse_jupyter, parse_markdown, parse_notedown};

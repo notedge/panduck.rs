@@ -1,4 +1,4 @@
-use crate::{convert::AST, ToNotedown};
+use crate::{ ToNotedown};
 use html_parser::{Dom, DomVariant, Element, Node};
 use notedown_parser::{ASTKind, ASTNode};
 

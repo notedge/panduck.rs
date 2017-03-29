@@ -6,8 +6,9 @@ mod html;
 #[cfg(feature = "serde_json")]
 mod json;
 
+use std::path::Path;
 use self::PanduckErrorKind::*;
-use notedown_parser::utils::Url;
+use notedown_ast::Url;
 use std::{
     error::Error,
     fmt::{Display, Formatter},
@@ -15,14 +16,14 @@ use std::{
 
 pub type Result<T> = std::result::Result<T, PanduckError>;
 
-#[derive(Clone, Debug)]
+#[derive(Debug)]
 pub struct PanduckError {
     kind: PanduckErrorKind,
     file: Option<Url>,
     position: (usize, usize),
 }
 
-#[derive(Clone, Debug)]
+#[derive(Debug)]
 pub enum PanduckErrorKind {
     IOError(std::io::Error),
     ParseError(String),

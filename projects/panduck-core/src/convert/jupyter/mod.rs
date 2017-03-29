@@ -1,6 +1,6 @@
 use super::*;
 use crate::{error::Error::ParseError, parse_markdown, Result};
-use notedown_parser::ASTKind;
+use notedown_ast::ASTKind;
 use serde_json::{Map, Value};
 
 pub fn register_jupyter(r: &mut ExtensionRegistrar) {

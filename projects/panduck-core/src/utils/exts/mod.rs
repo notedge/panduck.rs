@@ -1,10 +1,11 @@
-use crate::{PanduckError, Result, AST};
+use crate::{PanduckError, Result};
 use std::{
     collections::{BTreeMap, BTreeSet},
     fs::read_to_string,
     path::Path,
     rc::Rc,
 };
+use notedown_ast::ASTNode;
 
 pub struct ExtensionRegistrar {
     arena: Vec<Rc<ExtensionHandler>>,
@@ -13,7 +14,7 @@ pub struct ExtensionRegistrar {
 
 pub struct ExtensionHandler {
     try_extension: BTreeSet<String>,
-    parser: fn(&str) -> Result<AST>,
+    parser: fn(&str) -> Result<ASTNode>,
 }
 
 impl ExtensionRegistrar {
@@ -39,7 +40,7 @@ impl ExtensionRegistrar {
             Some(s) => s,
         }
     }
-    pub fn parse_by_ext(&self, file: impl AsRef<Path>) -> Result<AST> {
+    pub fn parse_by_ext(&self, file: impl AsRef<Path>) -> Result<ASTNode> {
         let ext = file.as_ref().extension().unwrap_or_default().to_str().unwrap_or_default();
         let input = &read_to_string(file.as_ref())?;
         for t in self.get(ext) {
