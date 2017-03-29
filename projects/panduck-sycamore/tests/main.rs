@@ -1,11 +1,9 @@
-use sycamore::{template};
-use sycamore::generic_node::ssr_node::render_to_string;
+use sycamore::{generic_node::ssr_node::render_to_string, template};
 
 #[test]
 fn ready() {
     println!("it works!")
 }
-
 
 #[test]
 fn renderer() {
@@ -16,6 +14,6 @@ fn renderer() {
     };
     let html = render_to_string(|| node);
 
-// Prints: <div class="my-class"><button>Click me</button></div>
+    // Prints: <div class="my-class"><button>Click me</button></div>
     println!("{}", html);
 }

@@ -19,8 +19,7 @@ pub use jupyter::register_jupyter;
 #[cfg(feature = "notedown")]
 pub use notedown::register_notedown;
 
-use notedown_ast::ASTNode;
-use notedown_ast::ASTNodes;
+use notedown_ast::{ASTNode, ASTNodes};
 
 pub trait ToNotedown {
     fn to_notedown(&self) -> ASTNode;

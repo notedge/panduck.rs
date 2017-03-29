@@ -6,12 +6,12 @@ mod html;
 #[cfg(feature = "serde_json")]
 mod json;
 
-use std::path::Path;
 use self::PanduckErrorKind::*;
 use notedown_ast::Url;
 use std::{
     error::Error,
-    fmt::{Display, Formatter},
+    fmt::{self, Display, Formatter},
+    path::Path,
 };
 
 pub type Result<T> = std::result::Result<T, PanduckError>;
@@ -42,7 +42,7 @@ impl PanduckError {
             Err(_) => self,
         }
     }
-    pub fn set_position(mut self, position: (usize, usize)) {
+    pub fn set_position(mut self, position: (usize, usize)) -> Self {
         Self { kind: self.kind, file: self.file, position }
     }
 }
@@ -62,19 +62,21 @@ impl Default for PanduckError {
 impl Error for PanduckError {}
 
 impl Display for PanduckError {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        let file = self.file.and_then(|e| e.to_file_path().ok()).and_then(|e| e.to_str());
-        let file = match file {
-            None => "<Anonymous>",
-            Some(s) => s,
-        };
-        writeln!(f, "at [{}:{}] of {}", self.position.0, self.position.1, file)?;
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        match &self.file {
+            None => {
+                writeln!(f, "at [{}:{}] of <Anonymous>", self.position.0, self.position.1)?;
+            }
+            Some(s) => {
+                writeln!(f, "at [{}:{}] of {}", self.position.0, self.position.1, s.as_str())?;
+            }
+        }
         Display::fmt(&self.kind, f)
     }
 }
 
 impl Display for PanduckErrorKind {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         todo!()
     }
 }

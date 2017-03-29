@@ -1,6 +1,5 @@
 use super::*;
 
-
 impl<G> IntoSycamore<G> for TextNode
 where
     G: GenericNode,

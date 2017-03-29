@@ -1,26 +1,23 @@
 mod blocks;
-mod text;
 mod command;
-mod table;
 mod list;
+mod table;
+mod text;
 
-use notedown_ast::nodes::ListView;
-use notedown_ast::nodes::TableView;
 use notedown_ast::{
-    nodes::{Delimiter, Header, Literal},
+    nodes::{Delimiter, Header, ListView, Literal, StyleKind, StyleNode, TableView, TextNode},
     ASTKind, ASTNodes,
 };
-use sycamore::{generic_node::GenericNode};
-use notedown_ast::nodes::{StyleKind, StyleNode, TextNode};
+use sycamore::generic_node::GenericNode;
 
 pub trait IntoSycamore<G: GenericNode> {
     fn into_sycamore(self) -> G;
 }
 
 impl<T, G> IntoSycamore<G> for Literal<T>
-    where
-        T: IntoSycamore<G>,
-        G: GenericNode,
+where
+    T: IntoSycamore<G>,
+    G: GenericNode,
 {
     fn into_sycamore(self) -> G {
         self.value.into_sycamore()
@@ -28,8 +25,8 @@ impl<T, G> IntoSycamore<G> for Literal<T>
 }
 
 impl<G> IntoSycamore<G> for ASTKind
-    where
-        G: GenericNode,
+where
+    G: GenericNode,
 {
     fn into_sycamore(self) -> G {
         match self {
@@ -70,8 +67,8 @@ impl<G> IntoSycamore<G> for ASTKind
 }
 
 pub fn push_nodes<G>(node: &G, children: ASTNodes)
-    where
-        G: GenericNode,
+where
+    G: GenericNode,
 {
     for i in children {
         node.append_child(&i.value.into_sycamore())

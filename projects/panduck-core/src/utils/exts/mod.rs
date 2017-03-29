@@ -1,11 +1,12 @@
 use crate::{PanduckError, Result};
+use notedown_ast::ASTNode;
 use std::{
+    cmp::Ordering,
     collections::{BTreeMap, BTreeSet},
     fs::read_to_string,
     path::Path,
     rc::Rc,
 };
-use notedown_ast::ASTNode;
 
 pub struct ExtensionRegistrar {
     arena: Vec<Rc<ExtensionHandler>>,
@@ -13,35 +14,46 @@ pub struct ExtensionRegistrar {
 }
 
 pub struct ExtensionHandler {
-    try_extension: BTreeSet<String>,
-    parser: fn(&str) -> Result<ASTNode>,
+    pub name: String,
+    pub parser: fn(&str) -> Result<ASTNode>,
+    pub try_extension: BTreeSet<String>,
 }
 
 impl ExtensionRegistrar {
     pub fn insert(&mut self, h: ExtensionHandler) {
         let handler = Rc::new(h);
         self.arena.push(Rc::clone(&handler));
-        for i in handler.try_extension {
+        for i in &handler.try_extension {
             let new = Rc::clone(&handler);
-            let ptr = self.inner.get_mut(&i);
+            let ptr = self.inner.get_mut(i.as_str());
             match ptr {
-                Some(s) => s.insert(new),
+                Some(s) => {
+                    s.insert(new);
+                }
                 None => {
                     let mut s = BTreeSet::new();
                     s.insert(new);
-                    self.inner.insert(i, s)
+                    self.inner.insert(i.to_owned(), s);
                 }
             }
         }
     }
-    pub fn get(&self, ext: &str) -> &BTreeSet<Rc<ExtensionHandler>> {
+    #[inline]
+    pub fn get(&self, ext: &str) -> BTreeSet<Rc<ExtensionHandler>> {
+        // self.inner.get(ext).unwrap_or_default()
         match self.inner.get(ext) {
-            None => &BTreeSet::new(),
-            Some(s) => s,
+            Some(s) => s.to_owned(),
+            None => BTreeSet::new(),
         }
     }
     pub fn parse_by_ext(&self, file: impl AsRef<Path>) -> Result<ASTNode> {
-        let ext = file.as_ref().extension().unwrap_or_default().to_str().unwrap_or_default();
+        let ext = match file.as_ref().extension().and_then(|t| t.to_str()) {
+            Some(s) => s,
+            None => {
+                return todo!();
+            }
+        };
+
         let input = &read_to_string(file.as_ref())?;
         for t in self.get(ext) {
             let parse = t.parser;
@@ -51,8 +63,29 @@ impl ExtensionRegistrar {
             }
         }
         let mut error = PanduckError::unsupported_file(ext);
-        error.set_path();
+        // error.set_path();
+        todo!();
 
         return Err(error);
+    }
+}
+
+impl Eq for ExtensionHandler {}
+
+impl PartialEq<Self> for ExtensionHandler {
+    fn eq(&self, other: &ExtensionHandler) -> bool {
+        self.name.eq(&other.name)
+    }
+}
+
+impl PartialOrd<Self> for ExtensionHandler {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        self.name.partial_cmp(&other.name)
+    }
+}
+
+impl Ord for ExtensionHandler {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.name.cmp(&other.name)
     }
 }
