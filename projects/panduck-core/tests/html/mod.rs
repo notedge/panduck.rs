@@ -1,9 +1,10 @@
-use panduck_core::{parse_html, AST};
+use panduck_core::convert::parse_html;
+use notedown_ast::{ASTNode, ASTKind};
 
 #[test]
 fn empty() {
     let ast = parse_html("").unwrap();
-    assert_eq!(ast, AST::statements(vec![]))
+    assert_eq!(ast, ASTKind::statements(vec![], None))
 }
 
 #[test]

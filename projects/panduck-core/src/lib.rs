@@ -1,4 +1,4 @@
-mod convert;
+pub mod convert;
 pub mod for_test;
 pub mod utils;
 

@@ -10,7 +10,7 @@ edition = "2021"
 
 [dependencies]
 serde = "1.0.130"
-notedown_ast = "0.12.5"
+notedown_ast = "0.12.6"
 
 
 # notedown
