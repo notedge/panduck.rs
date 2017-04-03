@@ -1,27 +1,44 @@
-use crate::{ToNotedown, AST};
-use markdown::{Block, ListItem, Span};
-use notedown_parser::{ASTKind, SmartLink};
+use crate::{ExtensionHandler, ExtensionRegistrar, Result, ToNotedown};
+use markdown::{tokenize, Block, ListItem, Span};
+use notedown_ast::{ASTKind, ASTNode, ASTNodes};
+use std::{collections::BTreeSet, iter::FromIterator};
 
-pub fn parse_markdown(input: &str) -> Result<AST> {
+pub fn register_markdown(r: &mut ExtensionRegistrar) {
+    let ext = vec!["markdown", "md"];
+    let new = ExtensionHandler {
+        name: String::from("markdown"),
+        try_extension: BTreeSet::from_iter(ext.into_iter().map(String::from)),
+        parser: parse_markdown,
+    };
+    r.insert(new)
+}
+
+pub fn parse_markdown(input: &str) -> Result<ASTNode> {
     Ok(tokenize(input).to_notedown())
 }
 
 impl ToNotedown for Vec<Block> {
-    fn to_notedown(&self) -> AST {
-        AST::statements(self.to_notedown_list())
+    fn to_notedown(&self) -> ASTNode {
+        ASTKind::statements(self.to_notedown_list(), None)
     }
 
-    fn to_notedown_list(&self) -> Vec<AST> {
+    fn to_notedown_list(&self) -> ASTNodes {
         self.iter().map(ToNotedown::to_notedown).collect()
     }
 }
 
 impl ToNotedown for Block {
-    fn to_notedown(&self) -> AST {
+    fn to_notedown(&self) -> ASTNode {
         match self {
-            Block::Header(content, level) => AST::header(content.to_notedown_list(), *level),
-            Block::Paragraph(p) => AST::paragraph(p.to_notedown_list()),
-            Block::CodeBlock(_, _) => unimplemented!(),
+            Block::Header(content, level) => ASTKind::header(content.to_notedown_list(), *level as u8, None),
+            Block::Paragraph(p) => ASTKind::paragraph(p.to_notedown_list(), None),
+            Block::CodeBlock(lang, code) => {
+                let lang = match lang {
+                    Some(s) => {s.as_str()},
+                    None => {"text"}
+                };
+                ASTKind::code_block(lang, code, None)
+            },
             Block::Raw(_) => unimplemented!(),
             Block::Hr => unimplemented!(),
             // Block::Blockquote(list) => AST::QuoteList { style: None, body: list.to_notedown().to_vec(), r },
@@ -35,16 +52,15 @@ impl ToNotedown for Block {
 }
 
 impl ToNotedown for Vec<Span> {
-    fn to_notedown(&self) -> AST {
-        AST::statements(self.to_notedown_list())
+    fn to_notedown(&self) -> ASTNode {
+        ASTKind::statements(self.to_notedown_list(), None)
     }
 
-    fn to_notedown_list(&self) -> Vec<AST> {
+    fn to_notedown_list(&self) -> ASTNodes {
         let mut out = vec![];
         for node in self {
             let ast = node.to_notedown();
-            match ast.kind {
-                ASTKind::None => continue,
+            match ast.value {
                 ASTKind::Statements(v) => out.extend(v),
                 _ => out.push(ast),
             }
@@ -54,20 +70,11 @@ impl ToNotedown for Vec<Span> {
 }
 
 impl ToNotedown for Span {
-    fn to_notedown(&self) -> AST {
+    fn to_notedown(&self) -> ASTNode {
         match self {
             Span::Break => unimplemented!(),
-            Span::Text(t) => AST::text(t.to_owned(), "text"),
-            Span::Code(code) => {
-                unimplemented!()
-                // AST::highlight {
-                //     lang: String::from("txt"),
-                //     code: code.to_owned(),
-                //     inline: true,
-                //     high_line: vec![],
-                //     r,
-                // }
-            }
+            Span::Text(t) => ASTKind::text(t, None),
+            Span::Code(code) => ASTKind::code_inline(code, None),
             Span::Link(text, url, title) => {
                 unimplemented!()
                 // let link = SmartLink::Hyperlinks {
@@ -80,22 +87,22 @@ impl ToNotedown for Span {
             }
             Span::Image(_, _, _) => unimplemented!(),
             Span::Emphasis(_) => unimplemented!(),
-            Span::Strong(_) => unimplemented!(),
+            Span::Strong(children) => ASTKind::strong(children.to_notedown_list(), None),
         }
     }
 }
 
 impl ToNotedown for Vec<ListItem> {
-    fn to_notedown(&self) -> AST {
-        AST::statements(self.iter().map(ToNotedown::to_notedown).collect())
+    fn to_notedown(&self) -> ASTNode {
+        ASTKind::statements(self.iter().map(ToNotedown::to_notedown).collect(), None)
     }
 }
 
 impl ToNotedown for ListItem {
-    fn to_notedown(&self) -> AST {
+    fn to_notedown(&self) -> ASTNode {
         match self {
             ListItem::Simple(s) => s.to_notedown(),
-            ListItem::Paragraph(p) => AST::paragraph(p.to_notedown_list()),
+            ListItem::Paragraph(p) => ASTKind::paragraph(p.to_notedown_list(), None),
         }
     }
 }

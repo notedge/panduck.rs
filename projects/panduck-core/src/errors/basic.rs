@@ -6,6 +6,12 @@ impl From<std::io::Error> for PanduckError {
     }
 }
 
+impl From<()> for PanduckError {
+    fn from(_: ()) -> Self {
+        Self { kind: PanduckErrorKind::Unknown, file: None, position: (0, 0) }
+    }
+}
+
 // impl From<notedown_parser::Error> for PanduckError {
 //     fn from(e: notedown_parser::Error) -> Self {
 //         match e {

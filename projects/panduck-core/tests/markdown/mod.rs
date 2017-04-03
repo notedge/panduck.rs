@@ -1,9 +1,10 @@
-use panduck_core::{parse_markdown, AST};
+use notedown_ast::ASTKind;
+use panduck_core::convert::parse_markdown;
 
 #[test]
 fn empty() {
     let ast = parse_markdown("").unwrap();
-    assert_eq!(ast, AST::statements(vec![]))
+    assert_eq!(ast, ASTKind::statements(vec![], None))
 }
 
 #[test]

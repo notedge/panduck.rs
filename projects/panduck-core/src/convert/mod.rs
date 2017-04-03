@@ -2,14 +2,18 @@
 mod docx;
 #[cfg(feature = "html")]
 mod html;
+
 #[cfg(feature = "html")]
 pub use self::html::{parse_html, register_html};
+
 #[cfg(feature = "jupyter")]
 mod jupyter;
 #[cfg(feature = "markdown")]
 mod markdown;
+
 #[cfg(feature = "markdown")]
-pub use self::markdown::{parse_html, register_html};
+pub use self::markdown::{parse_markdown, register_markdown};
+
 #[cfg(feature = "notedown")]
 mod notedown;
 #[cfg(feature = "rtf")]
@@ -24,8 +28,6 @@ pub use jupyter::register_jupyter;
 pub use notedown::register_notedown;
 
 use notedown_ast::{ASTNode, ASTNodes};
-
-
 
 pub trait ToNotedown {
     fn to_notedown(&self) -> ASTNode;

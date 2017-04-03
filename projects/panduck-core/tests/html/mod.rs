@@ -1,5 +1,5 @@
+use notedown_ast::ASTKind;
 use panduck_core::convert::parse_html;
-use notedown_ast::{ASTNode, ASTKind};
 
 #[test]
 fn empty() {

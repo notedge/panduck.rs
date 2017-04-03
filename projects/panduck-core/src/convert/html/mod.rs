@@ -1,9 +1,7 @@
-use crate::{ToNotedown, ExtensionRegistrar, ExtensionHandler};
+use crate::{ExtensionHandler, ExtensionRegistrar, Result, ToNotedown};
 use html_parser::{Dom, DomVariant, Element, Node};
 use notedown_ast::{ASTKind, ASTNode, ASTNodes};
-use crate::Result;
-use std::collections::BTreeSet;
-use std::iter::FromIterator;
+use std::{collections::BTreeSet, iter::FromIterator};
 
 pub fn register_html(r: &mut ExtensionRegistrar) {
     let ext = vec!["xhtml", "html"];
@@ -76,10 +74,10 @@ impl ToNotedown for Element {
             "p" => ASTKind::paragraph(self.children.to_notedown_list(), None),
             "br" => ASTKind::text("\n".to_string(), None),
             "i" | "em" => ASTKind::italic(self.children.to_notedown_list(), None),
-            "b" | "strong" => ASTKind::bold(self.children.to_notedown_list(), None),
+            "b" | "strong" => ASTKind::strong(self.children.to_notedown_list(), None),
             "u" => ASTKind::underline(self.children.to_notedown_list(), None),
-            "s" | "del" => ASTKind::strikethrough(self.children.to_notedown_list(), None),
-            "ins" => ASTKind::undercover(self.children.to_notedown_list(), None),
+            "s" | "del" => ASTKind::delete(self.children.to_notedown_list(), None),
+            "ins" => ASTKind::insert(self.children.to_notedown_list(), None),
             "ul" | "ol" | "blockquote" | "code" | "pre" | "table" | "a" | "img" | "mark" | "sup" | "dl" | "abbr" | "button"
             | "svg" | "form" => {
                 // FIXME: fast skip unimplemented
@@ -89,7 +87,8 @@ impl ToNotedown for Element {
             _ => {
                 if self.name.contains("-") {
                     ASTNode::default()
-                } else {
+                }
+                else {
                     unimplemented!("{:?}", self.name)
                 }
             }

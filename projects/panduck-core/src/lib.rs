@@ -1,3 +1,5 @@
+#![allow(clippy::needless_return)]
+
 pub mod convert;
 pub mod for_test;
 pub mod utils;

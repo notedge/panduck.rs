@@ -28,21 +28,21 @@ pub enum PanduckErrorKind {
     IOError(std::io::Error),
     ParseError(String),
     UnsupportedFormat(String),
-    Unknown(String),
+    Unknown,
 }
 
 // noinspection ALL
 impl PanduckError {
-    pub fn set_url(mut self, url: Url) -> Self {
+    pub fn set_url(self, url: Url) -> Self {
         Self { kind: self.kind, file: Some(url), position: self.position }
     }
-    pub fn set_path(mut self, path: impl AsRef<Path>) -> Self {
+    pub fn set_path(self, path: impl AsRef<Path>) -> Self {
         match Url::from_directory_path(path) {
             Ok(url) => self.set_url(url),
             Err(_) => self,
         }
     }
-    pub fn set_position(mut self, position: (usize, usize)) -> Self {
+    pub fn set_position(self, position: (usize, usize)) -> Self {
         Self { kind: self.kind, file: self.file, position }
     }
 }
@@ -55,7 +55,7 @@ impl PanduckError {
 
 impl Default for PanduckError {
     fn default() -> Self {
-        Self { kind: Unknown(String::new()), file: None, position: (0, 0) }
+        Self { kind: Unknown, file: None, position: (0, 0) }
     }
 }
 
@@ -77,6 +77,17 @@ impl Display for PanduckError {
 
 impl Display for PanduckErrorKind {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        todo!()
+        match self {
+            IOError(e) => Display::fmt(e, f),
+            ParseError(_) => {
+                unimplemented!()
+            }
+            UnsupportedFormat(_) => {
+                unimplemented!()
+            }
+            Unknown => {
+                unimplemented!()
+            }
+        }
     }
 }

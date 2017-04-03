@@ -1,5 +1,5 @@
 use crate::{PanduckError, Result};
-use notedown_ast::ASTNode;
+use notedown_ast::{ASTNode, Url};
 use std::{
     cmp::Ordering,
     collections::{BTreeMap, BTreeSet},
@@ -47,13 +47,7 @@ impl ExtensionRegistrar {
         }
     }
     pub fn parse_by_ext(&self, file: impl AsRef<Path>) -> Result<ASTNode> {
-        let ext = match file.as_ref().extension().and_then(|t| t.to_str()) {
-            Some(s) => s,
-            None => {
-                return todo!();
-            }
-        };
-
+        let ext = file.as_ref().extension().and_then(|t| t.to_str()).ok_or(())?;
         let input = &read_to_string(file.as_ref())?;
         for t in self.get(ext) {
             let parse = t.parser;
@@ -62,10 +56,7 @@ impl ExtensionRegistrar {
                 Err(_) => continue,
             }
         }
-        let mut error = PanduckError::unsupported_file(ext);
-        // error.set_path();
-        todo!();
-
+        let error = PanduckError::unsupported_file(ext).set_url(Url::from_file_path(file)?);
         return Err(error);
     }
 }
