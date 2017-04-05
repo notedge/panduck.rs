@@ -12,7 +12,9 @@ where
             Self::Normal(s) => GenericNode::text_node(&s),
             Self::Raw(s) => GenericNode::text_node(&s),
             Self::Escaped(c) => GenericNode::text_node(c.to_string().as_str()),
-            Self::Emoji(_) => {todo!()}
+            Self::Emoji(_) => {
+                todo!()
+            }
         }
     }
 }

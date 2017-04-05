@@ -16,10 +16,7 @@ mod common_markdown;
 #[cfg(feature = "markdown")]
 mod pandoc_markdown;
 #[cfg(feature = "markdown")]
-pub use self::{
-    common_markdown::{parse_common_markdown, register_common_markdown},
-    pandoc_markdown::{}
-};
+pub use self::common_markdown::{parse_common_markdown, register_common_markdown};
 
 #[cfg(feature = "notedown")]
 mod notedown;
@@ -37,7 +34,9 @@ pub use notedown::register_notedown;
 use notedown_ast::{ASTNode, ASTNodes};
 
 pub trait ToNotedown
-    where Self: Sized{
+where
+    Self: Sized,
+{
     fn into_notedown(self) -> ASTNode;
     fn into_notedown_list(self) -> ASTNodes {
         vec![self.into_notedown()]

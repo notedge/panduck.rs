@@ -1,7 +1,7 @@
 pub use self::{plain::PlainHTML, pretty::PrettyHTML};
 use notedown_ast::{
     nodes::{CodeNode, Header, ListView, MathKind, MathNode, StyleKind, TableView, TextNode},
-    ASTKind, ASTNode, ASTNodes,
+    ASTKind, ASTNode, ASTNodes, Result,
 };
 use std::{
     fmt,
@@ -39,15 +39,15 @@ impl Write for HTMLRenderer {
 }
 
 impl HTMLRenderer {
-    pub fn render_plain(&mut self, node: &ASTNode) -> String {
+    pub fn render_plain(&mut self, node: &ASTNode) -> Result<String> {
         self.buffer.clear();
-        node.plain_html(self);
-        return self.buffer.to_owned();
+        node.plain_html(self)?;
+        Ok(self.buffer.to_owned())
     }
-    pub fn render_pretty(&mut self, node: &ASTNode) -> String {
+    pub fn render_pretty(&mut self, node: &ASTNode) -> Result<String> {
         self.buffer.clear();
-        node.pretty_html(self);
-        return self.buffer.to_owned();
+        node.pretty_html(self)?;
+        Ok(self.buffer.to_owned())
     }
 }
 
