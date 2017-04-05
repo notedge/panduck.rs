@@ -10,13 +10,13 @@ pub fn register_notedown(r: &mut ExtensionRegistrar) {
 }
 
 impl ToNotedown for ASTNode<LSPMetaInfo> {
-    fn to_notedown(&self) -> AST {
+    fn into_notedown(&self) -> AST {
         self.kind.to_notedown()
     }
 }
 
 impl ToNotedown for ASTKind<ASTNode<LSPMetaInfo>> {
-    fn to_notedown(&self) -> AST {
+    fn into_notedown(&self) -> AST {
         match self {
             ASTKind::None => AST { kind: ASTKind::None, meta: () },
             ASTKind::Statements(_) => AST { kind: ASTKind::None, meta: () },

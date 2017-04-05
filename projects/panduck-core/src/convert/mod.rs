@@ -8,11 +8,18 @@ pub use self::html::{parse_html, register_html};
 
 #[cfg(feature = "jupyter")]
 mod jupyter;
-#[cfg(feature = "markdown")]
-mod markdown;
 
+// #[cfg(feature = "markdown")]
+// mod markdown;
 #[cfg(feature = "markdown")]
-pub use self::markdown::{parse_markdown, register_markdown};
+mod common_markdown;
+#[cfg(feature = "markdown")]
+mod pandoc_markdown;
+#[cfg(feature = "markdown")]
+pub use self::{
+    common_markdown::{parse_common_markdown, register_common_markdown},
+    pandoc_markdown::{}
+};
 
 #[cfg(feature = "notedown")]
 mod notedown;
@@ -29,9 +36,10 @@ pub use notedown::register_notedown;
 
 use notedown_ast::{ASTNode, ASTNodes};
 
-pub trait ToNotedown {
-    fn to_notedown(&self) -> ASTNode;
-    fn to_notedown_list(&self) -> ASTNodes {
-        vec![self.to_notedown()]
+pub trait ToNotedown
+    where Self: Sized{
+    fn into_notedown(self) -> ASTNode;
+    fn into_notedown_list(self) -> ASTNodes {
+        vec![self.into_notedown()]
     }
 }
