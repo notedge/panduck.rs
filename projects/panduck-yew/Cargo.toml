@@ -13,4 +13,4 @@ notedown_ast = "0.12.7"
 yew = "0.18.0"
 
 [dev-dependencies]
-# panduck-core = {version = "0.1", path = "../panduck-core"}
+panduck-core = {version = "0.1", path = "../panduck-core"}

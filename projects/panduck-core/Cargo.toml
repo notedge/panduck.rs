@@ -14,7 +14,7 @@ notedown_ast = "0.12.7"
 
 
 # notedown
-notedown_parser = { version = "0.12.0", optional = true }
+# notedown_parser = { version = "0.12.0", optional = true }
 # jupyter
 serde_json = { version = "1.0.72", optional = true }
 # md, markdown
@@ -36,7 +36,7 @@ calamine = { version = "0.18.0", optional = true }
 
 [features]
 default = ["markdown", "html"]
-notedown = ["notedown_parser"]
+# notedown = ["notedown_parser"]
 markdown = ["comrak", "pandoc_ast"]
 html = ["html_parser"]
 jupyter = ["serde_json", "markdown"]

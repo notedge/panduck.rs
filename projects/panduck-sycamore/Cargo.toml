@@ -17,4 +17,4 @@ version = "0.6.3"
 features = ["ssr"]
 
 [dev-dependencies]
-# panduck-core = {version = "0.1", path = "../panduck-core"}
+panduck-core = {version = "0.1", path = "../panduck-core"}

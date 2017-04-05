@@ -12,6 +12,7 @@ where
             Self::Normal(s) => GenericNode::text_node(&s),
             Self::Raw(s) => GenericNode::text_node(&s),
             Self::Escaped(c) => GenericNode::text_node(c.to_string().as_str()),
+            Self::Emoji(_) => {todo!()}
         }
     }
 }
@@ -38,17 +39,13 @@ where
         match self {
             Self::Plain => GenericNode::element("span"),
             Self::Italic => GenericNode::element("i"),
-            Self::Bold => GenericNode::element("b"),
-            Self::Emphasis => {
-                unimplemented!()
-            }
+            Self::Emphasis => GenericNode::element("em"),
             Self::Underline => GenericNode::element("u"),
-            Self::Strikethrough => {
-                unimplemented!()
-            }
-            Self::Undercover => {
-                unimplemented!()
-            }
+            Self::Undercover => GenericNode::element("u"),
+            Self::Strong => GenericNode::element("strong"),
+            Self::Highlight => todo!(),
+            Self::Delete => GenericNode::element("del"),
+            Self::Insert => GenericNode::element("ins"),
         }
     }
 }

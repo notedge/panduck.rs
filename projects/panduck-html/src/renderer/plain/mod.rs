@@ -20,7 +20,7 @@ impl PlainHTML for ASTNodes {
 
 impl<T: PlainHTML> PlainHTML for Literal<T> {
     fn plain_html(&self, f: &mut HTMLRenderer) -> fmt::Result {
-        self.unwrap().plain_html(f)
+        self.value.plain_html(f)
     }
 }
 
