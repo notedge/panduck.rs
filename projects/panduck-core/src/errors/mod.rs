@@ -7,12 +7,12 @@ mod html;
 mod json;
 
 use self::PanduckErrorKind::*;
-use notedown_ast::Url;
 use std::{
     error::Error,
     fmt::{self, Display, Formatter},
     path::Path,
 };
+use yggdrasil_shared::records::Url;
 
 pub type Result<T> = std::result::Result<T, PanduckError>;
 

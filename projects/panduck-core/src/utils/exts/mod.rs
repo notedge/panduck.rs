@@ -1,5 +1,5 @@
 use crate::{PanduckError, Result};
-use notedown_ast::{ASTNode, Url};
+use notedown_ast::{ASTNode};
 use std::{
     cmp::Ordering,
     collections::{BTreeMap, BTreeSet},
@@ -56,7 +56,7 @@ impl ExtensionRegistrar {
                 Err(_) => continue,
             }
         }
-        let error = PanduckError::unsupported_file(ext).set_url(Url::from_file_path(file)?);
+        let error = PanduckError::unsupported_file(ext).set_path(file);
         return Err(error);
     }
 }

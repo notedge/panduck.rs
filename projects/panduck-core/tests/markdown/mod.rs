@@ -16,5 +16,5 @@ fn test() {
 #[test]
 fn test3() {
     let ast = parse_common_markdown(include_str!("markdown-it.md"));
-    println!("{:#?}", ast.unwrap_or_default())
+    assert_eq!(format!("{:#?}", ast.unwrap()), include_str!("markdown-it-cmd.yaml"))
 }

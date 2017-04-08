@@ -1,5 +1,8 @@
 mod code;
 mod html;
+mod list;
+mod table;
+mod link;
 
 use crate::{ExtensionHandler, ExtensionRegistrar, Result, ToNotedown};
 use comrak::{
@@ -51,16 +54,14 @@ impl<'a> ToNotedown for &'a AstNode<'a> {
                 unimplemented!()
             }
             NodeValue::BlockQuote => {
-                unimplemented!()
+                ASTNode::default()
             }
-            NodeValue::List(_) => {
-                unimplemented!()
-            }
+            NodeValue::List(v) => v.into_notedown(),
             NodeValue::Item(_) => {
                 unimplemented!()
             }
             NodeValue::DescriptionList => {
-                unimplemented!()
+                ASTNode::default()
             }
             NodeValue::DescriptionItem(_) => {
                 unimplemented!()
@@ -74,16 +75,12 @@ impl<'a> ToNotedown for &'a AstNode<'a> {
             NodeValue::CodeBlock(v) => v.into_notedown(),
             NodeValue::HtmlBlock(v) => v.into_notedown(),
             NodeValue::Paragraph => ASTKind::paragraph(self.children().into_notedown_list(), None),
-            NodeValue::Heading(_) => {
-                unimplemented!()
-            }
+            NodeValue::Heading(v) => ASTKind::header(self.children().into_notedown_list(), v.level as u8, None),
             NodeValue::ThematicBreak => ASTKind::hr(None),
             NodeValue::FootnoteDefinition(_) => {
                 unimplemented!()
             }
-            NodeValue::Table(_) => {
-                unimplemented!()
-            }
+            NodeValue::Table(v) => v.into_notedown(),
             NodeValue::TableRow(_) => {
                 unimplemented!()
             }
@@ -100,9 +97,9 @@ impl<'a> ToNotedown for &'a AstNode<'a> {
                 unimplemented!()
             }
             NodeValue::SoftBreak => {
-                unimplemented!()
+                ASTKind::soft_break(None)
             }
-            NodeValue::LineBreak => ASTKind::br(None),
+            NodeValue::LineBreak => ASTKind::hard_break(None),
             NodeValue::Code(v) => v.into_notedown(),
             NodeValue::HtmlInline(_) => {
                 unimplemented!()
@@ -113,12 +110,8 @@ impl<'a> ToNotedown for &'a AstNode<'a> {
             NodeValue::Superscript => {
                 unimplemented!()
             }
-            NodeValue::Link(_) => {
-                unimplemented!()
-            }
-            NodeValue::Image(_) => {
-                unimplemented!()
-            }
+            NodeValue::Link(v) => v.into_notedown(),
+            NodeValue::Image(v) => v.into_notedown(),
             NodeValue::FootnoteReference(_) => {
                 unimplemented!()
             }
@@ -140,92 +133,3 @@ impl ToNotedown for Children<'_, RefCell<Ast>> {
     }
 }
 
-// impl ToNotedown for Vec<Ast> {
-//     fn to_notedown(&self) -> ASTNode {
-//         ASTKind::statements(self.to_notedown_list(), None)
-//     }
-//
-//     fn to_notedown_list(&self) -> ASTNodes {
-//         self.iter().map(ToNotedown::to_notedown).collect()
-//     }
-// }
-//
-// impl ToNotedown for Block {
-//     fn to_notedown(&self) -> ASTNode {
-//         match self {
-//             Block::Header(content, level) => ASTKind::header(content.to_notedown_list(), *level as u8, None),
-//             Block::Paragraph(p) => ASTKind::paragraph(p.to_notedown_list(), None),
-//             Block::CodeBlock(lang, code) => {
-//                 let lang = match lang {
-//                     Some(s) => { s.as_str() }
-//                     None => { "text" }
-//                 };
-//                 ASTKind::code_block(lang, code, None)
-//             }
-//             Block::Raw(_) => unimplemented!(),
-//             Block::Hr => unimplemented!(),
-//             // Block::Blockquote(list) => AST::QuoteList { style: None, body: list.to_notedown().to_vec(), r },
-//             // Block::OrderedList(list, _) => AST::OrderedList { head: 1, body: list.to_notedown().to_vec(), r },
-//             // Block::UnorderedList(list) => AST::OrderlessList { body: list.to_notedown().to_vec(), r },
-//             Block::Blockquote(_) => unimplemented!(),
-//             Block::OrderedList(_, _) => unimplemented!(),
-//             Block::UnorderedList(_) => unimplemented!(),
-//         }
-//     }
-// }
-//
-// impl ToNotedown for Vec<Span> {
-//     fn to_notedown(&self) -> ASTNode {
-//         ASTKind::statements(self.to_notedown_list(), None)
-//     }
-//
-//     fn to_notedown_list(&self) -> ASTNodes {
-//         let mut out = vec![];
-//         for node in self {
-//             let ast = node.to_notedown();
-//             match ast.value {
-//                 ASTKind::Statements(v) => out.extend(v),
-//                 _ => out.push(ast),
-//             }
-//         }
-//         return out;
-//     }
-// }
-//
-// impl ToNotedown for Span {
-//     fn to_notedown(&self) -> ASTNode {
-//         match self {
-//             Span::Break => unimplemented!(),
-//             Span::Text(t) => ASTKind::text(t, None),
-//             Span::Code(code) => ASTKind::code_inline(code, None),
-//             Span::Link(text, url, title) => {
-//                 unimplemented!()
-//                 // let link = SmartLink::Hyperlinks {
-//                 //     from: text.into(),
-//                 //     to: Some(url.into()),
-//                 //     alt: title.as_ref().map(Into::into),
-//                 //     bind: None,
-//                 // };
-//                 // AST::link { inner: link, r }
-//             }
-//             Span::Image(_, _, _) => unimplemented!(),
-//             Span::Emphasis(_) => unimplemented!(),
-//             Span::Strong(children) => ASTKind::strong(children.to_notedown_list(), None),
-//         }
-//     }
-// }
-//
-// impl ToNotedown for Vec<ListItem> {
-//     fn to_notedown(&self) -> ASTNode {
-//         ASTKind::statements(self.iter().map(ToNotedown::to_notedown).collect(), None)
-//     }
-// }
-//
-// impl ToNotedown for ListItem {
-//     fn to_notedown(&self) -> ASTNode {
-//         match self {
-//             ListItem::Simple(s) => s.to_notedown(),
-//             ListItem::Paragraph(p) => ASTKind::paragraph(p.to_notedown_list(), None),
-//         }
-//     }
-// }

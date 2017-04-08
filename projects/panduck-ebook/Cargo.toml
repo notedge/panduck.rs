@@ -14,7 +14,7 @@ include = [
 
 
 [dependencies]
-notedown_ast = "0.12.7"
+notedown_ast = "0.12.9"
 
 [dev-dependencies]
 panduck-core = "0.1.0"

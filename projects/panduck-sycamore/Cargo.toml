@@ -9,7 +9,7 @@ license = "MPL-2.0"
 edition = "2018"
 
 [dependencies]
-notedown_ast = "0.12.7"
+notedown_ast = "0.12.9"
 
 
 [dependencies.sycamore]
@@ -17,4 +17,4 @@ version = "0.6.3"
 features = ["ssr"]
 
 [dev-dependencies]
-panduck-core = {version = "0.1", path = "../panduck-core"}
+panduck-core = "0.1.0"
