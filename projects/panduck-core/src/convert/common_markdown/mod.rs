@@ -1,10 +1,14 @@
+mod code;
+mod html;
+
 use crate::{ExtensionHandler, ExtensionRegistrar, Result, ToNotedown};
 use comrak::{
-    nodes::{AstNode, NodeValue},
+    arena_tree::Children,
+    nodes::{Ast, AstNode, NodeValue},
     parse_document, Arena, ComrakExtensionOptions, ComrakOptions, ComrakParseOptions,
 };
-use notedown_ast::{ASTKind, ASTNode};
-use std::{collections::BTreeSet, iter::FromIterator};
+use notedown_ast::{ASTKind, ASTNode, ASTNodes};
+use std::{cell::RefCell, collections::BTreeSet, iter::FromIterator};
 
 pub fn register_common_markdown(r: &mut ExtensionRegistrar) {
     let ext = vec!["markdown", "md"];
@@ -40,15 +44,9 @@ pub fn parse_common_markdown(input: &str) -> Result<ASTNode> {
 
 impl<'a> ToNotedown for &'a AstNode<'a> {
     fn into_notedown(self) -> ASTNode {
-        let node: &NodeValue = &self.data.borrow().value;
-        match &node {
-            NodeValue::Document => {
-                let mut children = vec![];
-                for node in self.children() {
-                    children.push(node.into_notedown())
-                }
-                ASTKind::statements(children, None)
-            }
+        let node: NodeValue = self.data.borrow().value.to_owned();
+        match node {
+            NodeValue::Document => ASTKind::statements(self.children().into_notedown_list(), None),
             NodeValue::FrontMatter(_) => {
                 unimplemented!()
             }
@@ -73,25 +71,13 @@ impl<'a> ToNotedown for &'a AstNode<'a> {
             NodeValue::DescriptionDetails => {
                 unimplemented!()
             }
-            NodeValue::CodeBlock(_) => {
-                unimplemented!()
-            }
-            NodeValue::HtmlBlock(_) => {
-                unimplemented!()
-            }
-            NodeValue::Paragraph => {
-                let mut children = vec![];
-                for node in self.children() {
-                    children.push(node.into_notedown())
-                }
-                ASTKind::paragraph(children, None)
-            }
+            NodeValue::CodeBlock(v) => v.into_notedown(),
+            NodeValue::HtmlBlock(v) => v.into_notedown(),
+            NodeValue::Paragraph => ASTKind::paragraph(self.children().into_notedown_list(), None),
             NodeValue::Heading(_) => {
                 unimplemented!()
             }
-            NodeValue::ThematicBreak => {
-                unimplemented!()
-            }
+            NodeValue::ThematicBreak => ASTKind::hr(None),
             NodeValue::FootnoteDefinition(_) => {
                 unimplemented!()
             }
@@ -116,24 +102,14 @@ impl<'a> ToNotedown for &'a AstNode<'a> {
             NodeValue::SoftBreak => {
                 unimplemented!()
             }
-            NodeValue::LineBreak => {
-                unimplemented!()
-            }
-            NodeValue::Code(_) => {
-                unimplemented!()
-            }
+            NodeValue::LineBreak => ASTKind::br(None),
+            NodeValue::Code(v) => v.into_notedown(),
             NodeValue::HtmlInline(_) => {
                 unimplemented!()
             }
-            NodeValue::Emph => {
-                unimplemented!()
-            }
-            NodeValue::Strong => {
-                unimplemented!()
-            }
-            NodeValue::Strikethrough => {
-                unimplemented!()
-            }
+            NodeValue::Emph => ASTKind::emphasis(self.children().into_notedown_list(), None),
+            NodeValue::Strong => ASTKind::strong(self.children().into_notedown_list(), None),
+            NodeValue::Strikethrough => ASTKind::delete(self.children().into_notedown_list(), None),
             NodeValue::Superscript => {
                 unimplemented!()
             }
@@ -147,6 +123,20 @@ impl<'a> ToNotedown for &'a AstNode<'a> {
                 unimplemented!()
             }
         }
+    }
+}
+
+impl ToNotedown for Children<'_, RefCell<Ast>> {
+    fn into_notedown(self) -> ASTNode {
+        todo!()
+    }
+
+    fn into_notedown_list(self) -> ASTNodes {
+        let mut children = vec![];
+        for node in self {
+            children.push(node.into_notedown())
+        }
+        return children;
     }
 }
 
