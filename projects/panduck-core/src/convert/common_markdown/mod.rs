@@ -35,7 +35,7 @@ pub fn parse_common_markdown(input: &str) -> Result<ASTNode> {
             header_ids: None,
             footnotes: true,
             description_lists: true,
-            front_matter_delimiter: None,
+            front_matter_delimiter: Some(String::from("---")),
         },
         parse: ComrakParseOptions { smart: true, default_info_string: None },
         render: Default::default(),
@@ -49,8 +49,9 @@ impl<'a> ToNotedown for &'a AstNode<'a> {
         let node: NodeValue = self.data.borrow().value.to_owned();
         match node {
             NodeValue::Document => ASTKind::statements(self.children().into_notedown_list(), None),
-            NodeValue::FrontMatter(_) => {
-                unimplemented!()
+            NodeValue::FrontMatter(v) => {
+                let _front = String::from_utf8_lossy(&v);
+                todo!()
             }
             NodeValue::BlockQuote => {
                 ASTNode::default()
@@ -62,9 +63,7 @@ impl<'a> ToNotedown for &'a AstNode<'a> {
             NodeValue::DescriptionList => {
                 ASTNode::default()
             }
-            NodeValue::DescriptionItem(_) => {
-                unimplemented!()
-            }
+            NodeValue::DescriptionItem(v) => v.into_notedown(),
             NodeValue::DescriptionTerm => {
                 unimplemented!()
             }
@@ -86,12 +85,7 @@ impl<'a> ToNotedown for &'a AstNode<'a> {
             NodeValue::TableCell => {
                 unimplemented!()
             }
-            NodeValue::Text(v) => match String::from_utf8(v.to_owned()) {
-                Ok(o) => ASTKind::text(o, None),
-                Err(e) => {
-                    panic!("{}", e)
-                }
-            },
+            NodeValue::Text(v) => ASTKind::text(String::from_utf8_lossy(&v), None),
             NodeValue::TaskItem(_) => {
                 unimplemented!()
             }
@@ -100,8 +94,10 @@ impl<'a> ToNotedown for &'a AstNode<'a> {
             }
             NodeValue::LineBreak => ASTKind::hard_break(None),
             NodeValue::Code(v) => v.into_notedown(),
-            NodeValue::HtmlInline(_) => {
-                unimplemented!()
+            NodeValue::HtmlInline(v) => {
+                let _html = String::from_utf8_lossy(&v);
+                todo!()
+
             }
             NodeValue::Emph => ASTKind::emphasis(self.children().into_notedown_list(), None),
             NodeValue::Strong => ASTKind::strong(self.children().into_notedown_list(), None),
@@ -111,16 +107,31 @@ impl<'a> ToNotedown for &'a AstNode<'a> {
             }
             NodeValue::Link(v) => {
                 let url = String::from_utf8_lossy(&v.url);
-                let text = String::from_utf8_lossy(&v.title);
-                ASTKind::hyper_link_text(url, text,None)
-            },
+                match v.title.is_empty() {
+                    true => {
+                        ASTKind::hyper_link(url, None)
+                    }
+                    false => {
+                        let text = String::from_utf8_lossy(&v.title);
+                        ASTKind::hyper_link_text(url, text,None)
+                    }
+                }
+            }
             NodeValue::Image(v) => {
                 let url = String::from_utf8_lossy(&v.url);
-                let alt = String::from_utf8_lossy(&v.title);
-                ASTKind::image_link_alt(url, alt,None)
-            },
-            NodeValue::FootnoteReference(_) => {
-                unimplemented!()
+                match v.title.is_empty() {
+                    true => {
+                        ASTKind::image_link(url, None)
+                    }
+                    false => {
+                        let alt = String::from_utf8_lossy(&v.title);
+                        ASTKind::image_link_alt(url, alt,None)
+                    }
+                }
+            }
+            NodeValue::FootnoteReference(v) => {
+                let _foot = String::from_utf8_lossy(&v);
+                todo!()
             }
         }
     }
