@@ -2,7 +2,6 @@ mod code;
 mod html;
 mod list;
 mod table;
-mod link;
 
 use crate::{ExtensionHandler, ExtensionRegistrar, Result, ToNotedown};
 use comrak::{
@@ -110,8 +109,16 @@ impl<'a> ToNotedown for &'a AstNode<'a> {
             NodeValue::Superscript => {
                 unimplemented!()
             }
-            NodeValue::Link(v) => v.into_notedown(),
-            NodeValue::Image(v) => v.into_notedown(),
+            NodeValue::Link(v) => {
+                let url = String::from_utf8_lossy(&v.url);
+                let text = String::from_utf8_lossy(&v.title);
+                ASTKind::hyper_link_text(url, text,None)
+            },
+            NodeValue::Image(v) => {
+                let url = String::from_utf8_lossy(&v.url);
+                let alt = String::from_utf8_lossy(&v.title);
+                ASTKind::image_link_alt(url, alt,None)
+            },
             NodeValue::FootnoteReference(_) => {
                 unimplemented!()
             }

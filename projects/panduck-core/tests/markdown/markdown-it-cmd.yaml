@@ -659,8 +659,18 @@ ASTNode {
                 kind: Paragraph(
                     [
                         ASTNode {
-                            kind: Value(
-                                Null,
+                            kind: LinkNode(
+                                Normal(
+                                    HyperLink {
+                                        is_bare: false,
+                                        src: "http://dev.nodeca.com",
+                                        text: Some(
+                                            "",
+                                        ),
+                                        download: None,
+                                        target: None,
+                                    },
+                                ),
                             ),
                         },
                     ],
@@ -670,8 +680,18 @@ ASTNode {
                 kind: Paragraph(
                     [
                         ASTNode {
-                            kind: Value(
-                                Null,
+                            kind: LinkNode(
+                                Normal(
+                                    HyperLink {
+                                        is_bare: false,
+                                        src: "http://nodeca.github.io/pica/demo/",
+                                        text: Some(
+                                            "title text!",
+                                        ),
+                                        download: None,
+                                        target: None,
+                                    },
+                                ),
                             ),
                         },
                     ],
@@ -688,8 +708,18 @@ ASTNode {
                             ),
                         },
                         ASTNode {
-                            kind: Value(
-                                Null,
+                            kind: LinkNode(
+                                Normal(
+                                    HyperLink {
+                                        is_bare: false,
+                                        src: "https://github.com/nodeca/pica",
+                                        text: Some(
+                                            "",
+                                        ),
+                                        download: None,
+                                        target: None,
+                                    },
+                                ),
                             ),
                         },
                         ASTNode {
@@ -722,8 +752,17 @@ ASTNode {
                 kind: Paragraph(
                     [
                         ASTNode {
-                            kind: Value(
-                                Null,
+                            kind: LinkNode(
+                                Image(
+                                    ImageLink {
+                                        src: "https://octodex.github.com/images/minion.png",
+                                        alt: Some(
+                                            "",
+                                        ),
+                                        size: None,
+                                        layout: None,
+                                    },
+                                ),
                             ),
                         },
                         ASTNode {
@@ -732,8 +771,17 @@ ASTNode {
                             ),
                         },
                         ASTNode {
-                            kind: Value(
-                                Null,
+                            kind: LinkNode(
+                                Image(
+                                    ImageLink {
+                                        src: "https://octodex.github.com/images/stormtroopocat.jpg",
+                                        alt: Some(
+                                            "The Stormtroopocat",
+                                        ),
+                                        size: None,
+                                        layout: None,
+                                    },
+                                ),
                             ),
                         },
                     ],
@@ -756,8 +804,17 @@ ASTNode {
                 kind: Paragraph(
                     [
                         ASTNode {
-                            kind: Value(
-                                Null,
+                            kind: LinkNode(
+                                Image(
+                                    ImageLink {
+                                        src: "https://octodex.github.com/images/dojocat.jpg",
+                                        alt: Some(
+                                            "The Dojocat",
+                                        ),
+                                        size: None,
+                                        layout: None,
+                                    },
+                                ),
                             ),
                         },
                     ],
@@ -829,8 +886,18 @@ ASTNode {
                             ),
                         },
                         ASTNode {
-                            kind: Value(
-                                Null,
+                            kind: LinkNode(
+                                Normal(
+                                    HyperLink {
+                                        is_bare: false,
+                                        src: "https://www.npmjs.org/browse/keyword/markdown-it-plugin",
+                                        text: Some(
+                                            "",
+                                        ),
+                                        download: None,
+                                        target: None,
+                                    },
+                                ),
                             ),
                         },
                         ASTNode {
@@ -849,8 +916,18 @@ ASTNode {
                         level: 3,
                         children: [
                             ASTNode {
-                                kind: Value(
-                                    Null,
+                                kind: LinkNode(
+                                    Normal(
+                                        HyperLink {
+                                            is_bare: false,
+                                            src: "https://github.com/markdown-it/markdown-it-emoji",
+                                            text: Some(
+                                                "",
+                                            ),
+                                            download: None,
+                                            target: None,
+                                        },
+                                    ),
                                 ),
                             },
                         ],
@@ -873,8 +950,18 @@ ASTNode {
                             ),
                         },
                         ASTNode {
-                            kind: Value(
-                                Null,
+                            kind: LinkNode(
+                                Normal(
+                                    HyperLink {
+                                        is_bare: false,
+                                        src: "https://github.com/markdown-it/markdown-it-emoji#change-output",
+                                        text: Some(
+                                            "",
+                                        ),
+                                        download: None,
+                                        target: None,
+                                    },
+                                ),
                             ),
                         },
                         ASTNode {
@@ -893,8 +980,18 @@ ASTNode {
                         level: 3,
                         children: [
                             ASTNode {
-                                kind: Value(
-                                    Null,
+                                kind: LinkNode(
+                                    Normal(
+                                        HyperLink {
+                                            is_bare: false,
+                                            src: "https://github.com/markdown-it/markdown-it-sub",
+                                            text: Some(
+                                                "",
+                                            ),
+                                            download: None,
+                                            target: None,
+                                        },
+                                    ),
                                 ),
                             },
                             ASTNode {
@@ -905,8 +1002,18 @@ ASTNode {
                                 ),
                             },
                             ASTNode {
-                                kind: Value(
-                                    Null,
+                                kind: LinkNode(
+                                    Normal(
+                                        HyperLink {
+                                            is_bare: false,
+                                            src: "https://github.com/markdown-it/markdown-it-sup",
+                                            text: Some(
+                                                "",
+                                            ),
+                                            download: None,
+                                            target: None,
+                                        },
+                                    ),
                                 ),
                             },
                         ],
@@ -924,8 +1031,18 @@ ASTNode {
                         level: 3,
                         children: [
                             ASTNode {
-                                kind: Value(
-                                    Null,
+                                kind: LinkNode(
+                                    Normal(
+                                        HyperLink {
+                                            is_bare: false,
+                                            src: "https://github.com/markdown-it/markdown-it-ins",
+                                            text: Some(
+                                                "",
+                                            ),
+                                            download: None,
+                                            target: None,
+                                        },
+                                    ),
                                 ),
                             },
                         ],
@@ -951,8 +1068,18 @@ ASTNode {
                         level: 3,
                         children: [
                             ASTNode {
-                                kind: Value(
-                                    Null,
+                                kind: LinkNode(
+                                    Normal(
+                                        HyperLink {
+                                            is_bare: false,
+                                            src: "https://github.com/markdown-it/markdown-it-mark",
+                                            text: Some(
+                                                "",
+                                            ),
+                                            download: None,
+                                            target: None,
+                                        },
+                                    ),
                                 ),
                             },
                         ],
@@ -978,8 +1105,18 @@ ASTNode {
                         level: 3,
                         children: [
                             ASTNode {
-                                kind: Value(
-                                    Null,
+                                kind: LinkNode(
+                                    Normal(
+                                        HyperLink {
+                                            is_bare: false,
+                                            src: "https://github.com/markdown-it/markdown-it-footnote",
+                                            text: Some(
+                                                "",
+                                            ),
+                                            download: None,
+                                            target: None,
+                                        },
+                                    ),
                                 ),
                             },
                         ],
@@ -1044,8 +1181,18 @@ ASTNode {
                         level: 3,
                         children: [
                             ASTNode {
-                                kind: Value(
-                                    Null,
+                                kind: LinkNode(
+                                    Normal(
+                                        HyperLink {
+                                            is_bare: false,
+                                            src: "https://github.com/markdown-it/markdown-it-deflist",
+                                            text: Some(
+                                                "",
+                                            ),
+                                            download: None,
+                                            target: None,
+                                        },
+                                    ),
                                 ),
                             },
                         ],
@@ -1147,8 +1294,18 @@ ASTNode {
                         level: 3,
                         children: [
                             ASTNode {
-                                kind: Value(
-                                    Null,
+                                kind: LinkNode(
+                                    Normal(
+                                        HyperLink {
+                                            is_bare: false,
+                                            src: "https://github.com/markdown-it/markdown-it-abbr",
+                                            text: Some(
+                                                "",
+                                            ),
+                                            download: None,
+                                            target: None,
+                                        },
+                                    ),
                                 ),
                             },
                         ],
@@ -1200,8 +1357,18 @@ ASTNode {
                         level: 3,
                         children: [
                             ASTNode {
-                                kind: Value(
-                                    Null,
+                                kind: LinkNode(
+                                    Normal(
+                                        HyperLink {
+                                            is_bare: false,
+                                            src: "https://github.com/markdown-it/markdown-it-container",
+                                            text: Some(
+                                                "",
+                                            ),
+                                            download: None,
+                                            target: None,
+                                        },
+                                    ),
                                 ),
                             },
                         ],
