@@ -10,7 +10,7 @@ edition = "2021"
 
 [dependencies]
 serde = "1.0.130"
-notedown_ast = "0.13.0"
+notedown_ast = "0.13.1"
 yggdrasil-shared = "0.1.5"
 
 # notedown
@@ -25,12 +25,14 @@ comrak = { version = "0.12.1", optional = true }
 html_parser = { version = "0.6.2", optional = true }
 # rtf
 rtf-grimoire = { version = "0.1.1", optional = true }
+# rst
+rst_parser = { version = "0.4.0", optional = true }
+document_tree = { version = "*", optional = true }
 # wiki
 parse_wiki_text = { version = "0.1.5", optional = true }
 # office
 docx-rs = { version = "0.3.1", optional = true }
 calamine = { version = "0.18.0", optional = true }
-
 
 [dev-dependencies]
 
@@ -41,6 +43,7 @@ markdown = ["comrak", "pandoc_ast"]
 html = ["html_parser"]
 jupyter = ["serde_json", "markdown"]
 rtf = ["rtf-grimoire"]
+rst = ["rst_parser", "document_tree"]
 wiki = ["parse_wiki_text"]
 
 office = ["docx", "excel"]

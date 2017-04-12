@@ -9,7 +9,7 @@ license = "MPL-2.0"
 edition = "2018"
 
 [dependencies]
-notedown_ast = "0.13.0"
+notedown_ast = "0.13.1"
 # zola = "0.13"
 
 [dev-dependencies]

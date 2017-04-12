@@ -31,6 +31,9 @@ pub use jupyter::register_jupyter;
 #[cfg(feature = "notedown")]
 pub use notedown::register_notedown;
 
+#[cfg(feature = "rst")]
+mod rst;
+
 use notedown_ast::{ASTNode, ASTNodes};
 
 pub trait ToNotedown
