@@ -1,5 +1,8 @@
 use crate::ToNotedown;
-use document_tree::{element_categories::StructuralSubElement, Document, HasChildren, Inline};
+use document_tree::{
+    element_categories::{StructuralSubElement, SubStructure, TextOrInlineElement},
+    Decoration, Docinfo, Document, HasChildren, Inline, Math, Subtitle, Title,
+};
 use notedown_ast::{ASTKind, ASTNode, ASTNodes};
 
 impl ToNotedown for Document {
@@ -13,6 +16,134 @@ impl ToNotedown for Document {
 }
 
 impl ToNotedown for StructuralSubElement {
+    fn into_notedown(self) -> ASTNode {
+        match self {
+            StructuralSubElement::Title(v) => {
+                unimplemented!()
+            }
+            StructuralSubElement::Subtitle(v) => {
+                unimplemented!()
+            }
+            StructuralSubElement::Decoration(v) => {
+                unimplemented!()
+            }
+            StructuralSubElement::Docinfo(v) => {
+                unimplemented!()
+            }
+            StructuralSubElement::SubStructure(v) => {
+                unimplemented!()
+            }
+        }
+    }
+}
+
+impl ToNotedown for Title {
+    fn into_notedown(self) -> ASTNode {
+        let _out = self.children();
+        todo!()
+    }
+}
+impl ToNotedown for Subtitle {
+    fn into_notedown(self) -> ASTNode {
+        let _out = self.children();
+        todo!()
+    }
+}
+impl ToNotedown for Decoration {
+    fn into_notedown(self) -> ASTNode {
+        todo!()
+    }
+}
+impl ToNotedown for Docinfo {
+    fn into_notedown(self) -> ASTNode {
+        todo!()
+    }
+}
+
+impl ToNotedown for SubStructure {
+    fn into_notedown(self) -> ASTNode {
+        todo!()
+    }
+}
+
+impl ToNotedown for Vec<TextOrInlineElement> {
+    fn into_notedown(self) -> ASTNode {
+        todo!()
+    }
+
+    fn into_notedown_list(self) -> ASTNodes {
+        todo!()
+    }
+}
+
+impl ToNotedown for TextOrInlineElement {
+    fn into_notedown(self) -> ASTNode {
+        match self {
+            TextOrInlineElement::String(_) => {
+                unimplemented!()
+            }
+            TextOrInlineElement::Emphasis(_) => {
+                unimplemented!()
+            }
+            TextOrInlineElement::Strong(_) => {
+                unimplemented!()
+            }
+            TextOrInlineElement::Literal(_) => {
+                unimplemented!()
+            }
+            TextOrInlineElement::Reference(_) => {
+                unimplemented!()
+            }
+            TextOrInlineElement::FootnoteReference(_) => {
+                unimplemented!()
+            }
+            TextOrInlineElement::CitationReference(_) => {
+                unimplemented!()
+            }
+            TextOrInlineElement::SubstitutionReference(_) => {
+                unimplemented!()
+            }
+            TextOrInlineElement::TitleReference(_) => {
+                unimplemented!()
+            }
+            TextOrInlineElement::Abbreviation(_) => {
+                unimplemented!()
+            }
+            TextOrInlineElement::Acronym(_) => {
+                unimplemented!()
+            }
+            TextOrInlineElement::Superscript(_) => {
+                unimplemented!()
+            }
+            TextOrInlineElement::Subscript(_) => {
+                unimplemented!()
+            }
+            TextOrInlineElement::Inline(_) => {
+                unimplemented!()
+            }
+            TextOrInlineElement::Problematic(_) => {
+                unimplemented!()
+            }
+            TextOrInlineElement::Generated(_) => {
+                unimplemented!()
+            }
+            TextOrInlineElement::Math(m) => {
+                unimplemented!()
+            }
+            TextOrInlineElement::TargetInline(_) => {
+                unimplemented!()
+            }
+            TextOrInlineElement::RawInline(_) => {
+                unimplemented!()
+            }
+            TextOrInlineElement::ImageInline(_) => {
+                unimplemented!()
+            }
+        }
+    }
+}
+
+impl ToNotedown for Math {
     fn into_notedown(self) -> ASTNode {
         todo!()
     }
