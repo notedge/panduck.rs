@@ -18,37 +18,15 @@ impl ToNotedown for Document {
 impl ToNotedown for StructuralSubElement {
     fn into_notedown(self) -> ASTNode {
         match self {
-            StructuralSubElement::Title(v) => {
-                unimplemented!()
-            }
-            StructuralSubElement::Subtitle(v) => {
-                unimplemented!()
-            }
-            StructuralSubElement::Decoration(v) => {
-                unimplemented!()
-            }
-            StructuralSubElement::Docinfo(v) => {
-                unimplemented!()
-            }
-            StructuralSubElement::SubStructure(v) => {
-                unimplemented!()
-            }
+            Self::Title(v) => ASTKind::header(v.children().into_notedown_list(), 1, None),
+            Self::Subtitle(v) => ASTKind::header(v.children().into_notedown_list(), 2, None),
+            Self::Decoration(v) => v.into_notedown(),
+            Self::Docinfo(v) => v.into_notedown(),
+            Self::SubStructure(v) => v.into_notedown(),
         }
     }
 }
 
-impl ToNotedown for Title {
-    fn into_notedown(self) -> ASTNode {
-        let _out = self.children();
-        todo!()
-    }
-}
-impl ToNotedown for Subtitle {
-    fn into_notedown(self) -> ASTNode {
-        let _out = self.children();
-        todo!()
-    }
-}
 impl ToNotedown for Decoration {
     fn into_notedown(self) -> ASTNode {
         todo!()
@@ -82,12 +60,8 @@ impl ToNotedown for TextOrInlineElement {
             TextOrInlineElement::String(_) => {
                 unimplemented!()
             }
-            TextOrInlineElement::Emphasis(_) => {
-                unimplemented!()
-            }
-            TextOrInlineElement::Strong(_) => {
-                unimplemented!()
-            }
+            TextOrInlineElement::Emphasis(v) => ASTKind::emphasis(v.children().into_notedown_list(), None),
+            TextOrInlineElement::Strong(v) => ASTKind::strong(v.children().into_notedown_list(), None),
             TextOrInlineElement::Literal(_) => {
                 unimplemented!()
             }
@@ -118,18 +92,14 @@ impl ToNotedown for TextOrInlineElement {
             TextOrInlineElement::Subscript(_) => {
                 unimplemented!()
             }
-            TextOrInlineElement::Inline(_) => {
-                unimplemented!()
-            }
+            TextOrInlineElement::Inline(v) => v.into_notedown(),
             TextOrInlineElement::Problematic(_) => {
                 unimplemented!()
             }
             TextOrInlineElement::Generated(_) => {
                 unimplemented!()
             }
-            TextOrInlineElement::Math(m) => {
-                unimplemented!()
-            }
+            TextOrInlineElement::Math(v) => v.into_notedown(),
             TextOrInlineElement::TargetInline(_) => {
                 unimplemented!()
             }
@@ -145,6 +115,7 @@ impl ToNotedown for TextOrInlineElement {
 
 impl ToNotedown for Math {
     fn into_notedown(self) -> ASTNode {
+        let _t = self.children().join("");
         todo!()
     }
 }

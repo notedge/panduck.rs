@@ -1,6 +1,6 @@
 [package]
 name = "panduck-core"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Aster <192607617@qq.com>"]
 description = "Conversion tool by rust, inspired by pandoc"
 repository = "https://github.com/oovm/panduck"
@@ -10,7 +10,7 @@ edition = "2021"
 
 [dependencies]
 serde = "1.0.130"
-notedown_ast = "0.13.1"
+notedown_ast = "0.13.3"
 yggdrasil-shared = "0.1.5"
 
 # notedown
@@ -27,7 +27,7 @@ html_parser = { version = "0.6.2", optional = true }
 rtf-grimoire = { version = "0.1.1", optional = true }
 # rst
 rst_parser = { version = "0.4.0", optional = true }
-document_tree = { version = "*", optional = true }
+document_tree = { version = "0.4.0", optional = true }
 # wiki
 parse_wiki_text = { version = "0.1.5", optional = true }
 # office

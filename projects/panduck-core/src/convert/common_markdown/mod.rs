@@ -53,16 +53,12 @@ impl<'a> ToNotedown for &'a AstNode<'a> {
                 let _front = String::from_utf8_lossy(&v);
                 todo!()
             }
-            NodeValue::BlockQuote => {
-                ASTNode::default()
-            }
+            NodeValue::BlockQuote => ASTNode::default(),
             NodeValue::List(v) => v.into_notedown(),
             NodeValue::Item(_) => {
                 unimplemented!()
             }
-            NodeValue::DescriptionList => {
-                ASTNode::default()
-            }
+            NodeValue::DescriptionList => ASTNode::default(),
             NodeValue::DescriptionItem(v) => v.into_notedown(),
             NodeValue::DescriptionTerm => {
                 unimplemented!()
@@ -89,43 +85,34 @@ impl<'a> ToNotedown for &'a AstNode<'a> {
             NodeValue::TaskItem(_) => {
                 unimplemented!()
             }
-            NodeValue::SoftBreak => {
-                ASTKind::soft_break(None)
-            }
+            NodeValue::SoftBreak => ASTKind::soft_break(None),
             NodeValue::LineBreak => ASTKind::hard_break(None),
             NodeValue::Code(v) => v.into_notedown(),
             NodeValue::HtmlInline(v) => {
                 let _html = String::from_utf8_lossy(&v);
                 todo!()
-
             }
             NodeValue::Emph => ASTKind::emphasis(self.children().into_notedown_list(), None),
             NodeValue::Strong => ASTKind::strong(self.children().into_notedown_list(), None),
             NodeValue::Strikethrough => ASTKind::delete(self.children().into_notedown_list(), None),
-            NodeValue::Superscript => {
-                unimplemented!()
-            }
+            NodeValue::Superscript => ASTKind::superscript(self.children().into_notedown_list(), None),
             NodeValue::Link(v) => {
                 let url = String::from_utf8_lossy(&v.url);
                 match v.title.is_empty() {
-                    true => {
-                        ASTKind::hyper_link(url, None)
-                    }
+                    true => ASTKind::hyper_link(url, None),
                     false => {
                         let text = String::from_utf8_lossy(&v.title);
-                        ASTKind::hyper_link_text(url, text,None)
+                        ASTKind::hyper_link_text(url, text, None)
                     }
                 }
             }
             NodeValue::Image(v) => {
                 let url = String::from_utf8_lossy(&v.url);
                 match v.title.is_empty() {
-                    true => {
-                        ASTKind::image_link(url, None)
-                    }
+                    true => ASTKind::image_link(url, None),
                     false => {
                         let alt = String::from_utf8_lossy(&v.title);
-                        ASTKind::image_link_alt(url, alt,None)
+                        ASTKind::image_link_alt(url, alt, None)
                     }
                 }
             }
@@ -150,4 +137,3 @@ impl ToNotedown for Children<'_, RefCell<Ast>> {
         return children;
     }
 }
-

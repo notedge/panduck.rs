@@ -72,12 +72,8 @@ impl ToNotedown for Inline {
             Inline::Strikeout(_) => {
                 unimplemented!()
             }
-            Inline::Superscript(_) => {
-                unimplemented!()
-            }
-            Inline::Subscript(_) => {
-                unimplemented!()
-            }
+            Inline::Superscript(v) => ASTKind::superscript(v.into_notedown_list(), None),
+            Inline::Subscript(v) => ASTKind::subscript(v.into_notedown_list(), None),
             Inline::SmallCaps(_) => {
                 unimplemented!()
             }
@@ -92,12 +88,8 @@ impl ToNotedown for Inline {
             Inline::SoftBreak => ASTKind::soft_break(None),
             Inline::LineBreak => ASTKind::hard_break(None),
             Inline::Math(m, t) => match m {
-                MathType::DisplayMath => {
-                    unimplemented!()
-                }
-                MathType::InlineMath => {
-                    unimplemented!()
-                }
+                MathType::DisplayMath => ASTKind::math_display(t, None),
+                MathType::InlineMath => ASTKind::math_inline(t, None),
             },
             Inline::RawInline(_, _) => {
                 unimplemented!()

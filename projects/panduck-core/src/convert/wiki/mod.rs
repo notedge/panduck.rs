@@ -1,29 +1,7 @@
 use crate::ToNotedown;
-use notedown_ast::ASTNode;
+use notedown_ast::{ASTKind, ASTNode};
 use parse_wiki_text::{Configuration, Node};
-
-fn try_parse() {
-    let wiki_text = concat!("==Our values==\n", "*Correctness\n", "*Speed\n", "*Ergonomics");
-    let result = Configuration::default().parse(wiki_text);
-    assert!(result.warnings.is_empty());
-    for node in result.nodes {
-        if let Node::UnorderedList { items, .. } = node {
-            println!("Our values are:");
-            for item in items {
-                println!(
-                    "- {}",
-                    item.nodes
-                        .iter()
-                        .map(|node| match node {
-                            Node::Text { value, .. } => value,
-                            _ => "",
-                        })
-                        .collect::<String>()
-                );
-            }
-        }
-    }
-}
+use std::ops::Range;
 
 impl ToNotedown for Node {
     fn into_notedown(self) -> ASTNode {
@@ -97,9 +75,7 @@ impl ToNotedown for Node {
             Node::Template { .. } => {
                 unimplemented!()
             }
-            Node::Text { .. } => {
-                unimplemented!()
-            }
+            Node::Text { end, start, value } => ASTKind::text(value, Some(Range { start, end })),
             Node::UnorderedList { .. } => {
                 unimplemented!()
             }

@@ -9,14 +9,17 @@ Conversion tool by rust, inspired by [pandoc]().
 
 #### From (Text/Binary)
 
-- [x] Markdown
+- [x] Common Markdown
+- [x] Github Favored Markdown
+- [x] Pandoc Markdown (json)
 - [x] HTML
-- [ ] Jupyter(ipynb)
-- [ ] Wiki
+- [x] Jupyter (ipynb)
+- [x] Wiki
 - [ ] Org-mode
-- [ ] Rich Text Format(rtf)
-- [ ] Office Word(docx)
-- [ ] Office Excel(xls, xlsx, xlsm, xlsb, xla, xlam)
+- [ ] reStructuredText (rst)
+- [ ] Rich Text Format (rtf)
+- [ ] Office Word (docx)
+- [ ] Office Excel (xls, xlsx, xlsm, xlsb, xla, xlam)
 - [x] CSV/TSV
 - [ ] Open Document Spread Sheets(ods)
 - [ ] TeX
@@ -27,6 +30,9 @@ Conversion tool by rust, inspired by [pandoc]().
 - [x] HTML
 - [x] yew (+html_vdom)
 - [x] sycamore (+html_dom)
+- [ ] pdf
+- [ ] ebook
+- [ ] zola
 
 ### Highlights
 
@@ -37,9 +43,3 @@ Conversion tool by rust, inspired by [pandoc]().
 ## Developers
 
 
-
-- Why not use `feature`
-
-I used to use feature, but many formats are dependent on each other, and finally made a mess.
-
-This makes me confused, so I canceled the feature division.

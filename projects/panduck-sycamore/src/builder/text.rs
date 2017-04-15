@@ -15,6 +15,15 @@ where
             Self::Emoji(_) => {
                 todo!()
             }
+            TextNode::SoftNewline => {
+                unimplemented!()
+            }
+            TextNode::HardNewline => {
+                unimplemented!()
+            }
+            TextNode::CheckBox(_) => {
+                unimplemented!()
+            }
         }
     }
 }
@@ -40,14 +49,27 @@ where
     fn into_sycamore(self) -> G {
         match self {
             Self::Plain => GenericNode::element("span"),
-            Self::Italic => GenericNode::element("i"),
             Self::Emphasis => GenericNode::element("em"),
             Self::Underline => GenericNode::element("u"),
             Self::Undercover => GenericNode::element("u"),
             Self::Strong => GenericNode::element("strong"),
-            Self::Highlight => todo!(),
             Self::Delete => GenericNode::element("del"),
             Self::Insert => GenericNode::element("ins"),
+            StyleKind::ItalicBold => {
+                unimplemented!()
+            }
+            StyleKind::Marking => {
+                unimplemented!()
+            }
+            StyleKind::Color(_, _, _, _) => {
+                unimplemented!()
+            }
+            StyleKind::Subscript => {
+                unimplemented!()
+            }
+            StyleKind::Superscript => {
+                unimplemented!()
+            }
         }
     }
 }
