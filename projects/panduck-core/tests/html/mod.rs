@@ -22,11 +22,11 @@ fn nested() {
 #[test]
 fn md_fragment() {
     let ast = parse_html(include_str!("md_fragment.html"));
-    println!("{:#?}", ast.unwrap_or_default())
+    assert_eq!(format!("{:#?}", ast.unwrap()), include_str!("md_fragment.yaml"))
 }
 
 #[test]
 fn md_full() {
     let ast = parse_html(include_str!("md_full.html"));
-    println!("{:#?}", ast.unwrap_or_default())
+    assert_eq!(format!("{:#?}", ast.unwrap()), include_str!("md_full.yaml"))
 }

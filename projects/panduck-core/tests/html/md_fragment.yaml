@@ -2,8 +2,8 @@ ASTNode {
     kind: Statements(
         [
             ASTNode {
-                kind: Value(
-                    Null,
+                kind: Delimiter(
+                    HorizontalRule,
                 ),
             },
             ASTNode {
@@ -17,7 +17,7 @@ ASTNode {
                                         ASTNode {
                                             kind: TextSpan(
                                                 Normal(
-                                                    "Advertisement :)",
+                                                    "Advertisement 😃",
                                                 ),
                                             ),
                                         },
@@ -47,16 +47,8 @@ ASTNode {
                 ),
             },
             ASTNode {
-                kind: Paragraph(
-                    [
-                        ASTNode {
-                            kind: TextSpan(
-                                Normal(
-                                    "===",
-                                ),
-                            ),
-                        },
-                    ],
+                kind: Delimiter(
+                    HorizontalRule,
                 ),
             },
             ASTNode {
@@ -67,7 +59,7 @@ ASTNode {
                             ASTNode {
                                 kind: TextSpan(
                                     Normal(
-                                        "h1 Heading 8-)",
+                                        "h1 Heading 😎",
                                     ),
                                 ),
                             },
@@ -221,7 +213,7 @@ ASTNode {
                         ASTNode {
                             kind: TextSpan(
                                 Normal(
-                                    "(c) (C) (r) (R) (tm) (TM) (p) (P) +––",
+                                    "© © ® ® ™ ™ § § ±",
                                 ),
                             ),
                         },
@@ -234,7 +226,7 @@ ASTNode {
                         ASTNode {
                             kind: TextSpan(
                                 Normal(
-                                    "test.. test… test….. test?….. test!….",
+                                    "test… test… test… test?.. test!..",
                                 ),
                             ),
                         },
@@ -247,7 +239,7 @@ ASTNode {
                         ASTNode {
                             kind: TextSpan(
                                 Normal(
-                                    "!!!!!! ???? ,,  – —",
+                                    "!!! ??? , – —",
                                 ),
                             ),
                         },
@@ -506,22 +498,13 @@ ASTNode {
                         ASTNode {
                             kind: TextSpan(
                                 Normal(
-                                    "Inline ",
+                                    "Inline",
                                 ),
                             ),
                         },
                         ASTNode {
-                            kind: CodeNode(
-                                CodeNode {
-                                    lang: "text",
-                                    inline: true,
-                                    highlight: false,
-                                    code: "code",
-                                    show_file_name: None,
-                                    show_line_number: None,
-                                    highlight_lines: [],
-                                    hide_lines: [],
-                                },
+                            kind: Value(
+                                Null,
                             ),
                         },
                     ],
@@ -541,17 +524,8 @@ ASTNode {
                 ),
             },
             ASTNode {
-                kind: CodeNode(
-                    CodeNode {
-                        lang: "",
-                        inline: false,
-                        highlight: true,
-                        code: "// Some comments\nline 1 of code\nline 2 of code\nline 3 of code\n",
-                        show_file_name: None,
-                        show_line_number: None,
-                        highlight_lines: [],
-                        hide_lines: [],
-                    },
+                kind: Value(
+                    Null,
                 ),
             },
             ASTNode {
@@ -568,17 +542,8 @@ ASTNode {
                 ),
             },
             ASTNode {
-                kind: CodeNode(
-                    CodeNode {
-                        lang: "",
-                        inline: false,
-                        highlight: true,
-                        code: "Sample text here...\n",
-                        show_file_name: None,
-                        show_line_number: None,
-                        highlight_lines: [],
-                        hide_lines: [],
-                    },
+                kind: Value(
+                    Null,
                 ),
             },
             ASTNode {
@@ -595,17 +560,8 @@ ASTNode {
                 ),
             },
             ASTNode {
-                kind: CodeNode(
-                    CodeNode {
-                        lang: "js",
-                        inline: false,
-                        highlight: true,
-                        code: "var foo = function (bar) {\n  return bar++;\n};\n\nconsole.log(foo(5));\n",
-                        show_file_name: None,
-                        show_line_number: None,
-                        highlight_lines: [],
-                        hide_lines: [],
-                    },
+                kind: Value(
+                    Null,
                 ),
             },
             ASTNode {
@@ -667,11 +623,8 @@ ASTNode {
                 kind: Paragraph(
                     [
                         ASTNode {
-                            kind: LinkNode(
-                                HyperLink {
-                                    src: "http://dev.nodeca.com",
-                                    is_bare: false,
-                                },
+                            kind: Value(
+                                Null,
                             ),
                         },
                     ],
@@ -681,12 +634,8 @@ ASTNode {
                 kind: Paragraph(
                     [
                         ASTNode {
-                            kind: LinkNode(
-                                HyperLink {
-                                    src: "http://nodeca.github.io/pica/demo/",
-                                    is_bare: false,
-                                    text: "title text!",
-                                },
+                            kind: Value(
+                                Null,
                             ),
                         },
                     ],
@@ -698,22 +647,19 @@ ASTNode {
                         ASTNode {
                             kind: TextSpan(
                                 Normal(
-                                    "Autoconverted link ",
+                                    "Autoconverted link",
                                 ),
                             ),
                         },
                         ASTNode {
-                            kind: LinkNode(
-                                HyperLink {
-                                    src: "https://github.com/nodeca/pica",
-                                    is_bare: false,
-                                },
+                            kind: Value(
+                                Null,
                             ),
                         },
                         ASTNode {
                             kind: TextSpan(
                                 Normal(
-                                    " (enable linkify to see)",
+                                    "(enable linkify to\n    see)",
                                 ),
                             ),
                         },
@@ -740,23 +686,13 @@ ASTNode {
                 kind: Paragraph(
                     [
                         ASTNode {
-                            kind: LinkNode(
-                                ImageLink {
-                                    src: "https://octodex.github.com/images/minion.png",
-                                },
+                            kind: Value(
+                                Null,
                             ),
                         },
                         ASTNode {
-                            kind: TextSpan(
-                                SoftNewline,
-                            ),
-                        },
-                        ASTNode {
-                            kind: LinkNode(
-                                ImageLink {
-                                    src: "https://octodex.github.com/images/stormtroopocat.jpg",
-                                    alt: "The Stormtroopocat",
-                                },
+                            kind: Value(
+                                Null,
                             ),
                         },
                     ],
@@ -779,11 +715,8 @@ ASTNode {
                 kind: Paragraph(
                     [
                         ASTNode {
-                            kind: LinkNode(
-                                ImageLink {
-                                    src: "https://octodex.github.com/images/dojocat.jpg",
-                                    alt: "The Dojocat",
-                                },
+                            kind: Value(
+                                Null,
                             ),
                         },
                     ],
@@ -824,42 +757,275 @@ ASTNode {
                         ASTNode {
                             kind: TextSpan(
                                 Normal(
-                                    "The killer feature of ",
+                                    "The killer feature of",
                                 ),
                             ),
                         },
                         ASTNode {
-                            kind: CodeNode(
-                                CodeNode {
-                                    lang: "text",
-                                    inline: true,
-                                    highlight: false,
-                                    code: "markdown-it",
-                                    show_file_name: None,
-                                    show_line_number: None,
-                                    highlight_lines: [],
-                                    hide_lines: [],
-                                },
+                            kind: Value(
+                                Null,
                             ),
                         },
                         ASTNode {
                             kind: TextSpan(
                                 Normal(
-                                    " is very effective support of",
+                                    "is very effective support of",
                                 ),
                             ),
                         },
                         ASTNode {
-                            kind: TextSpan(
-                                SoftNewline,
+                            kind: Value(
+                                Null,
                             ),
                         },
                         ASTNode {
-                            kind: LinkNode(
-                                HyperLink {
-                                    src: "https://www.npmjs.org/browse/keyword/markdown-it-plugin",
-                                    is_bare: false,
+                            kind: TextSpan(
+                                Normal(
+                                    ".\n",
+                                ),
+                            ),
+                        },
+                    ],
+                ),
+            },
+            ASTNode {
+                kind: Header(
+                    Header {
+                        level: 3,
+                        children: [
+                            ASTNode {
+                                kind: Value(
+                                    Null,
+                                ),
+                            },
+                        ],
+                    },
+                ),
+            },
+            ASTNode {
+                kind: Value(
+                    Null,
+                ),
+            },
+            ASTNode {
+                kind: Paragraph(
+                    [
+                        ASTNode {
+                            kind: TextSpan(
+                                Normal(
+                                    "see",
+                                ),
+                            ),
+                        },
+                        ASTNode {
+                            kind: Value(
+                                Null,
+                            ),
+                        },
+                        ASTNode {
+                            kind: TextSpan(
+                                Normal(
+                                    "with twemoji.",
+                                ),
+                            ),
+                        },
+                    ],
+                ),
+            },
+            ASTNode {
+                kind: Header(
+                    Header {
+                        level: 3,
+                        children: [
+                            ASTNode {
+                                kind: Value(
+                                    Null,
+                                ),
+                            },
+                            ASTNode {
+                                kind: TextSpan(
+                                    Normal(
+                                        "/ ",
+                                    ),
+                                ),
+                            },
+                            ASTNode {
+                                kind: Value(
+                                    Null,
+                                ),
+                            },
+                        ],
+                    },
+                ),
+            },
+            ASTNode {
+                kind: Value(
+                    Null,
+                ),
+            },
+            ASTNode {
+                kind: Header(
+                    Header {
+                        level: 3,
+                        children: [
+                            ASTNode {
+                                kind: Value(
+                                    Null,
+                                ),
+                            },
+                        ],
+                    },
+                ),
+            },
+            ASTNode {
+                kind: Paragraph(
+                    [
+                        ASTNode {
+                            kind: StyledSpan(
+                                StyleNode {
+                                    kind: Insert,
+                                    children: [
+                                        ASTNode {
+                                            kind: TextSpan(
+                                                Normal(
+                                                    "Inserted text",
+                                                ),
+                                            ),
+                                        },
+                                    ],
                                 },
+                            ),
+                        },
+                    ],
+                ),
+            },
+            ASTNode {
+                kind: Header(
+                    Header {
+                        level: 3,
+                        children: [
+                            ASTNode {
+                                kind: Value(
+                                    Null,
+                                ),
+                            },
+                        ],
+                    },
+                ),
+            },
+            ASTNode {
+                kind: Paragraph(
+                    [
+                        ASTNode {
+                            kind: Value(
+                                Null,
+                            ),
+                        },
+                    ],
+                ),
+            },
+            ASTNode {
+                kind: Header(
+                    Header {
+                        level: 3,
+                        children: [
+                            ASTNode {
+                                kind: Value(
+                                    Null,
+                                ),
+                            },
+                        ],
+                    },
+                ),
+            },
+            ASTNode {
+                kind: Paragraph(
+                    [
+                        ASTNode {
+                            kind: TextSpan(
+                                Normal(
+                                    "Footnote 1 link",
+                                ),
+                            ),
+                        },
+                        ASTNode {
+                            kind: Value(
+                                Null,
+                            ),
+                        },
+                        ASTNode {
+                            kind: TextSpan(
+                                Normal(
+                                    ".",
+                                ),
+                            ),
+                        },
+                    ],
+                ),
+            },
+            ASTNode {
+                kind: Paragraph(
+                    [
+                        ASTNode {
+                            kind: TextSpan(
+                                Normal(
+                                    "Footnote 2 link",
+                                ),
+                            ),
+                        },
+                        ASTNode {
+                            kind: Value(
+                                Null,
+                            ),
+                        },
+                        ASTNode {
+                            kind: TextSpan(
+                                Normal(
+                                    ".",
+                                ),
+                            ),
+                        },
+                    ],
+                ),
+            },
+            ASTNode {
+                kind: Paragraph(
+                    [
+                        ASTNode {
+                            kind: TextSpan(
+                                Normal(
+                                    "Inline footnote",
+                                ),
+                            ),
+                        },
+                        ASTNode {
+                            kind: Value(
+                                Null,
+                            ),
+                        },
+                        ASTNode {
+                            kind: TextSpan(
+                                Normal(
+                                    "definition.",
+                                ),
+                            ),
+                        },
+                    ],
+                ),
+            },
+            ASTNode {
+                kind: Paragraph(
+                    [
+                        ASTNode {
+                            kind: TextSpan(
+                                Normal(
+                                    "Duplicated footnote reference",
+                                ),
+                            ),
+                        },
+                        ASTNode {
+                            kind: Value(
+                                Null,
                             ),
                         },
                         ASTNode {
@@ -878,227 +1044,8 @@ ASTNode {
                         level: 3,
                         children: [
                             ASTNode {
-                                kind: LinkNode(
-                                    HyperLink {
-                                        src: "https://github.com/markdown-it/markdown-it-emoji",
-                                        is_bare: false,
-                                    },
-                                ),
-                            },
-                        ],
-                    },
-                ),
-            },
-            ASTNode {
-                kind: Value(
-                    Null,
-                ),
-            },
-            ASTNode {
-                kind: Paragraph(
-                    [
-                        ASTNode {
-                            kind: TextSpan(
-                                Normal(
-                                    "see ",
-                                ),
-                            ),
-                        },
-                        ASTNode {
-                            kind: LinkNode(
-                                HyperLink {
-                                    src: "https://github.com/markdown-it/markdown-it-emoji#change-output",
-                                    is_bare: false,
-                                },
-                            ),
-                        },
-                        ASTNode {
-                            kind: TextSpan(
-                                Normal(
-                                    " with twemoji.",
-                                ),
-                            ),
-                        },
-                    ],
-                ),
-            },
-            ASTNode {
-                kind: Header(
-                    Header {
-                        level: 3,
-                        children: [
-                            ASTNode {
-                                kind: LinkNode(
-                                    HyperLink {
-                                        src: "https://github.com/markdown-it/markdown-it-sub",
-                                        is_bare: false,
-                                    },
-                                ),
-                            },
-                            ASTNode {
-                                kind: TextSpan(
-                                    Normal(
-                                        " / ",
-                                    ),
-                                ),
-                            },
-                            ASTNode {
-                                kind: LinkNode(
-                                    HyperLink {
-                                        src: "https://github.com/markdown-it/markdown-it-sup",
-                                        is_bare: false,
-                                    },
-                                ),
-                            },
-                        ],
-                    },
-                ),
-            },
-            ASTNode {
-                kind: Value(
-                    Null,
-                ),
-            },
-            ASTNode {
-                kind: Header(
-                    Header {
-                        level: 3,
-                        children: [
-                            ASTNode {
-                                kind: LinkNode(
-                                    HyperLink {
-                                        src: "https://github.com/markdown-it/markdown-it-ins",
-                                        is_bare: false,
-                                    },
-                                ),
-                            },
-                        ],
-                    },
-                ),
-            },
-            ASTNode {
-                kind: Paragraph(
-                    [
-                        ASTNode {
-                            kind: TextSpan(
-                                Normal(
-                                    "++Inserted text++",
-                                ),
-                            ),
-                        },
-                    ],
-                ),
-            },
-            ASTNode {
-                kind: Header(
-                    Header {
-                        level: 3,
-                        children: [
-                            ASTNode {
-                                kind: LinkNode(
-                                    HyperLink {
-                                        src: "https://github.com/markdown-it/markdown-it-mark",
-                                        is_bare: false,
-                                    },
-                                ),
-                            },
-                        ],
-                    },
-                ),
-            },
-            ASTNode {
-                kind: Paragraph(
-                    [
-                        ASTNode {
-                            kind: TextSpan(
-                                Normal(
-                                    "==Marked text==",
-                                ),
-                            ),
-                        },
-                    ],
-                ),
-            },
-            ASTNode {
-                kind: Header(
-                    Header {
-                        level: 3,
-                        children: [
-                            ASTNode {
-                                kind: LinkNode(
-                                    HyperLink {
-                                        src: "https://github.com/markdown-it/markdown-it-footnote",
-                                        is_bare: false,
-                                    },
-                                ),
-                            },
-                        ],
-                    },
-                ),
-            },
-            ASTNode {
-                kind: Paragraph(
-                    [
-                        ASTNode {
-                            kind: TextSpan(
-                                Normal(
-                                    "Footnote 1 link[^first].",
-                                ),
-                            ),
-                        },
-                    ],
-                ),
-            },
-            ASTNode {
-                kind: Paragraph(
-                    [
-                        ASTNode {
-                            kind: TextSpan(
-                                Normal(
-                                    "Footnote 2 link[^second].",
-                                ),
-                            ),
-                        },
-                    ],
-                ),
-            },
-            ASTNode {
-                kind: Paragraph(
-                    [
-                        ASTNode {
-                            kind: TextSpan(
-                                Normal(
-                                    "Inline footnote^[Text of inline footnote] definition.",
-                                ),
-                            ),
-                        },
-                    ],
-                ),
-            },
-            ASTNode {
-                kind: Paragraph(
-                    [
-                        ASTNode {
-                            kind: TextSpan(
-                                Normal(
-                                    "Duplicated footnote reference[^second].",
-                                ),
-                            ),
-                        },
-                    ],
-                ),
-            },
-            ASTNode {
-                kind: Header(
-                    Header {
-                        level: 3,
-                        children: [
-                            ASTNode {
-                                kind: LinkNode(
-                                    HyperLink {
-                                        src: "https://github.com/markdown-it/markdown-it-deflist",
-                                        is_bare: false,
-                                    },
+                                kind: Value(
+                                    Null,
                                 ),
                             },
                         ],
@@ -1133,65 +1080,8 @@ ASTNode {
                 ),
             },
             ASTNode {
-                kind: Paragraph(
-                    [
-                        ASTNode {
-                            kind: TextSpan(
-                                Normal(
-                                    "Term 1",
-                                ),
-                            ),
-                        },
-                        ASTNode {
-                            kind: TextSpan(
-                                SoftNewline,
-                            ),
-                        },
-                        ASTNode {
-                            kind: TextSpan(
-                                Normal(
-                                    "~ Definition 1",
-                                ),
-                            ),
-                        },
-                    ],
-                ),
-            },
-            ASTNode {
-                kind: Paragraph(
-                    [
-                        ASTNode {
-                            kind: TextSpan(
-                                Normal(
-                                    "Term 2",
-                                ),
-                            ),
-                        },
-                        ASTNode {
-                            kind: TextSpan(
-                                SoftNewline,
-                            ),
-                        },
-                        ASTNode {
-                            kind: TextSpan(
-                                Normal(
-                                    "~ Definition 2a",
-                                ),
-                            ),
-                        },
-                        ASTNode {
-                            kind: TextSpan(
-                                SoftNewline,
-                            ),
-                        },
-                        ASTNode {
-                            kind: TextSpan(
-                                Normal(
-                                    "~ Definition 2b",
-                                ),
-                            ),
-                        },
-                    ],
+                kind: Value(
+                    Null,
                 ),
             },
             ASTNode {
@@ -1200,11 +1090,8 @@ ASTNode {
                         level: 3,
                         children: [
                             ASTNode {
-                                kind: LinkNode(
-                                    HyperLink {
-                                        src: "https://github.com/markdown-it/markdown-it-abbr",
-                                        is_bare: false,
-                                    },
+                                kind: Value(
+                                    Null,
                                 ),
                             },
                         ],
@@ -1217,7 +1104,19 @@ ASTNode {
                         ASTNode {
                             kind: TextSpan(
                                 Normal(
-                                    "This is HTML abbreviation example.",
+                                    "This is",
+                                ),
+                            ),
+                        },
+                        ASTNode {
+                            kind: Value(
+                                Null,
+                            ),
+                        },
+                        ASTNode {
+                            kind: TextSpan(
+                                Normal(
+                                    "abbreviation example.",
                                 ),
                             ),
                         },
@@ -1230,20 +1129,19 @@ ASTNode {
                         ASTNode {
                             kind: TextSpan(
                                 Normal(
-                                    "It converts “HTML”, but keep intact partial entries like “xxxHTMLyyy” and so on.",
+                                    "It converts “",
                                 ),
                             ),
                         },
-                    ],
-                ),
-            },
-            ASTNode {
-                kind: Paragraph(
-                    [
+                        ASTNode {
+                            kind: Value(
+                                Null,
+                            ),
+                        },
                         ASTNode {
                             kind: TextSpan(
                                 Normal(
-                                    "*[HTML]: Hyper Text Markup Language",
+                                    "”, but keep intact partial entries like “xxxHTMLyyy”\n    and so on.",
                                 ),
                             ),
                         },
@@ -1256,11 +1154,8 @@ ASTNode {
                         level: 3,
                         children: [
                             ASTNode {
-                                kind: LinkNode(
-                                    HyperLink {
-                                        src: "https://github.com/markdown-it/markdown-it-container",
-                                        is_bare: false,
-                                    },
+                                kind: Value(
+                                    Null,
                                 ),
                             },
                         ],
@@ -1270,18 +1165,6 @@ ASTNode {
             ASTNode {
                 kind: Paragraph(
                     [
-                        ASTNode {
-                            kind: TextSpan(
-                                Normal(
-                                    "::: warning",
-                                ),
-                            ),
-                        },
-                        ASTNode {
-                            kind: TextSpan(
-                                SoftNewline,
-                            ),
-                        },
                         ASTNode {
                             kind: StyledSpan(
                                 StyleNode {
@@ -1298,19 +1181,17 @@ ASTNode {
                                 },
                             ),
                         },
-                        ASTNode {
-                            kind: TextSpan(
-                                SoftNewline,
-                            ),
-                        },
-                        ASTNode {
-                            kind: TextSpan(
-                                Normal(
-                                    ":::",
-                                ),
-                            ),
-                        },
                     ],
+                ),
+            },
+            ASTNode {
+                kind: Delimiter(
+                    HorizontalRule,
+                ),
+            },
+            ASTNode {
+                kind: Value(
+                    Null,
                 ),
             },
         ],

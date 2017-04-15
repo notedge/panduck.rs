@@ -1,4 +1,5 @@
 use super::*;
+use notedown_ast::nodes::{CodeNode, MathNode};
 
 impl<G> IntoSycamore<G> for Delimiter
 where
@@ -26,5 +27,23 @@ where
         };
         push_nodes(&node, self.children);
         return node;
+    }
+}
+
+impl<G> IntoSycamore<G> for CodeNode
+where
+    G: GenericNode,
+{
+    fn into_sycamore(self) -> G {
+        todo!()
+    }
+}
+
+impl<G> IntoSycamore<G> for MathNode
+where
+    G: GenericNode,
+{
+    fn into_sycamore(self) -> G {
+        todo!()
     }
 }

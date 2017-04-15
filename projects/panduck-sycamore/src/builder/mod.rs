@@ -1,5 +1,6 @@
 mod blocks;
 mod command;
+mod link;
 mod list;
 mod table;
 mod text;
@@ -30,36 +31,30 @@ where
 {
     fn into_sycamore(self) -> G {
         match self {
-            ASTKind::Statements(children) => {
+            Self::Statements(children) => {
                 let root: G = GenericNode::element("div");
                 root.set_class_name("notedown");
                 push_nodes(&root, children);
                 return root;
             }
-            ASTKind::Paragraph(children) => {
+            Self::Paragraph(children) => {
                 let p = GenericNode::element("p");
                 push_nodes(&p, children);
                 return p;
             }
-            ASTKind::Header(inner) => inner.into_sycamore(),
-            ASTKind::Delimiter(inner) => inner.into_sycamore(),
-            ASTKind::TableView(inner) => inner.into_sycamore(),
-            ASTKind::ListView(inner) => inner.into_sycamore(),
-            ASTKind::CodeNode(_) => {
+            Self::Header(inner) => inner.into_sycamore(),
+            Self::Delimiter(inner) => inner.into_sycamore(),
+            Self::TableView(inner) => inner.into_sycamore(),
+            Self::ListView(inner) => inner.into_sycamore(),
+            Self::CodeNode(inner) => inner.into_sycamore(),
+            Self::MathNode(inner) => inner.into_sycamore(),
+            Self::LinkNode(inner) => inner.into_sycamore(),
+            Self::TextSpan(inner) => inner.into_sycamore(),
+            Self::StyledSpan(inner) => inner.into_sycamore(),
+            Self::Command(_) => {
                 unimplemented!()
             }
-            ASTKind::MathNode(_) => {
-                unimplemented!()
-            }
-            ASTKind::LinkNode(_) => {
-                unimplemented!()
-            }
-            ASTKind::TextSpan(inner) => inner.into_sycamore(),
-            ASTKind::StyledSpan(inner) => inner.into_sycamore(),
-            ASTKind::Command(_) => {
-                unimplemented!()
-            }
-            ASTKind::Value(_) => {
+            Self::Value(_) => {
                 unimplemented!()
             }
         }

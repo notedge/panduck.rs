@@ -51,7 +51,7 @@ impl<'a> ToNotedown for &'a AstNode<'a> {
             NodeValue::Document => ASTKind::statements(self.children().into_notedown_list(), None),
             NodeValue::FrontMatter(v) => {
                 let _front = String::from_utf8_lossy(&v);
-                todo!()
+                ASTNode::default()
             }
             NodeValue::BlockQuote => ASTNode::default(),
             NodeValue::List(v) => v.into_notedown(),
