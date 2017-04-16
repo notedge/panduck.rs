@@ -1,4 +1,4 @@
-pub use self::{plain::PlainHTML, pretty::PrettyHTML};
+pub use self::{plain_text::PlainHTML, pretty_print::PrettyHTML};
 use notedown_ast::{
     nodes::{CodeNode, Header, ListView, MathKind, MathNode, StyleKind, TableView, TextNode},
     ASTKind, ASTNode, ASTNodes, Result,
@@ -8,11 +8,12 @@ use std::{
     fmt::{Arguments, Write},
 };
 
-mod plain;
-mod pretty;
+mod plain_text;
+mod pretty_print;
 
 pub struct HTMLRenderer {
     xhtml: bool,
+    max_width: usize,
     math_renderer: Option<fn(&MathNode) -> String>,
     code_renderer: Option<fn(&CodeNode) -> String>,
     buffer: String,
@@ -20,7 +21,7 @@ pub struct HTMLRenderer {
 
 impl Default for HTMLRenderer {
     fn default() -> Self {
-        Self { xhtml: false, math_renderer: None, code_renderer: None, buffer: String::new() }
+        Self { xhtml: false, max_width: 144, math_renderer: None, code_renderer: None, buffer: String::new() }
     }
 }
 
@@ -46,7 +47,7 @@ impl HTMLRenderer {
     }
     pub fn render_pretty(&mut self, node: &ASTNode) -> Result<String> {
         self.buffer.clear();
-        node.pretty_html(self)?;
+        node.pretty_html(self).render_fmt(self.max_width, &mut self.buffer)?;
         Ok(self.buffer.to_owned())
     }
 }

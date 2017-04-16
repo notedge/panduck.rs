@@ -10,6 +10,7 @@ use self::PanduckErrorKind::*;
 use std::{
     error::Error,
     fmt::{self, Display, Formatter},
+    ops::Range,
     path::Path,
 };
 use yggdrasil_shared::records::Url;
@@ -20,7 +21,7 @@ pub type Result<T> = std::result::Result<T, PanduckError>;
 pub struct PanduckError {
     kind: PanduckErrorKind,
     file: Option<Url>,
-    position: (usize, usize),
+    range: Option<Range<usize>>,
 }
 
 #[derive(Debug)]
@@ -33,29 +34,39 @@ pub enum PanduckErrorKind {
 
 // noinspection ALL
 impl PanduckError {
-    pub fn set_url(self, url: Url) -> Self {
-        Self { kind: self.kind, file: Some(url), position: self.position }
+    #[inline]
+    pub fn set_url(mut self, url: Url) -> Self {
+        self.file = Some(url);
+        return self;
     }
+    #[inline]
     pub fn set_path(self, path: impl AsRef<Path>) -> Self {
         match Url::from_directory_path(path) {
             Ok(url) => self.set_url(url),
             Err(_) => self,
         }
     }
-    pub fn set_position(self, position: (usize, usize)) -> Self {
-        Self { kind: self.kind, file: self.file, position }
+    #[inline]
+    pub fn set_range(mut self, range: Range<usize>) -> Self {
+        self.range = Some(range);
+        return self;
+    }
+    #[inline]
+    pub fn set_offset(mut self, start: usize, end: usize) -> Self {
+        self.range = Some(Range { start, end });
+        return self;
     }
 }
 
 impl PanduckError {
     pub fn unsupported_file(msg: impl Into<String>) -> Self {
-        Self { kind: UnsupportedFormat(msg.into()), file: None, position: (0, 0) }
+        Self { kind: UnsupportedFormat(msg.into()), file: None, range: None }
     }
 }
 
 impl Default for PanduckError {
     fn default() -> Self {
-        Self { kind: Unknown, file: None, position: (0, 0) }
+        Self { kind: Unknown, file: None, range: None }
     }
 }
 
@@ -63,15 +74,15 @@ impl Error for PanduckError {}
 
 impl Display for PanduckError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        match &self.file {
-            None => {
-                writeln!(f, "at [{}:{}] of <Anonymous>", self.position.0, self.position.1)?;
-            }
-            Some(s) => {
-                writeln!(f, "at [{}:{}] of {}", self.position.0, self.position.1, s.as_str())?;
-            }
+        let path = match &self.file {
+            Some(s) => s.path(),
+            None => "<Anonymous>",
+        };
+        match &self.range {
+            Some(s) => writeln!(f, "at ({}, {}) of {}", s.start, s.end, path)?,
+            None => writeln!(f, "at {}", path)?,
         }
-        Display::fmt(&self.kind, f)
+        write!(f, "{:indent$}{}", self.kind, indent = 4)
     }
 }
 

@@ -1,10 +1,10 @@
 #![allow(clippy::needless_return)]
 
 pub mod convert;
+mod errors;
+#[cfg(test)]
 pub mod for_test;
 pub mod utils;
-
-mod errors;
 
 // pub use notedown_ast;
 pub use convert::ToNotedown;

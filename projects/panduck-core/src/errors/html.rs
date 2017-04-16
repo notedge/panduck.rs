@@ -13,6 +13,6 @@ impl From<Error> for PanduckError {
                 unimplemented!()
             }
         };
-        Self { kind, file: None, position: (0, 0) }
+        Self { kind, file: None, range: None }
     }
 }

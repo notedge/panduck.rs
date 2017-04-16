@@ -1,4 +1,4 @@
-use sycamore::{generic_node::ssr_node::render_to_string, template};
+use sycamore::{generic_node::ssr_node::render_to_string, view};
 
 #[test]
 fn ready() {
@@ -7,7 +7,7 @@ fn ready() {
 
 #[test]
 fn renderer() {
-    let node = template! {
+    let node = view! {
     div(class="my-class") {
         button { "Click me" }
     }

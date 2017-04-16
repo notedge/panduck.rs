@@ -55,17 +55,17 @@ where
             Self::Strong => GenericNode::element("strong"),
             Self::Delete => GenericNode::element("del"),
             Self::Insert => GenericNode::element("ins"),
-            StyleKind::ItalicBold => {
+            Self::ItalicBold => {
                 unimplemented!()
             }
-            StyleKind::Marking => {
+            Self::Marking => {
                 unimplemented!()
             }
-            StyleKind::Color(_, _, _, _) => {
+            Self::Color(_, _, _, _) => {
                 unimplemented!()
             }
-            StyleKind::Subscript => GenericNode::element("sub"),
-            StyleKind::Superscript => GenericNode::element("sup"),
+            Self::Subscript => GenericNode::element("sub"),
+            Self::Superscript => GenericNode::element("sup"),
         }
     }
 }

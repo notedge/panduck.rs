@@ -1,6 +1,6 @@
 [package]
 name = "panduck-core"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Aster <192607617@qq.com>"]
 description = "Conversion tool by rust, inspired by pandoc"
 repository = "https://github.com/oovm/panduck"
@@ -10,7 +10,7 @@ edition = "2021"
 
 [dependencies]
 serde = "1.0.131"
-notedown_ast = "0.13.3"
+notedown_ast = "0.13.5"
 yggdrasil-shared = "0.1.5"
 
 # notedown
