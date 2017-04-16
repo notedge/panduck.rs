@@ -10,13 +10,13 @@ fn empty() {
 #[test]
 fn simple() {
     let ast = parse_html("<p>text</p>");
-    println!("{:#?}", ast.unwrap_or_default())
+    format!("{:#?}", ast.unwrap_or_default());
 }
 
 #[test]
 fn nested() {
     let ast = parse_html("<p>text<i>i</i><b>b</b></p>");
-    println!("{:#?}", ast.unwrap_or_default())
+    format!("{:#?}", ast.unwrap_or_default());
 }
 
 #[test]

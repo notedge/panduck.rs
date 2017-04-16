@@ -1,5 +1,5 @@
 use crate::{PanduckError, Result};
-use notedown_ast::{ASTNode};
+use notedown_ast::ASTNode;
 use std::{
     cmp::Ordering,
     collections::{BTreeMap, BTreeSet},

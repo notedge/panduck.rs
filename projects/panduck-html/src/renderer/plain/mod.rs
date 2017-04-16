@@ -1,6 +1,7 @@
 use super::*;
-use notedown_ast::nodes::{Delimiter, Literal, SmartLink, StyleNode};
+use notedown_ast::nodes::{Delimiter, EmailLink, Literal, SmartLink, StyleNode};
 
+mod link;
 mod table_view;
 mod text;
 mod writers;
@@ -32,13 +33,13 @@ impl PlainHTML for ASTKind {
         match self {
             ASTKind::Statements(children) => {
                 f.write_str("<div>")?;
-                children.plain_html(f);
+                children.plain_html(f)?;
                 f.write_str("</div>")
             }
             ASTKind::Header(inner) => inner.plain_html(f),
             ASTKind::Paragraph(children) => {
                 f.write_str("<p>")?;
-                children.plain_html(f);
+                children.plain_html(f)?;
                 f.write_str("</p>")
             }
             ASTKind::Delimiter(inner) => inner.plain_html(f),
@@ -63,11 +64,5 @@ impl PlainHTML for Delimiter {
                 false => f.write_str("<hr/>"),
             },
         }
-    }
-}
-
-impl PlainHTML for SmartLink {
-    fn plain_html(&self, f: &mut HTMLRenderer) -> fmt::Result {
-        todo!()
     }
 }

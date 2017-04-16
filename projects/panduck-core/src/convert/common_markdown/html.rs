@@ -6,6 +6,3 @@ impl ToNotedown for NodeHtmlBlock {
         todo!()
     }
 }
-
-
-

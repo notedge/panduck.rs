@@ -33,7 +33,7 @@ impl PlainHTML for Header {
 }
 
 impl PlainHTML for ListView {
-    fn plain_html(&self, f: &mut HTMLRenderer) -> fmt::Result {
+    fn plain_html(&self, _: &mut HTMLRenderer) -> fmt::Result {
         todo!()
     }
 }

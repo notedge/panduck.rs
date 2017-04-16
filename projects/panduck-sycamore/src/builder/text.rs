@@ -1,12 +1,12 @@
 use super::*;
 
 impl<G> IntoSycamore<G> for TextNode
-    where
-        G: GenericNode,
+where
+    G: GenericNode,
 {
     fn into_sycamore(self) -> G
-        where
-            G: GenericNode,
+    where
+        G: GenericNode,
     {
         match self {
             Self::Normal(s) => GenericNode::text_node(&s),
@@ -29,8 +29,8 @@ impl<G> IntoSycamore<G> for TextNode
 }
 
 impl<G> IntoSycamore<G> for StyleNode
-    where
-        G: GenericNode,
+where
+    G: GenericNode,
 {
     fn into_sycamore(self) -> G {
         let node: G = self.kind.into_sycamore();
@@ -43,8 +43,8 @@ impl<G> IntoSycamore<G> for StyleNode
 }
 
 impl<G> IntoSycamore<G> for StyleKind
-    where
-        G: GenericNode,
+where
+    G: GenericNode,
 {
     fn into_sycamore(self) -> G {
         match self {
@@ -64,12 +64,8 @@ impl<G> IntoSycamore<G> for StyleKind
             StyleKind::Color(_, _, _, _) => {
                 unimplemented!()
             }
-            StyleKind::Subscript => {
-                GenericNode::element("sub")
-            }
-            StyleKind::Superscript => {
-                GenericNode::element("sup")
-            }
+            StyleKind::Subscript => GenericNode::element("sub"),
+            StyleKind::Superscript => GenericNode::element("sup"),
         }
     }
 }

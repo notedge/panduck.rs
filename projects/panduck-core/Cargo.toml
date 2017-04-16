@@ -9,7 +9,7 @@ license = "MPL-2.0"
 edition = "2021"
 
 [dependencies]
-serde = "1.0.130"
+serde = "1.0.131"
 notedown_ast = "0.13.3"
 yggdrasil-shared = "0.1.5"
 

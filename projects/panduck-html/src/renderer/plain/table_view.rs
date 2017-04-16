@@ -1,7 +1,7 @@
 use super::*;
 
 impl PlainHTML for TableView {
-    fn plain_html(&self, f: &mut HTMLRenderer) -> fmt::Result {
+    fn plain_html(&self, _: &mut HTMLRenderer) -> fmt::Result {
         todo!()
     }
 }

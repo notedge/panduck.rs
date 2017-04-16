@@ -1,6 +1,5 @@
 use super::*;
-use comrak::nodes::{NodeList, NodeDescriptionItem};
-
+use comrak::nodes::{NodeDescriptionItem, NodeList};
 
 impl ToNotedown for NodeList {
     fn into_notedown(self) -> ASTNode {

@@ -1,6 +1,6 @@
 [package]
 name = "panduck-sycamore"
-version = "0.6.3"
+version = "0.7.0"
 authors = ["Aster <192607617@qq.com>"]
 description = "use panduck to generate pdfs"
 repository = "https://github.com/oovm/panduck"
@@ -13,7 +13,7 @@ notedown_ast = "0.13.3"
 
 
 [dependencies.sycamore]
-version = "0.6.3"
+version = "0.7.0"
 features = ["ssr"]
 
 [dev-dependencies]
