@@ -4,7 +4,7 @@ impl<G> IntoSycamore<G> for TextNode
 where
     G: GenericNode,
 {
-    fn into_sycamore(self) -> G
+    fn into_sycamore(self, ctx: &SycamoreBuilder) -> G
     where
         G: GenericNode,
     {
@@ -32,12 +32,12 @@ impl<G> IntoSycamore<G> for StyleNode
 where
     G: GenericNode,
 {
-    fn into_sycamore(self) -> G {
-        let node: G = self.kind.into_sycamore();
+    fn into_sycamore(self, ctx: &SycamoreBuilder) -> G {
+        let node: G = self.kind.into_sycamore(ctx);
         // for i in self.children {
         //     node.append_child(&i.value.into_sycamore())
         // }
-        push_nodes(&node, self.children);
+        push_nodes(&node, self.children, ctx);
         return node;
     }
 }
@@ -46,7 +46,7 @@ impl<G> IntoSycamore<G> for StyleKind
 where
     G: GenericNode,
 {
-    fn into_sycamore(self) -> G {
+    fn into_sycamore(self, ctx: &SycamoreBuilder) -> G {
         match self {
             Self::Plain => GenericNode::element("span"),
             Self::Emphasis => GenericNode::element("em"),

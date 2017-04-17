@@ -9,9 +9,9 @@ license = "MPL-2.0"
 edition = "2018"
 
 [dependencies]
-notedown_ast = "0.13.5"
+notedown_ast = "0.13.6"
 html-escape = "0.2.9"
-pretty = "0.10.0"
+pretty = "0.11.1"
 
 [dev-dependencies]
-panduck-core = {version = "0.1", path = "../panduck-core"}
+panduck-core = "0.1.2"
