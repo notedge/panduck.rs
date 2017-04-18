@@ -1,5 +1,5 @@
 use super::*;
-use notedown_ast::nodes::{HyperLink, ImageLink, TagReference, TwoWayLink};
+use notedown_ast::nodes::{HyperLink, ImageLink, ResourceDescriptor, TagReference, TwoWayLink};
 
 impl PlainHTML for SmartLink {
     fn plain_html(&self, f: &mut HTMLRenderer) -> fmt::Result {
@@ -9,7 +9,14 @@ impl PlainHTML for SmartLink {
             Self::Image(v) => v.plain_html(f),
             Self::TwoWay(v) => v.plain_html(f),
             Self::Reference(v) => v.plain_html(f),
+            Self::ExternalResource(v) => v.plain_html(f),
         }
+    }
+}
+
+impl PlainHTML for ResourceDescriptor {
+    fn plain_html(&self, _: &mut HTMLRenderer) -> fmt::Result {
+        todo!()
     }
 }
 

@@ -9,8 +9,9 @@ license = "MPL-2.0"
 edition = "2018"
 
 [dependencies]
-notedown_ast = "0.13.6"
+notedown_ast = "0.13.8"
 html-escape = "0.2.9"
+
 pretty = "0.11.1"
 
 [dev-dependencies]
