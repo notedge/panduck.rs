@@ -1,17 +1,21 @@
-pub use self::{plain_text::PlainHTML, pretty_print::PrettyHTML};
 use notedown_ast::{
     nodes::{CodeNode, Header, ListView, MathKind, MathNode, StyleKind, TableView, TextNode},
     ASTKind, ASTNode, ASTNodes, Result,
 };
+use pretty::RcDoc;
 use std::{
     fmt,
     fmt::{Arguments, Write},
 };
 
-mod plain_text;
-mod pretty_print;
+mod nodes;
+mod text;
 
-pub struct HTMLRenderer {
+pub trait PrettyHTML {
+    fn pretty_html(&self, f: &mut PrettyRenderer) -> RcDoc<()>;
+}
+
+pub struct PrettyRenderer {
     xhtml: bool,
     max_width: usize,
     math_renderer: Option<fn(&MathNode) -> String>,
@@ -19,13 +23,13 @@ pub struct HTMLRenderer {
     buffer: String,
 }
 
-impl Default for HTMLRenderer {
+impl Default for PrettyRenderer {
     fn default() -> Self {
         Self { xhtml: false, max_width: 144, math_renderer: None, code_renderer: None, buffer: String::new() }
     }
 }
 
-impl Write for HTMLRenderer {
+impl Write for PrettyRenderer {
     fn write_str(&mut self, s: &str) -> fmt::Result {
         self.buffer.write_str(s)
     }
@@ -39,12 +43,7 @@ impl Write for HTMLRenderer {
     }
 }
 
-impl HTMLRenderer {
-    pub fn render_plain(&mut self, node: &ASTNode) -> Result<String> {
-        self.buffer.clear();
-        node.plain_html(self)?;
-        Ok(self.buffer.to_owned())
-    }
+impl PrettyRenderer {
     pub fn render_pretty(&mut self, node: &ASTNode) -> Result<String> {
         self.buffer.clear();
         node.pretty_html(self).render_fmt(self.max_width, &mut self.buffer)?;
@@ -52,7 +51,7 @@ impl HTMLRenderer {
     }
 }
 
-impl HTMLRenderer {
+impl PrettyRenderer {
     pub fn set_math_renderer(mut self, renderer: fn(&MathNode) -> String) -> Self {
         self.math_renderer = Some(renderer);
         return self;

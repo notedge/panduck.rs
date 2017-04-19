@@ -11,8 +11,13 @@ edition = "2018"
 [dependencies]
 notedown_ast = "0.13.8"
 html-escape = "0.2.9"
-
 pretty = "0.11.1"
+
+[dependencies.katex]
+version = "0.4.2"
+optional = true
+default-features = false
+features = ["duktape"]
 
 [dev-dependencies]
 panduck-core = "0.1.2"

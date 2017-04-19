@@ -14,20 +14,15 @@ notedown_ast = "0.13.8"
 [dependencies.panduck-html]
 version = "0.1.0"
 path = "../panduck-html"
+default-features = false
 
 [dependencies.sycamore]
 version = "0.7.0"
 features = ["ssr"]
 
-[dependencies.katex]
-version = "0.4.2"
-optional = true
-default-features = false
-features = ["duktape"]
-
 [features]
 default = ["local"]
-local = ["katex"]
+local = ["panduck-html/katex"]
 
 [dev-dependencies]
 panduck-core = "0.1.2"

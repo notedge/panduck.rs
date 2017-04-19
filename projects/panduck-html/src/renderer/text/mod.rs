@@ -1,8 +1,9 @@
 use super::*;
 use notedown_ast::nodes::StyleNode;
+use pretty::RcDoc;
 
 impl PrettyHTML for TextNode {
-    fn pretty_html(&self, _: &mut HTMLRenderer) -> RcDoc<()> {
+    fn pretty_html(&self, _: &mut PrettyRenderer) -> RcDoc<()> {
         match self {
             TextNode::Raw(_) => {
                 unimplemented!()
@@ -23,7 +24,7 @@ impl PrettyHTML for TextNode {
     }
 }
 impl PrettyHTML for StyleNode {
-    fn pretty_html(&self, f: &mut HTMLRenderer) -> RcDoc<()> {
+    fn pretty_html(&self, f: &mut PrettyRenderer) -> RcDoc<()> {
         match self.kind {
             StyleKind::Plain => {
                 unimplemented!()
