@@ -1,3 +1,3 @@
 mod builder;
-pub(crate) mod errors;
+pub(crate) mod shared;
 mod traits;

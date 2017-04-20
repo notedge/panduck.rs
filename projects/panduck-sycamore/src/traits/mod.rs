@@ -5,10 +5,13 @@ mod list;
 mod table;
 mod text;
 
-use crate::builder::SycamoreBuilder;
+use crate::{
+    builder::SycamoreBuilder,
+    shared::{error_block, error_inline, push_nodes},
+};
 use notedown_ast::{
-    nodes::{Delimiter, Header, ListView, Literal, StyleKind, StyleNode, TableView, TextNode},
-    ASTKind, ASTNodes,
+    nodes::{CodeNode, Delimiter, Header, ListView, Literal, MathKind, MathNode, StyleKind, StyleNode, TableView, TextNode},
+    ASTKind,
 };
 use sycamore::generic_node::GenericNode;
 
@@ -55,18 +58,7 @@ where
             Self::Command(_) => {
                 unimplemented!()
             }
-            Self::Value(_) => {
-                unimplemented!()
-            }
+            Self::Value(e) => error_block(&format!("Bare value {}", e)),
         }
-    }
-}
-
-pub fn push_nodes<G>(node: &G, children: ASTNodes, ctx: &SycamoreBuilder)
-where
-    G: GenericNode,
-{
-    for i in children {
-        node.append_child(&i.value.into_sycamore(ctx))
     }
 }

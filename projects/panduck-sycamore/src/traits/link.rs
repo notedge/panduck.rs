@@ -91,7 +91,7 @@ impl<G> IntoSycamore<G> for TwoWayLink
 where
     G: GenericNode,
 {
-    fn into_sycamore(self, ctx: &SycamoreBuilder) -> G {
+    fn into_sycamore(self, _: &SycamoreBuilder) -> G {
         todo!()
     }
 }
@@ -99,7 +99,7 @@ impl<G> IntoSycamore<G> for TagReference
 where
     G: GenericNode,
 {
-    fn into_sycamore(self, ctx: &SycamoreBuilder) -> G {
+    fn into_sycamore(self, _: &SycamoreBuilder) -> G {
         todo!()
     }
 }

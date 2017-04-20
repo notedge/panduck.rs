@@ -1,8 +1,4 @@
 use super::*;
-use notedown_ast::{
-    nodes::{CodeNode, MathKind, MathNode},
-    NoteError,
-};
 
 impl<G> IntoSycamore<G> for Delimiter
 where
@@ -37,7 +33,8 @@ impl<G> IntoSycamore<G> for CodeNode
 where
     G: GenericNode,
 {
-    fn into_sycamore(self, ctx: &SycamoreBuilder) -> G {
+    #[cfg(feature = "local")]
+    fn into_sycamore(self, _: &SycamoreBuilder) -> G {
         todo!()
     }
 }
@@ -52,7 +49,7 @@ where
         match self.get_format().to_ascii_lowercase().as_str() {
             "tex" | "latex" => {
                 let g: G = GenericNode::marker();
-                let html = match math.get_kind() {
+                let html = match self.get_kind() {
                     MathKind::Inline => katex_inline(&self.get_text()),
                     MathKind::Display => katex_display(&self.get_text()),
                     MathKind::BlockInline => katex_inline(&self.get_text()),
@@ -61,20 +58,20 @@ where
                 match html {
                     Ok(o) => g.dangerously_set_inner_html(&o),
                     #[cfg(debug_assertions)]
-                    Err(_) => return GenericNode::marker(),
+                    Err(e) => return error_inline(e.to_string().as_str()),
                     #[cfg(not(debug_assertions))]
                     Err(_) => return GenericNode::marker(),
                 };
                 match g.first_child() {
                     Some(s) => s,
                     #[cfg(debug_assertions)]
-                    None => GenericNode::marker(),
+                    None => panic!("Illegal HTML content"),
                     #[cfg(not(debug_assertions))]
                     None => GenericNode::marker(),
                 }
             }
             #[cfg(debug_assertions)]
-            _ => return GenericNode::marker(),
+            _ => return error_inline(&format!("Unknown math renderer {}", self.get_format())),
             #[cfg(not(debug_assertions))]
             _ => return GenericNode::marker(),
         }

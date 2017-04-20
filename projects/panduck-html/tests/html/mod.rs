@@ -5,7 +5,7 @@ use panduck_html::PrettyRenderer;
 fn nested() -> Result<()> {
     let mut cfg = PrettyRenderer::default();
     let ast = parse_html("<p>text<i>i</i><b>b</b></p>")?;
-    let out = cfg.render_pretty(&ast)?;
+    let out = cfg.render(&ast)?;
     println!("{}", out);
     Ok(())
 }
