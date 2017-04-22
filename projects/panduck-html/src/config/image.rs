@@ -10,8 +10,13 @@ impl Default for ImageConfig {
     }
 }
 
-impl<T> HTMLConfig<T> {
-    pub fn set_image_config(&mut self, config: ImageConfig) {
-        self.image_config = config
+impl HTMLConfig {
+    #[inline]
+    pub fn get_image_lazy_loading(&mut self) -> &bool {
+        &self.image_config.lazy_loading
+    }
+    #[inline]
+    pub fn set_image_lazy_loading(&mut self, config: bool) {
+        self.image_config.lazy_loading = config
     }
 }

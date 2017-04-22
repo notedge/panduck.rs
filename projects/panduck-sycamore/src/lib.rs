@@ -1,3 +1,5 @@
 mod builder;
-pub(crate) mod shared;
+mod shared;
 mod traits;
+
+pub use builder::SycamoreBuilder;

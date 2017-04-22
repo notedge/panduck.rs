@@ -55,7 +55,7 @@ where
     //      src="/media/cc0-images/grapefruit-slice-332-332.jpg"
     //      alt="Grapefruit slice atop a pile of other slices">
     fn into_sycamore(self, builder: &SycamoreBuilder) -> G {
-        let cfg = &builder.image_config;
+        let cfg = &builder.config.image_config;
         let img: G = GenericNode::element("img");
         img.set_attribute("src", &self.src);
         if let Some(s) = self.alt {

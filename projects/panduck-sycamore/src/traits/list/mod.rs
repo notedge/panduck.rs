@@ -27,7 +27,7 @@ impl<G> IntoSycamore<G> for ListDetailedNode
 where
     G: GenericNode,
 {
-    fn into_sycamore(self, ctx: &SycamoreBuilder) -> G {
+    fn into_sycamore(self, _: &SycamoreBuilder) -> G {
         todo!()
     }
 }

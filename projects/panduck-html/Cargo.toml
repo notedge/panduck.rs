@@ -19,5 +19,6 @@ optional = true
 default-features = false
 features = ["duktape"]
 
-[dev-dependencies]
-panduck-core = "0.1.2"
+[dev-dependencies.panduck-core]
+version = "0.1.2"
+features = ["markdown"]

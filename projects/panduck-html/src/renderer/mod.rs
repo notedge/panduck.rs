@@ -1,13 +1,9 @@
 use crate::HTMLConfig;
 use notedown_ast::{
-    nodes::{CodeNode, MathNode, StyleKind, TextNode},
+    nodes::{StyleKind, TextNode},
     ASTKind, ASTNode, Result,
 };
 use pretty::RcDoc;
-use std::{
-    fmt,
-    fmt::{Arguments, Write},
-};
 
 mod nodes;
 mod text;
@@ -19,7 +15,7 @@ pub trait PrettyHTML {
 pub struct PrettyRenderer {
     xhtml: bool,
     max_width: usize,
-    config: HTMLConfig<()>,
+    config: HTMLConfig,
 }
 
 impl Default for PrettyRenderer {

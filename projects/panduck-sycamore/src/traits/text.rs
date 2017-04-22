@@ -4,7 +4,7 @@ impl<G> IntoSycamore<G> for TextNode
 where
     G: GenericNode,
 {
-    fn into_sycamore(self, ctx: &SycamoreBuilder) -> G
+    fn into_sycamore(self, _: &SycamoreBuilder) -> G
     where
         G: GenericNode,
     {
@@ -15,9 +15,7 @@ where
             Self::Emoji(_) => {
                 todo!()
             }
-            TextNode::SoftNewline => {
-                unimplemented!()
-            }
+            TextNode::SoftNewline => GenericNode::marker(),
             TextNode::HardNewline => {
                 unimplemented!()
             }
@@ -46,7 +44,7 @@ impl<G> IntoSycamore<G> for StyleKind
 where
     G: GenericNode,
 {
-    fn into_sycamore(self, ctx: &SycamoreBuilder) -> G {
+    fn into_sycamore(self, _: &SycamoreBuilder) -> G {
         match self {
             Self::Plain => GenericNode::element("span"),
             Self::Emphasis => GenericNode::element("em"),
