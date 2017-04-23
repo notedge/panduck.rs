@@ -1,1 +1,94 @@
-<div class="notedown"><p class="debug-error">Bare value null</p><hr/><p>Unordered lists:</p><p class="debug-error">Bare value null</p><p>Ordered lists:</p><p class="debug-error">Bare value null</p><p>List items with bold and italic:</p><p class="debug-error">Bare value null</p><p>Bold and italic phrases at the beginning of lines:</p><p><em>not a list</em><!----><strong>also not a list</strong></p></div>
+<div class="notedown"><h1>markdown-mode Test Cases</h1><p class="debug-error">Bare value null</p><hr/><p>Unordered lists:</p><p class="debug-error">Bare value null</p><p>Ordered lists:</p><p class="debug-error">Bare value null</p><p>List items with bold and italic:</p><p class="debug-error">Bare value null</p><p>Bold and italic phrases at the beginning of lines:</p><p><em>not a list</em><!----><strong>also not a list</strong></p><p class="debug-error">Bare value null</p><hr/><p class="debug-error">Bare value null</p><p class="debug-error">Bare value null</p><hr/><p><em>Contributed by Ryan Barrett on 2007-07-02</em></p><p>thanks! the new version 1.4 works great. very cool.</p><p>i did notice a minor bug. if there are two inline links in the same line, e.g.<!----><a></a> baz <a></a>, it colors the text between the links (baz) as well.</p><p>i’m guessing this is because the inline link regexp is greedy. if you switch<!---->it to non-greedy - if elisp can do that - or to something like ‘[<a></a>]+]’ if<!---->not, that might do the trick.</p><p class="debug-error">Bare value null</p><hr/><p><a></a><!----><a></a><!----><a></a></p><p class="debug-error">Bare value null</p><hr/><p><em>Contributed by Conal Elliott on 2007-08-27</em></p><p>By the way, here are two syntax-highlighting glitches I’ve seen so far:</p><p><strong>foo and doo</strong> or <em>ziddle zop</em><!---->Oh – what’s happening here?</p><p class="debug-error">Bare value null</p><hr/><p>Why doesn’t the bold part get picked up?<!----><em>ziddle zop</em> or <strong>foo and doo</strong></p><p class="debug-error">Bare value null</p><hr/><p><em>Contributed by Alastair Rankine on 2007-09-10</em></p><p>Thanks for this, I have been waiting for an emacs markdown mode for ages!</p><p>One minor quibble is in the highlighting of inline links. As currently<!---->(1.4) implemented the presence of a close paren on the same line as an<!---->inline link will highlight the link and the subsequent text:</p><p>[blah](this bit will be highlighted) and so (will this bit)</p><p>I think this is because of greedy regexes. Here is a simple patch to address.</p><p class="debug-error">Bare value null</p><hr/><p>Here’s a [link] <a></a> with a space between the components.</p><p class="debug-error">Bare value null</p><hr/><p>Single <pre>`
+backtick code
+`</pre> fragments as well as <pre>`
+double`backtick
+`</pre> fragments are<!---->supported.</p><p class="debug-error">Bare value null</p><hr/><p>This is a _ single underscore and a * single asterisk.<!---->They should not trigger font locking.</p><p class="debug-error">Bare value null</p><hr/><p>Neither should a double **asterisk and double__ underscore!</p><p class="debug-error">Bare value null</p><hr/><p>To make lists look nice, you can wrap items with hanging indents:</p><pre>```
+*   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+    Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
+    viverra nec, fringilla in, laoreet vitae, risus.
+*   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
+    Suspendisse id sem consectetuer libero luctus adipiscing.
+
+```</pre><p class="debug-error">Bare value null</p><hr/><p>bold <strong>phrase spanning<!---->two lines</strong> asdf <strong>same line</strong> test</p><p>italic <em>phrase spanning<!---->two lines</em> italic <em>same line</em> test</p><p class="debug-error">Bare value null</p><hr/><p>This document was created in GNU Emacs using <a></a>.  It provides<!---->syntax highlighting for <a></a> documents which allows reference-style<!---->links like these.  The reference definitions can even contain alternate<!---->text such as <a></a>.</p><p class="debug-error">Bare value null</p><hr/><p>ab *literal asterisks* asdf <em>inside * literal asterisks</em> asd lkj</p><p>ab *<em>this should be italic*</em> yz<br/>ab *<em>this should be italic</em>* yz<br/>ab <em>*this should be italic*</em> yz<br/>ab <em>*this should be italic</em>* yz</p><p class="debug-error">Bare value null</p><hr/><p>a single <strong>a</strong> bold letter and bold word <strong>test</strong> asdf<br/>a single <em>a</em> italic letter and italic word <em>test</em> asdf<br/>a single <strong>a</strong> bold letter and bold word <strong>test</strong> asdf<br/>a single <em>a</em> italic letter italic word <em>test</em> asdf</p><p class="debug-error">Bare value null</p><hr/><p class="debug-error">Bare value null</p><p class="debug-error">Bare value null</p><hr/><p>Here’s an example of reference links in action:</p><pre>```
+This document was created in GNU Emacs using [markdown-mode][].  It
+provides syntax highlighting for [Markdown][] documents which allows
+reference-style links like these.  The reference definitions can even
+contain alternate text such as [this one][id].
+
+ [markdown-mode]: http://jrblevin.freeshell.org/software/markdown-mode
+ [Markdown]:      http://daringfireball.net/projects/markdown
+ [id]:            http://reference-link.com/with/alt "Alternate Text"
+
+```</pre><p class="debug-error">Bare value null</p><hr/><pre>```
+svn commit -m "Imported RCS project"
+svn add image.png binaries/*
+svn commit -m "Imported additional project files"
+
+```</pre><p>This text gets counted as part of the block quote too.  But it can be ended<!---->by a star-slash: */ It is as if <pre>`
+markdown-mode
+`</pre> is using C++ style comments.</p><p>Fixed by commit d81138d.</p><p class="debug-error">Bare value null</p><hr/><p><em>Contributed by shindo on 2008-01-20</em></p><pre>```
+get_something_by_name()
+
+```</pre><p class="debug-error">Bare value null</p><hr/><p>Escaped backticks: `not code`</p><p>Escaped underscores: don’t_italicize_this</p><p>Escaped asterisks: *also not italic*</p><p>Escaped hash marks:<br/># This is not a heading</p><p class="debug-error">Bare value null</p><hr/><p>[[Two]] [[WikiLinks]] [[InARow]]</p><p class="debug-error">Bare value null</p><hr/><p>This is a test of “SmartyPants,” a progrm written by John Gruber for<!---->generating typographically correct HTML entities–ones such as<!---->the em-dash and ellipsis…</p><p class="debug-error">Bare value null</p><hr/><hr/><hr/><hr/><p class="debug-error">Bare value null</p><hr/><p>Asterisks *should</p><p>not match across* block boundaries.</p><p>Underscores _should</p><p>not match across_ block boundaries.</p><p>Double Asterisks **should</p><p>not match across** block boundaries.</p><p>Double underscores __should</p><p>not match across__ block boundaries.</p><p>But, <em>this should still match</em>.</p><p>So should <em>this</em>.</p><p>Addressed by commit d81138d.</p><p class="debug-error">Bare value null</p><hr/><p>Code fragments <pre>`
+can_have_underscores_inside_like
+`</pre> this.</p><p class="debug-error">Bare value null</p><hr/><p>Markdown allows <pre>`
+code fragments
+`</pre> to span across lines.</p><p>Let’s make sure that <pre>`
+double` backtick`code fragments
+`</pre> work<!---->this way too.</p><p>However, they should `not</p><p>match` across blocks.</p><p>Here’s another <pre>`
+valid
+`</pre> one.</p><p class="debug-error">Bare value null</p><hr/><p class="debug-error">Bare value null</p><p class="debug-error">Bare value null</p><hr/><p>[[AnotherLink]]:note</p><p class="debug-error">Bare value null</p><hr/><p><em>Contributed by Luciano Gerber <a></a> on April 4, 2012.</em></p><p>It is interesting to see what happens when one queries<!----><pre>`
+social upheaval
+`</pre> and <pre>`
+protopalatial era
+`</pre>.</p><p class="debug-error">Bare value null</p><p>The preceding text should not be matched as a preformatted block.</p><p class="debug-error">Bare value null</p><hr/><p>This is a footnote marker,[^1] but this is not.<a></a></p><p class="debug-error">Bare value null</p><hr/><p>This is a valid markdown link: <a></a></p><p class="debug-error">Bare value null</p><hr/><p><em>Lorem <a></a> amet.</em></p><p><strong>Lorem <a></a> amet.</strong></p><p class="debug-error">Bare value null</p><hr/><p><em>markdown-mode homepage <a></a></em></p><p><strong>markdown-mode homepage <a></a></strong></p><p class="debug-error">Bare value null</p><hr/><pre>```
+class Employee &lt; ActiveRecord::Base
+  attr_accessible :github_username, :name
+
+  def self.syncify!
+    begin
+      employee_sync = GitOrganized::GithubEmployeeSync.new(
+        GitOrganized::Organization.new(
+          GitOrganized.config.default_org,
+          ["employees-pull", "employees-push"]
+        ),
+        Sources.new
+      )
+
+      employee_sync.sync
+    rescue Github::Error::ServiceError => e
+      retry
+    end
+  end
+
+  after_save do |employee| Employee.syncify! end
+  after_destroy do |employee| Employee.syncify! end
+end
+
+```</pre><p class="debug-error">Bare value null</p><hr/><p>Fenced code blocks begin with three or more tildes and end with a line<!---->with at least as many tildes.</p><pre>```
+program hello
+  implicit none
+  print '(a)', 'Hello, world!'
+end program hello
+
+```</pre><p>They may also have a <pre>`
+lang
+`</pre> attribute.</p><pre>```{: lang=fortran }
+program hello
+  implicit none
+  print '(a)', 'Hello, world!'
+end program hello
+
+```</pre><p>In Kramdown, one specifies the language identifier as follows:</p><pre>```fortran
+program hello
+  implicit none
+  print '(a)', 'Hello, world!'
+end program hello
+
+```</pre><p>or with a Maruku-style inline attribute list</p><pre>```
+program hello
+  implicit none
+  print '(a)', 'Hello, world!'
+end program hello
+
+```</pre><p>{: .language-fortran}</p></div>

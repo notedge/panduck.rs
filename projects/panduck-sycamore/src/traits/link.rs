@@ -57,8 +57,8 @@ where
     fn into_sycamore(self, builder: &SycamoreBuilder) -> G {
         let cfg = &builder.config.image_config;
         let img: G = GenericNode::element("img");
-        img.set_attribute("src", &self.src);
-        if let Some(s) = self.alt {
+        img.set_attribute("src", &self.source);
+        if let Some(s) = self.description {
             img.set_attribute("alt", &s)
         };
         match cfg.lazy_loading {

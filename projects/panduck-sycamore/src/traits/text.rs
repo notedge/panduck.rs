@@ -16,12 +16,11 @@ where
                 todo!()
             }
             TextNode::SoftNewline => GenericNode::marker(),
-            TextNode::HardNewline => {
-                unimplemented!()
-            }
+            TextNode::HardNewline => GenericNode::element("br"),
             TextNode::CheckBox(_) => {
                 unimplemented!()
             }
+            TextNode::Empty => GenericNode::marker(),
         }
     }
 }

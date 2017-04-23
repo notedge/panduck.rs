@@ -20,6 +20,9 @@ impl PrettyHTML for TextNode {
             TextNode::CheckBox(_) => {
                 unimplemented!()
             }
+            TextNode::Empty => {
+                unimplemented!()
+            }
         }
     }
 }

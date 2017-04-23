@@ -1,5 +1,6 @@
 use super::*;
 
+mod code;
 mod math;
 
 impl<G> IntoSycamore<G> for Delimiter
@@ -28,15 +29,5 @@ where
         };
         push_nodes(&node, self.children, ctx);
         return node;
-    }
-}
-
-impl<G> IntoSycamore<G> for CodeNode
-where
-    G: GenericNode,
-{
-    #[cfg(feature = "local")]
-    fn into_sycamore(self, _: &SycamoreBuilder) -> G {
-        todo!()
     }
 }
