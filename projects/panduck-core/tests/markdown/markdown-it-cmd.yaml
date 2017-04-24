@@ -2,8 +2,17 @@ ASTNode {
     kind: Statements(
         [
             ASTNode {
-                kind: Value(
-                    Null,
+                kind: CodeNode(
+                    CodeNode {
+                        inline: false,
+                        highlight: true,
+                        language: "front-matter",
+                        code: "---\ntitle: Markdown it!\nlang: en-US\n---\n",
+                        show_file_name: None,
+                        show_line_number: None,
+                        highlight_lines: [],
+                        hide_lines: [],
+                    },
                 ),
             },
             ASTNode {
@@ -27,8 +36,12 @@ ASTNode {
                 ),
             },
             ASTNode {
-                kind: Value(
-                    Null,
+                kind: ListView(
+                    ListSimpleNode {
+                        ignore_global_list_style: false,
+                        first_symbol: Arabic,
+                        children: [],
+                    },
                 ),
             },
             ASTNode {
@@ -364,8 +377,12 @@ ASTNode {
                 ),
             },
             ASTNode {
-                kind: Value(
-                    Null,
+                kind: ListView(
+                    ListSimpleNode {
+                        ignore_global_list_style: false,
+                        first_symbol: Quote,
+                        children: [],
+                    },
                 ),
             },
             ASTNode {
@@ -394,8 +411,12 @@ ASTNode {
                 ),
             },
             ASTNode {
-                kind: Value(
-                    Null,
+                kind: ListView(
+                    ListSimpleNode {
+                        ignore_global_list_style: false,
+                        first_symbol: Arabic,
+                        children: [],
+                    },
                 ),
             },
             ASTNode {
@@ -410,8 +431,12 @@ ASTNode {
                 ),
             },
             ASTNode {
-                kind: Value(
-                    Null,
+                kind: ListView(
+                    ListSimpleNode {
+                        ignore_global_list_style: false,
+                        first_symbol: Hyphen,
+                        children: [],
+                    },
                 ),
             },
             ASTNode {
@@ -426,8 +451,12 @@ ASTNode {
                 ),
             },
             ASTNode {
-                kind: Value(
-                    Null,
+                kind: ListView(
+                    ListSimpleNode {
+                        ignore_global_list_style: false,
+                        first_symbol: Hyphen,
+                        children: [],
+                    },
                 ),
             },
             ASTNode {
@@ -802,8 +831,12 @@ ASTNode {
                 ),
             },
             ASTNode {
-                kind: Value(
-                    Null,
+                kind: ListView(
+                    ListSimpleNode {
+                        ignore_global_list_style: false,
+                        first_symbol: Quote,
+                        children: [],
+                    },
                 ),
             },
             ASTNode {
@@ -861,8 +894,12 @@ ASTNode {
                 ),
             },
             ASTNode {
-                kind: Value(
-                    Null,
+                kind: ListView(
+                    ListSimpleNode {
+                        ignore_global_list_style: false,
+                        first_symbol: Arabic,
+                        children: [],
+                    },
                 ),
             },
             ASTNode {

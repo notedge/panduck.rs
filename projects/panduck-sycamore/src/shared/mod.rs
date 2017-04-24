@@ -16,12 +16,13 @@ pub fn error_block<G: GenericNode>(msg: &str) -> G {
     return node;
 }
 
-pub fn push_nodes<G>(node: &G, children: ASTNodes, ctx: &SycamoreBuilder)
+pub fn push_nodes<T, G>(node: &G, children: Vec<T>, ctx: &SycamoreBuilder)
 where
     G: GenericNode,
+    T: IntoSycamore<G>,
 {
     for i in children {
-        node.append_child(&i.value.into_sycamore(ctx))
+        node.append_child(&i.into_sycamore(ctx))
     }
 }
 

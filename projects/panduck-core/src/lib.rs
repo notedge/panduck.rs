@@ -1,3 +1,4 @@
+#![feature(box_syntax)]
 #![allow(clippy::needless_return)]
 
 pub mod convert;
