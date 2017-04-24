@@ -9,7 +9,7 @@ where
         use panduck_html::extension::katex::{katex_display, katex_inline};
         match self.get_format().to_ascii_lowercase().as_str() {
             "tex" | "latex" => {
-                let g: G = GenericNode::marker();
+                let g: G = GenericNode::element("Fragment");
                 let html = match self.get_kind() {
                     MathKind::Inline => katex_inline(&self.get_text()),
                     MathKind::Display => katex_display(&self.get_text()),
@@ -23,13 +23,7 @@ where
                     #[cfg(not(debug_assertions))]
                     Err(_) => return GenericNode::marker(),
                 };
-                match g.first_child() {
-                    Some(s) => s,
-                    #[cfg(debug_assertions)]
-                    None => panic!("Illegal HTML content"),
-                    #[cfg(not(debug_assertions))]
-                    None => GenericNode::marker(),
-                }
+                unwrap_inner(g)
             }
             #[cfg(debug_assertions)]
             _ => return error_inline(&format!("Unknown math renderer {}", self.get_format())),

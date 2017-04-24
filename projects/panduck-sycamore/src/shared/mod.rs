@@ -24,3 +24,13 @@ where
         node.append_child(&i.value.into_sycamore(ctx))
     }
 }
+
+pub fn unwrap_inner<G: GenericNode>(node: G) -> G {
+    match node.first_child() {
+        Some(s) => s,
+        #[cfg(debug_assertions)]
+        None => panic!("Illegal HTML content"),
+        #[cfg(not(debug_assertions))]
+        None => GenericNode::marker(),
+    }
+}

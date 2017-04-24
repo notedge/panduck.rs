@@ -22,7 +22,8 @@ features = ["ssr"]
 
 [features]
 default = ["local"]
-local = ["panduck-html/katex"]
+local = ["panduck-html/katex", "panduck-html/syntect"]
+
 
 [dev-dependencies]
 panduck-core = "0.1.2"

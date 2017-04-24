@@ -7,7 +7,7 @@ mod text;
 
 use crate::{
     builder::SycamoreBuilder,
-    shared::{error_block, error_inline, push_nodes},
+    shared::{error_block, error_inline, push_nodes, unwrap_inner},
 };
 use notedown_ast::{
     nodes::{CodeNode, Delimiter, Header, ListView, Literal, MathKind, MathNode, StyleKind, StyleNode, TableView, TextNode},
