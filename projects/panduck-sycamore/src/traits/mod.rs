@@ -7,10 +7,10 @@ mod text;
 
 use crate::{
     builder::SycamoreBuilder,
-    shared::{error_block, error_inline, push_nodes, unwrap_inner},
+    shared::{error_block, error_inline, push_nodes},
 };
 use notedown_ast::{
-    nodes::{CodeNode, Delimiter, Header, ListView, Literal, MathKind, MathNode, StyleKind, StyleNode, TableView, TextNode},
+    nodes::{CodeNode, Delimiter, Header, ListView, Literal, MathNode, StyleKind, StyleNode, TableView, TextNode},
     ASTKind,
 };
 use sycamore::generic_node::GenericNode;
@@ -55,10 +55,8 @@ where
             Self::LinkNode(inner) => inner.into_sycamore(ctx),
             Self::TextSpan(inner) => inner.into_sycamore(ctx),
             Self::StyledSpan(inner) => inner.into_sycamore(ctx),
-            Self::Command(_) => {
-                unimplemented!()
-            }
-            Self::Value(e) => error_block(&format!("Bare value {}", e)),
+            Self::Command(inner) => inner.into_sycamore(ctx),
+            Self::Value(inner) => inner.into_sycamore(ctx),
         }
     }
 }

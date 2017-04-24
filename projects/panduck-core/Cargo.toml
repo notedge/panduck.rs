@@ -1,6 +1,6 @@
 [package]
 name = "panduck-core"
-version = "0.1.2"
+version = "0.1.3"
 authors = ["Aster <192607617@qq.com>"]
 description = "Conversion tool by rust, inspired by pandoc"
 repository = "https://github.com/oovm/panduck"

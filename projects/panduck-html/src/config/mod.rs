@@ -1,20 +1,13 @@
 mod code;
 mod image;
+mod math;
 
-pub use self::{code::CodeConfig, image::ImageConfig};
+pub use self::{code::CodeConfig, image::ImageConfig, math::MathConfig};
 
 pub struct HTMLConfig {
     pub image_config: ImageConfig,
     pub code_config: CodeConfig,
     pub math_config: MathConfig,
-}
-
-pub struct MathConfig {}
-
-impl Default for MathConfig {
-    fn default() -> Self {
-        Self {}
-    }
 }
 
 impl Default for HTMLConfig {

@@ -1,5 +1,5 @@
 use crate::{builder::SycamoreBuilder, traits::IntoSycamore};
-use notedown_ast::ASTNodes;
+use notedown_ast::{ASTNodes, Result};
 use sycamore::prelude::GenericNode;
 
 pub fn error_inline<G: GenericNode>(msg: &str) -> G {
@@ -33,4 +33,16 @@ pub fn unwrap_inner<G: GenericNode>(node: G) -> G {
         #[cfg(not(debug_assertions))]
         None => GenericNode::marker(),
     }
+}
+
+pub fn phantom_node<G: GenericNode>(html: Result<String>) -> G {
+    let g: G = GenericNode::element("Phantom");
+    match html {
+        Ok(o) => g.dangerously_set_inner_html(&o),
+        #[cfg(debug_assertions)]
+        Err(e) => return error_inline(e.to_string().as_str()),
+        #[cfg(not(debug_assertions))]
+        Err(_) => return GenericNode::marker(),
+    };
+    unwrap_inner(g)
 }
