@@ -1,5 +1,5 @@
 use super::*;
-use notedown_ast::nodes::{ListDetailedNode, ListItem, ListPrefixSymbol, ListSimpleNode};
+use notedown_ast::nodes::{ListDetailedNode, ListItem};
 
 impl<G> IntoSycamore<G> for ListView
 where

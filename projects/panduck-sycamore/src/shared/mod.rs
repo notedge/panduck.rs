@@ -1,5 +1,5 @@
 use crate::{builder::SycamoreBuilder, traits::IntoSycamore};
-use notedown_ast::{ASTNodes, Result};
+use notedown_ast::Result;
 use sycamore::prelude::GenericNode;
 
 pub fn error_inline<G: GenericNode>(msg: &str) -> G {

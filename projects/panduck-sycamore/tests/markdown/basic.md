@@ -89,7 +89,7 @@ One minor quibble is in the highlighting of inline links. As currently
 (1.4) implemented the presence of a close paren on the same line as an
 inline link will highlight the link and the subsequent text:
 
-[blah](this bit will be highlighted) and so (will this bit)
+   [blah](this bit will be highlighted) and so (will this bit)
 
 I think this is because of greedy regexes. Here is a simple patch to address.
 
@@ -99,7 +99,7 @@ I think this is because of greedy regexes. Here is a simple patch to address.
 
 Here's a [link] [1] with a space between the components.
 
-[1]: http://daringfireball.net/projects/markdown/syntax
+ [1]: http://daringfireball.net/projects/markdown/syntax
 
 
 9. Inline Code
@@ -150,9 +150,9 @@ syntax highlighting for [Markdown][] documents which allows reference-style
 links like these.  The reference definitions can even contain alternate
 text such as [this one][id].
 
-[markdown-mode]: http://jrblevin.freeshell.org/software/markdown-mode
-[Markdown]:      http://daringfireball.net/projects/markdown "Markdown Homepage"
-[id]:            http://reference-link.com/with/alt "Alternate Text"
+ [markdown-mode]: http://jrblevin.freeshell.org/software/markdown-mode
+ [Markdown]:      http://daringfireball.net/projects/markdown "Markdown Homepage"
+ [id]:            http://reference-link.com/with/alt "Alternate Text"
 
 
 15. Escaping
@@ -308,28 +308,28 @@ Here's another `valid` one.
 28. Pre Blocks and Nested Lists
 -------------------------------
 
-- List level 1 item 1
-- List level 1 item 2
+   - List level 1 item 1
+   - List level 1 item 2
 
-  This is a second paragraph, part of item 2.
+     This is a second paragraph, part of item 2.
 
-      This nested pre block should match
+         This nested pre block should match
 
-          So should this
+             So should this
 
-  Now we move back to the list.
+     Now we move back to the list.
 
-- List level 1 item 3
+   - List level 1 item 3
 
-  - List level 2 item 1
+       - List level 2 item 1
 
-        Nested pre block
+             Nested pre block
 
-  - List level 2 item 2
+       - List level 2 item 2
 
-    - List level 3 item 1
+           - List level 3 item 1
 
-          Nested pre block
+                 Nested pre block
 
 
 29. Colon After Wiki Link
@@ -348,7 +348,7 @@ It is interesting to see what happens when one queries
 
 * `social upheaval`: the following queries have been tried:
 
-  social upheaval subClassOf
+    social upheaval subClassOf
 
 The preceding text should not be matched as a preformatted block.
 

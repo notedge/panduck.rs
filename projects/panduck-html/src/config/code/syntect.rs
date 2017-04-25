@@ -2,9 +2,7 @@ use notedown_ast::{nodes::CodeNode, Result};
 use syntect::{
     easy::HighlightLines,
     highlighting::{Color, Theme, ThemeSet},
-    html::{
-        append_highlighted_html_for_styled_line, highlighted_html_for_string, start_highlighted_html_snippet, IncludeBackground,
-    },
+    html::{append_highlighted_html_for_styled_line, highlighted_html_for_string, IncludeBackground},
     parsing::SyntaxSet,
     util::LinesWithEndings,
 };
