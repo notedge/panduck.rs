@@ -9,9 +9,7 @@ license = "MPL-2.0"
 edition = "2018"
 
 [dependencies]
-notedown_ast = "0.13.9"
-# zola = "0.13"
+notedown_ast = "0.13.11"
 
-[dev-dependencies.panduck-core]
-version = "0.1"
-path = "../panduck-core"
+[dev-dependencies]
+panduck-core= "0.1.3"

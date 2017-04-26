@@ -17,17 +17,17 @@ path = "../panduck-html"
 default-features = false
 
 [dependencies.sycamore]
-version = "0.7.0"
+version = "0.7.1"
 features = ["ssr"]
 
 [dev-dependencies.panduck-core]
-version = "0.1"
+version = "0.1.*"
 path = "../panduck-core"
 features = ["markdown"]
 
 
 [features]
 default = ["local"]
-local = ["panduck-html/katex", "panduck-html/syntect"]
+local = ["panduck-html/katex", "panduck-html/syntect", ]
 
 
