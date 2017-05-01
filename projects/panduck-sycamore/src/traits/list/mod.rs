@@ -1,5 +1,5 @@
 use super::*;
-use notedown_ast::nodes::{ListDetailedNode, ListItem};
+use notedown_ast::nodes::{DetailedList, ListItem};
 
 impl<G> IntoSycamore<G> for ListView
 where
@@ -38,7 +38,7 @@ where
     }
 }
 
-impl<G> IntoSycamore<G> for ListDetailedNode
+impl<G> IntoSycamore<G> for DetailedList
 where
     G: GenericNode,
 {
