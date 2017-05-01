@@ -18,10 +18,11 @@ default-features = false
 
 [dependencies.sycamore]
 version = "0.7.1"
+git = "https://github.com/notedge/sycamore.git"
 features = ["ssr"]
 
 [dev-dependencies.panduck-core]
-version = "0.1.*"
+version = "0.1"
 path = "../panduck-core"
 features = ["markdown"]
 
