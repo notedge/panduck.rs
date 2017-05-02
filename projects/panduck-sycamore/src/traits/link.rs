@@ -81,8 +81,11 @@ impl<G> IntoSycamore<G> for HyperLink
 where
     G: GenericNode,
 {
+    //<a href="https://www.runoob.com/">访问菜鸟教程</a>
     fn into_sycamore(self, _: &SycamoreBuilder) -> G {
-        let a = GenericNode::element("a");
+        let a: G = GenericNode::element("a");
+        a.set_attribute("href", &self.src);
+        self.text.map(|f| a.update_inner_text(&f));
         return a;
     }
 }

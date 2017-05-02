@@ -17,7 +17,7 @@ fn node_prefix(kind: &NodeList) -> ListPrefixSymbol {
 
 pub fn node_list<'a>(_: NodeList, nodes: ASTNodes) -> ASTNode {
     match &nodes.len() {
-        0 => ASTNode::default(),
+        0 => unimplemented!("{:#?}", nodes),
         1 => nodes.get(0).unwrap().to_owned(),
         _ => {
             let mut nodes = nodes.iter();
@@ -47,9 +47,27 @@ pub fn node_item<'a>(kind: NodeList, nodes: ASTNodes) -> ASTNode {
 }
 
 pub fn block_quote<'a>(node: &'a AstNode<'a>) -> ASTNode {
-    let item = ListItem {
-        prefix: Literal { value: ListPrefixSymbol::Quote, range: None },
-        rest: node.children().into_notedown_list(),
-    };
-    ListView::quote_list(vec![item]).into()
+    let nodes = node.children().into_notedown_list();
+    match &nodes.len() {
+        0 => unimplemented!("{:#?}", nodes),
+        1 => {
+            let node = nodes.get(0);
+
+            match node {
+                None => unimplemented!("{:#?}", nodes),
+                Some(s) => {
+                    let item =
+                        ListItem { prefix: Literal { value: ListPrefixSymbol::Quote, range: None }, rest: vec![s.to_owned()] };
+                    ListView::quote_list(vec![item]).into()
+                }
+            }
+        }
+        _ => {
+            let item = ListItem {
+                prefix: Literal { value: ListPrefixSymbol::Quote, range: None },
+                rest: node.children().into_notedown_list(),
+            };
+            ListView::quote_list(vec![item]).into()
+        }
+    }
 }

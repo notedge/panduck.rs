@@ -23,3 +23,9 @@ pub fn markdown_it() -> Result<()> {
     html_standalone(include_str!("markdown-it.md"), include_str!("markdown-it.html"))?;
     Ok(())
 }
+
+#[test]
+pub fn punctuation() -> Result<()> {
+    html_standalone(include_str!("punctuation.md"), include_str!("punctuation.html"))?;
+    Ok(())
+}

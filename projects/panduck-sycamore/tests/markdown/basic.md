@@ -1,8 +1,7 @@
 markdown-mode Test Cases
 ========================
 
-1. Lists
---------
+## 1. Lists
 
 Unordered lists:
 
@@ -30,15 +29,15 @@ Bold and italic phrases at the beginning of lines:
 **also not a list**
 
 
-2. Blockquotes
---------------
+## 2. Blockquotes
+
 
 > this is a test
 > of the blockquote mechanism
 
 
-3. Two Inline Links on One Line
--------------------------------
+## 3. Two Inline Links on One Line
+
 
 *Contributed by Ryan Barrett on 2007-07-02*
 
@@ -52,16 +51,14 @@ it to non-greedy - if elisp can do that - or to something like '\[[^]]+\]' if
 not, that might do the trick.
 
 
-4. Empty Inline Links
----------------------
+## 4. Empty Inline Links
 
 []()
 [](asdf)
 [asdf]()
 
 
-5. Bold and Italics on the Same Line
-------------------------------------
+## 5. Bold and Italics on the Same Line
 
 *Contributed by Conal Elliott on 2007-08-27*
 
@@ -71,15 +68,13 @@ By the way, here are two syntax-highlighting glitches I've seen so far:
 Oh -- what's happening here?
 
 
-6. Reverse Order Italic then Bold
----------------------------------
+## 6. Reverse Order Italic then Bold
 
 Why doesn't the bold part get picked up?
 *ziddle zop* or **foo and doo**
 
 
-7. Two Inline Links in One Line
--------------------------------
+## 7. Two Inline Links in One Line
 
 *Contributed by Alastair Rankine on 2007-09-10*
 
@@ -94,35 +89,30 @@ inline link will highlight the link and the subsequent text:
 I think this is because of greedy regexes. Here is a simple patch to address.
 
 
-8. Reference-Style Link with a Space
-------------------------------------
+## 8. Reference-Style Link with a Space
 
 Here's a [link] [1] with a space between the components.
 
  [1]: http://daringfireball.net/projects/markdown/syntax
 
 
-9. Inline Code
---------------
+## 9. Inline Code
 
 Single `backtick code` fragments as well as ``double`backtick`` fragments are
 supported.
 
 
-10. Single Underscore and Asterisk
-----------------------------------
+## 10. Single Underscore and Asterisk
 
 This is a _ single underscore and a * single asterisk.
 They should not trigger font locking.
 
 
-11. Double Underscores and Asterisks
-------------------------------------
+## 11. Double Underscores and Asterisks
 
 Neither should a double **asterisk and double__ underscore!
 
-12. List-Like Strings in Preformatted Text
-------------------------------------------
+## 12. List-Like Strings in Preformatted Text
 
 To make lists look nice, you can wrap items with hanging indents:
 
@@ -132,8 +122,7 @@ To make lists look nice, you can wrap items with hanging indents:
     *   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
         Suspendisse id sem consectetuer libero luctus adipiscing.
 
-13. Multi-Line Italic and Bold
-------------------------------
+## 13. Multi-Line Italic and Bold
 
 bold **phrase spanning
 two lines** asdf **same line** test
@@ -142,8 +131,7 @@ italic *phrase spanning
 two lines* italic *same line* test
 
 
-14. Reference Links
--------------------
+## 14. Reference Links
 
 This document was created in GNU Emacs using [markdown-mode][].  It provides
 syntax highlighting for [Markdown][] documents which allows reference-style
@@ -155,8 +143,7 @@ text such as [this one][id].
  [id]:            http://reference-link.com/with/alt "Alternate Text"
 
 
-15. Escaping
-------------
+## 15. Escaping
 
 ab \*literal asterisks\* asdf *inside \* literal asterisks* asd lkj
 
@@ -166,8 +153,7 @@ ab *\*this should be italic\** yz
 ab *\*this should be italic*\* yz
 
 
-16. Single Letter and Word on Same Line
----------------------------------------
+## 16. Single Letter and Word on Same Line
 
 a single **a** bold letter and bold word **test** asdf  
 a single _a_ italic letter and italic word _test_ asdf  
@@ -175,16 +161,14 @@ a single __a__ bold letter and bold word __test__ asdf
 a single *a* italic letter italic word *test* asdf
 
 
-17. Hanging Indents
--------------------
+## 17. Hanging Indents
 
 *   An exclamation mark: `!`;
 *   followed by a set of square brackets, containing the `alt`
     attribute text for the image;
 
 
-18. Links in Preformatted Text
-------------------------------
+## 18. Links in Preformatted Text
 
 Here's an example of reference links in action:
 
@@ -198,8 +182,7 @@ Here's an example of reference links in action:
      [id]:            http://reference-link.com/with/alt "Alternate Text"
 
 
-19. Slash-Star in Preformatted Text
------------------------------------
+## 19. Slash-Star in Preformatted Text
 
     svn commit -m "Imported RCS project"
     svn add image.png binaries/*
@@ -211,16 +194,14 @@ by a star-slash: */ It is as if `markdown-mode` is using C++ style comments.
 Fixed by commit d81138d.
 
 
-20. Underscores in Code Blocks
-------------------------------
+## 20. Underscores in Code Blocks
 
 *Contributed by shindo on 2008-01-20*
 
     get_something_by_name()
 
 
-21. Escaped Characters
-----------------------
+## 21. Escaped Characters
 
 Escaped backticks: \`not code\`
 
@@ -232,22 +213,19 @@ Escaped hash marks:
 \# This is not a heading
 
 
-22. Adjacent Wiki Links
------------------------
+## 22. Adjacent Wiki Links
 
 [[Two]] [[WikiLinks]] [[InARow]]
 
 
-23. SmartyPants
----------------
+## 23. SmartyPants
 
 This is a test of "SmartyPants," a progrm written by John Gruber for
 generating typographically correct HTML entities--ones such as
 the em-dash and ellipsis...
 
 
-24. Horizontal Rules
---------------------
+## 24. Horizontal Rules
 
 * * * * *
 
@@ -256,8 +234,7 @@ the em-dash and ellipsis...
 * *** * * *** * * *
 
 
-25. Asterisks and Underscores Across Blocks
--------------------------------------------
+## 25. Asterisks and Underscores Across Blocks
 
 Asterisks *should
 
@@ -282,14 +259,12 @@ So should _this_.
 Addressed by commit d81138d.
 
 
-26. Underscores Within Words
-----------------------------
+## 26. Underscores Within Words
 
 Code fragments `can_have_underscores_inside_like` this.
 
 
-27. Code Blocks Spanning Lines
-------------------------------
+## 27. Code Blocks Spanning Lines
 
 Markdown allows `code
 fragments` to span across lines.
@@ -305,8 +280,7 @@ match` across blocks.
 Here's another `valid` one.
 
 
-28. Pre Blocks and Nested Lists
--------------------------------
+## 28. Pre Blocks and Nested Lists
 
    - List level 1 item 1
    - List level 1 item 2
@@ -332,14 +306,12 @@ Here's another `valid` one.
                  Nested pre block
 
 
-29. Colon After Wiki Link
--------------------------
+## 29. Colon After Wiki Link
 
 [[AnotherLink]]:note
 
 
-30. Incorrect Parsing of List Paragraph
----------------------------------------
+## 30. Incorrect Parsing of List Paragraph
 
 *Contributed by Luciano Gerber <garopaba_uk@yahoo.co.uk> on April 4, 2012.*
 
@@ -353,8 +325,7 @@ It is interesting to see what happens when one queries
 The preceding text should not be matched as a preformatted block.
 
 
-31. Footnotes
--------------
+## 31. Footnotes
 
 This is a footnote marker,[^1] but this is not.[^]
 
@@ -363,31 +334,27 @@ This is a footnote marker,[^1] but this is not.[^]
     [^2]: but this is preformatted text.
 
 
-32. Carat as Implicit Reference Link
-------------------------------------
+## 32. Carat as Implicit Reference Link
 
 This is a valid markdown link: [^][]
 
 [^]: http://jblevins.org/ "And this is a valid reference definition!"
 
 
-33. Email Address Inside Bold and Italic Spans
-----------------------------------------------
+## 33. Email Address Inside Bold and Italic Spans
 
 *Lorem <ipsum@dolor.sit> amet.*
 
 **Lorem <ipsum@dolor.sit> amet.**
 
 
-34. URL Inside Bold and Italic Spans
-------------------------------------
+## 34. URL Inside Bold and Italic Spans
 
 *markdown-mode homepage http://jblevins.org/projects/markdown-mode/*
 
 **markdown-mode homepage http://jblevins.org/projects/markdown-mode/**
 
-35. Complex Preformatted Code Block
------------------------------------
+## 35. Complex Preformatted Code Block
 
     class Employee < ActiveRecord::Base
       attr_accessible :github_username, :name
@@ -412,8 +379,7 @@ This is a valid markdown link: [^][]
       after_destroy do |employee| Employee.syncify! end
     end
 
-36. Fenced Code Blocks
-----------------------
+## 36. Fenced Code Blocks
 
 Fenced code blocks begin with three or more tildes and end with a line
 with at least as many tildes.
