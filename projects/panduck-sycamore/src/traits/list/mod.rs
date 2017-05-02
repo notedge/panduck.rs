@@ -9,8 +9,9 @@ where
         match self {
             ListView::Quote(v) => {
                 let item: G = GenericNode::element("blockquote");
-                // unimplemented!("{:#?}", v.children);
-                push_nodes(&item, v.children, ctx);
+                for i in v.children {
+                    push_nodes(&item, i.rest, ctx);
+                }
                 return item;
             }
             ListView::Ordered(v) => {

@@ -52,7 +52,6 @@ pub fn block_quote<'a>(node: &'a AstNode<'a>) -> ASTNode {
         0 => unimplemented!("{:#?}", nodes),
         1 => {
             let node = nodes.get(0);
-
             match node {
                 None => unimplemented!("{:#?}", nodes),
                 Some(s) => {

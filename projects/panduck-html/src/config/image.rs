@@ -6,7 +6,7 @@ pub struct ImageConfig {
 
 impl Default for ImageConfig {
     fn default() -> Self {
-        Self { lazy_loading: true }
+        Self { lazy_loading: false }
     }
 }
 

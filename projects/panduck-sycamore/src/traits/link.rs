@@ -61,18 +61,20 @@ where
         if let Some(s) = self.description {
             img.set_attribute("alt", &s)
         };
-        match cfg.lazy_loading {
-            true => img.set_attribute("loading", "lazy"),
-            false => {
-                // img.set_attribute("loading", "eager") // default, hide
+        if let true = cfg.lazy_loading {
+            // img.set_attribute("loading", "eager") // default, hide
+            img.set_attribute("loading", "lazy")
+        }
+        let link = match self.link {
+            None => return img,
+            Some(s) => {
+                let link: G = GenericNode::element("a");
+                link.append_child(&img);
+                link.set_attribute("src", &s);
+                link
             }
-        }
-        if false {
-            return img;
-        }
+        };
 
-        let link: G = GenericNode::element("a");
-        link.append_child(&img);
         return link;
     }
 }
@@ -81,7 +83,6 @@ impl<G> IntoSycamore<G> for HyperLink
 where
     G: GenericNode,
 {
-    //<a href="https://www.runoob.com/">访问菜鸟教程</a>
     fn into_sycamore(self, _: &SycamoreBuilder) -> G {
         let a: G = GenericNode::element("a");
         a.set_attribute("href", &self.src);
