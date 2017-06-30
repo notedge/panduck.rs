@@ -37,6 +37,9 @@ parse_wiki_text = { version = "0.1.5", optional = true }
 docx-rs = { version = "0.4.3", optional = true }
 calamine = { version = "0.18.0", optional = true }
 
+[dependencies.notedown-wasi]
+version = "0.0.1"
+
 [dev-dependencies]
 
 [features]
