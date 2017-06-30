@@ -1,3 +1,5 @@
+use panduck_markdown::{MarkdownReader,};
+
 // use notedown_ast::ASTNode;
 //
 // use panduck_core::Result;
@@ -13,6 +15,16 @@
 fn ready() {
     println!("it works!")
 }
+
+
+#[test]
+fn test_normal() {
+    let mut reader = MarkdownReader::default();
+
+    let out = reader.load_str("hello world!").unwrap();
+    println!("{out:#?}")
+}
+
 //
 // pub fn html_fragment_builder(parser: fn(&str) -> Result<ASTNode>) -> impl FnOnce(&str, &str) -> Result<()> {
 //     move |source, target| {
