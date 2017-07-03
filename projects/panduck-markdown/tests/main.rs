@@ -1,4 +1,4 @@
-use panduck_markdown::{MarkdownReader,};
+use panduck_markdown::{MarkdownParser};
 
 // use notedown_ast::ASTNode;
 //
@@ -19,7 +19,7 @@ fn ready() {
 
 #[test]
 fn test_normal() {
-    let mut reader = MarkdownReader::default();
+    let mut reader = MarkdownParser::default();
 
     let out = reader.load_str("hello world!").unwrap();
     println!("{out:#?}")

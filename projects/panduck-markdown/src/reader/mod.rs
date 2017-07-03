@@ -1,36 +1,77 @@
 use std::cell::RefCell;
-use comrak::{Arena, ComrakExtensionOptions, ComrakOptions, ComrakParseOptions, parse_document};
-use comrak::arena_tree::Node;
-use comrak::nodes::{Ast, AstNode, NodeMath, NodeValue};
+use markdown::{Constructs, ParseOptions, to_mdast};
+use markdown::mdast::Node;
+
 use wasi_notedown::exports::notedown::core::syntax_tree::{MathContent, MathDisplay, MathSpan, NotedownBlock, NotedownRoot};
 use wasi_notedown::exports::notedown::core::types::{NotedownError, TextRange};
 use crate::utils::{ReadState, ReadMarkdown};
 
 
-pub struct MarkdownReader {}
+pub struct MarkdownParser {}
 
-impl Default for MarkdownReader {
+impl Default for MarkdownParser {
     fn default() -> Self {
         Self {}
     }
 }
 
-impl MarkdownReader {
-    pub fn load_str(&self, input: &str) -> Result<NotedownRoot, NotedownError> {
-        let arena = Arena::new();
-        let mut extension = ComrakExtensionOptions::default();
-        extension.math_code = true;
-        extension.table = true;
-        let mut parse = ComrakParseOptions::default();
-        parse.smart = true;
-        let options = ComrakOptions {
-            extension,
-            parse,
-            render: Default::default(),
+impl MarkdownParser {
+    pub fn load_str(&self, input: &str) -> Result<NotedownRoot, Vec<NotedownError>> {
+        let config = ParseOptions {
+            constructs: Constructs {
+                attention: true,
+                autolink: true,
+                block_quote: true,
+                character_escape: true,
+                character_reference: true,
+                code_indented: true,
+                code_fenced: true,
+                code_text: true,
+                definition: true,
+                frontmatter: true,
+                gfm_autolink_literal: true,
+                gfm_footnote_definition: true,
+                gfm_label_start_footnote: true,
+                gfm_strikethrough: true,
+                gfm_table: true,
+                gfm_task_list_item: true,
+                hard_break_escape: true,
+                hard_break_trailing: true,
+                heading_atx: true,
+                heading_setext: true,
+                html_flow: true,
+                html_text: true,
+                label_start_image: true,
+                label_start_link: true,
+                label_end: true,
+                list_item: true,
+                math_flow: true,
+                math_text: true,
+                mdx_esm: true,
+                mdx_expression_flow: true,
+                mdx_expression_text: true,
+                mdx_jsx_flow: true,
+                mdx_jsx_text: true,
+                thematic_break: true,
+            },
+            gfm_strikethrough_single_tilde: false,
+            math_text_single_dollar: false,
+            mdx_expression_parse: None,
+            mdx_esm_parse: None,
         };
         let mut state = ReadState::default();
-        let parsed = parse_document(&arena, input, &options);
-        return Ok(NotedownRoot { blocks: parsed.into_note_down(&mut state)?, path: None });
+        let root = match to_mdast(input, &config) {
+            Ok(to_mdast) => {
+                match to_mdast.into_note_down(&mut state) {
+                    Ok(o) => { o }
+                    Err(e) => {
+                        todo!()
+                    }
+                }
+            }
+            Err(e) => { todo!() }
+        };
+        Ok(root)
     }
 }
 
@@ -39,72 +80,60 @@ enum MaybeInline {
     Inline(MathSpan),
 }
 
-impl<'a> ReadMarkdown<Vec<NotedownBlock>> for &'a Node<'a, RefCell<Ast>> {
-    fn into_note_down(self, state: &mut ReadState) -> Result<Vec<NotedownBlock>, NotedownError> {
-        let node: NodeValue = self.data.borrow().value.to_owned();
-        match node {
-            NodeValue::Document => {
-                let mut blocks = Vec::with_capacity(4);
-                for child in self.children() {
-                    blocks.extend(child.into_note_down(state)?)
-                }
-                Ok(blocks)
+impl ReadMarkdown<NotedownRoot> for Node {
+    fn into_note_down(self, state: &mut ReadState) -> Result<NotedownRoot, NotedownError> {
+        match self {
+            Node::Root(v) => {
+                todo!()
             }
-            NodeValue::FrontMatter(_) => { unreachable!() }
-            NodeValue::BlockQuote => { unreachable!() }
-            NodeValue::List(_) => { unreachable!() }
-            NodeValue::Item(_) => { unreachable!() }
-            NodeValue::DescriptionList => { unreachable!() }
-            NodeValue::DescriptionItem(_) => { unreachable!() }
-            NodeValue::DescriptionTerm => { unreachable!() }
-            NodeValue::DescriptionDetails => { unreachable!() }
-            NodeValue::CodeBlock(_) => { unreachable!() }
-            NodeValue::HtmlBlock(_) => { unreachable!() }
-            NodeValue::Paragraph => {
-                let mut blocks = Vec::with_capacity(4);
-                for child in self.children() {
-                    blocks.extend(child.into_note_down(state)?)
-                }
-                Ok(blocks)
-            }
-            NodeValue::Heading(_) => { unreachable!() }
-            NodeValue::ThematicBreak => { unreachable!() }
-            NodeValue::FootnoteDefinition(_) => { unreachable!() }
-            NodeValue::Table(_) => { unreachable!() }
-            NodeValue::TableRow(_) => { unreachable!() }
-            NodeValue::TableCell => { unreachable!() }
-            NodeValue::Text(_) => { unreachable!() }
-            NodeValue::TaskItem(_) => { unreachable!() }
-            NodeValue::SoftBreak => { unreachable!() }
-            NodeValue::LineBreak => { unreachable!() }
-            NodeValue::Code(_) => { unreachable!() }
-            NodeValue::HtmlInline(_) => { unreachable!() }
-            NodeValue::Emph => { unreachable!() }
-            NodeValue::Strong => { unreachable!() }
-            NodeValue::Strikethrough => { unreachable!() }
-            NodeValue::Superscript => { unreachable!() }
-            NodeValue::Link(_) => { unreachable!() }
-            NodeValue::Image(_) => { unreachable!() }
-            NodeValue::FootnoteReference(_) => { unreachable!() }
-            NodeValue::ShortCode(_) => { unreachable!() }
-            NodeValue::Math(v) => { unreachable!() }
-            NodeValue::MultilineBlockQuote(_) => { unreachable!() }
-            NodeValue::Escaped => { unreachable!() }
+            Node::BlockQuote(_) => { todo!() }
+            Node::FootnoteDefinition(_) => { todo!() }
+            Node::MdxJsxFlowElement(_) => { todo!() }
+            Node::List(_) => { todo!() }
+            Node::MdxjsEsm(_) => { todo!() }
+            Node::Toml(_) => { todo!() }
+            Node::Yaml(_) => { todo!() }
+            Node::Break(_) => { todo!() }
+            Node::InlineCode(_) => { todo!() }
+            Node::InlineMath(_) => { todo!() }
+            Node::Delete(_) => { todo!() }
+            Node::Emphasis(_) => { todo!() }
+            Node::MdxTextExpression(_) => { todo!() }
+            Node::FootnoteReference(_) => { todo!() }
+            Node::Html(_) => { todo!() }
+            Node::Image(_) => { todo!() }
+            Node::ImageReference(_) => { todo!() }
+            Node::MdxJsxTextElement(_) => { todo!() }
+            Node::Link(_) => { todo!() }
+            Node::LinkReference(_) => { todo!() }
+            Node::Strong(_) => { todo!() }
+            Node::Text(_) => { todo!() }
+            Node::Code(_) => { todo!() }
+            Node::Math(_) => { todo!() }
+            Node::MdxFlowExpression(_) => { todo!() }
+            Node::Heading(_) => { todo!() }
+            Node::Table(_) => { todo!() }
+            Node::ThematicBreak(_) => { todo!() }
+            Node::TableRow(_) => { todo!() }
+            Node::TableCell(_) => { todo!() }
+            Node::ListItem(_) => { todo!() }
+            Node::Definition(_) => { todo!() }
+            Node::Paragraph(_) => { todo!() }
         }
     }
 }
 
-
-impl ReadMarkdown<MathSpan> for NodeMath {
-    fn into_note_down(self, _: &mut ReadState) -> Result<MathSpan, NotedownError> {
-        let content = MathContent::Tex(self.literal);
-        Ok(MathSpan {
-            display: MathDisplay::Inline,
-            content,
-            range: TextRange { head_offset: 0, tail_offset: 0 },
-        })
-    }
-}
+//
+// impl ReadMarkdown<MathSpan> for NodeMath {
+//     fn into_note_down(self, _: &mut ReadState) -> Result<MathSpan, NotedownError> {
+//         let content = MathContent::Tex(self.literal);
+//         Ok(MathSpan {
+//             display: MathDisplay::Inline,
+//             content,
+//             range: TextRange { head_offset: 0, tail_offset: 0 },
+//         })
+//     }
+// }
 
 #[test]
 fn ready() {

@@ -1,4 +1,4 @@
 mod reader;
 mod utils;
 
-pub use reader::MarkdownReader;
+pub use reader::MarkdownParser;
