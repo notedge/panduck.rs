@@ -1,7 +1,7 @@
+
 use super::*;
-use crate::utils::GetTextRange;
-use markdown::mdast::Code;
-use wasi_notedown::exports::notedown::core::syntax_tree::{CodeAction, CodeHighlight, CodeSpan};
+
+
 
 impl NoteBlock for Node {
     fn note_down_block(self, state: &mut ReadState) -> Result<RootItem, NotedownError> {
@@ -16,9 +16,7 @@ impl NoteBlock for Node {
             Node::MdxJsxFlowElement(_) => {
                 todo!()
             }
-            Node::List(_) => {
-                todo!()
-            }
+            Node::List(list) => list.note_down_block(state),
             Node::MdxjsEsm(_) => {
                 todo!()
             }
@@ -122,19 +120,19 @@ impl NoteBlock for Paragraph {
 
 impl NoteBlock for Code {
     fn note_down_block(self, _: &mut ReadState) -> Result<RootItem, NotedownError> {
-        let math = CodeSpan {
+        let math = CodeEnvironment {
             action: CodeAction::Highlight(CodeHighlight { language: self.lang.unwrap(), range: self.position.as_range() }),
             lines: self.value,
             range: self.position.as_range(),
         };
-        Ok(RootItem::CodeBlock(math))
+        Ok(RootItem::Code(math))
     }
 }
 
 impl NoteBlock for Math {
     fn note_down_block(self, _: &mut ReadState) -> Result<RootItem, NotedownError> {
         let content = MathContent::Tex(self.value);
-        let math = MathSpan { display: MathDisplay::Block, content, range: TextRange { head_offset: 0, tail_offset: 0 } };
-        Ok(RootItem::MathBlock(math))
+        let math = MathEnvironment { display: MathDisplay::Block, content, range: TextRange { head_offset: 0, tail_offset: 0 } };
+        Ok(RootItem::Math(math))
     }
 }

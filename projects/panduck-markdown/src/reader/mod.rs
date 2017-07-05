@@ -1,15 +1,20 @@
-use crate::utils::{NoteBlock, NoteInline, NoteRoot, ReadState};
+use crate::utils::{GetTextRange, NoteBlock, NoteInline, NoteRoot, ReadState};
 use markdown::{
-    mdast::{Math, Node, Paragraph, Root, Text},
+    mdast::{Code, Delete, Emphasis, InlineCode, InlineMath, List, Math, Node, Paragraph, Root, Strong, Table, Text},
     to_mdast, Constructs, ParseOptions,
 };
 use wasi_notedown::exports::notedown::core::{
-    syntax_tree::{MathContent, MathDisplay, MathSpan, NotedownRoot, ParagraphBlock, ParagraphItem, RootItem},
+    syntax_tree::{
+        CodeAction, CodeEnvironment, CodeHighlight, MathContent, MathDisplay, MathEnvironment, NormalText, NotedownRoot,
+        ParagraphBlock, ParagraphItem, RootItem, StyleType, StyledText,
+    },
     types::{NotedownError, TextRange},
 };
 
-mod old;
 mod code;
+mod list;
+mod old;
+mod table;
 
 pub struct MarkdownParser {}
 
@@ -87,109 +92,6 @@ impl NoteRoot for Node {
         }
     }
 }
-
-
-
-impl NoteInline for Node {
-    fn note_down_inline(self, state: &mut ReadState) -> Result<ParagraphItem, NotedownError> {
-        match self {
-            Node::Root(_) => {
-                todo!()
-            }
-            Node::BlockQuote(_) => {
-                todo!()
-            }
-            Node::FootnoteDefinition(_) => {
-                todo!()
-            }
-            Node::MdxJsxFlowElement(_) => {
-                todo!()
-            }
-            Node::List(_) => {
-                todo!()
-            }
-            Node::MdxjsEsm(_) => {
-                todo!()
-            }
-            Node::Toml(_) => {
-                todo!()
-            }
-            Node::Yaml(_) => {
-                todo!()
-            }
-            Node::Break(_) => {
-                todo!()
-            }
-            Node::InlineCode(v) => v.note_down_inline(state),
-            Node::InlineMath(_) => {
-                todo!()
-            }
-            Node::Delete(v) => v.note_down_inline(state),
-            Node::Emphasis(v) => v.note_down_inline(state),
-            Node::MdxTextExpression(_) => {
-                todo!()
-            }
-            Node::FootnoteReference(_) => {
-                todo!()
-            }
-            Node::Html(_) => {
-                todo!()
-            }
-            Node::Image(_) => {
-                todo!()
-            }
-            Node::ImageReference(_) => {
-                todo!()
-            }
-            Node::MdxJsxTextElement(_) => {
-                todo!()
-            }
-            Node::Link(_) => {
-                todo!()
-            }
-            Node::LinkReference(_) => {
-                todo!()
-            }
-            Node::Strong(v) => v.note_down_inline(state),
-            Node::Text(v) => v.note_down_inline(state),
-            Node::Code(_) => {
-                todo!()
-            }
-            Node::Math(_) => {
-                todo!()
-            }
-            Node::MdxFlowExpression(_) => {
-                todo!()
-            }
-            Node::Heading(_) => {
-                todo!()
-            }
-            Node::Table(_) => {
-                todo!()
-            }
-            Node::ThematicBreak(_) => {
-                todo!()
-            }
-            Node::TableRow(_) => {
-                todo!()
-            }
-            Node::TableCell(_) => {
-                todo!()
-            }
-            Node::ListItem(_) => {
-                todo!()
-            }
-            Node::Definition(_) => {
-                todo!()
-            }
-            Node::Paragraph(v) => {
-                todo!()
-            }
-        }
-    }
-}
-
-
 
 impl NoteRoot for Root {
     fn note_down_root(self, state: &mut ReadState) -> Result<NotedownRoot, NotedownError> {
