@@ -12,8 +12,8 @@ use wasi_notedown::exports::notedown::core::{
 };
 
 mod code;
+mod inline;
 mod list;
-mod old;
 mod table;
 
 pub struct MarkdownParser {}
@@ -95,17 +95,22 @@ impl NoteRoot for Node {
 
 impl NoteRoot for Root {
     fn note_down_root(self, state: &mut ReadState) -> Result<NotedownRoot, NotedownError> {
-        let mut blocks = Vec::with_capacity(self.children.len());
-        for x in self.children {
-            match x.note_down_block(state) {
-                Ok(o) => blocks.push(o),
-                Err(e) => {
-                    state.errors.push(e);
-                }
-            }
-        }
+        let blocks = root_items(self.children, state)?;
         Ok(NotedownRoot { blocks, path: None })
     }
+}
+
+fn root_items(children: Vec<Node>, state: &mut ReadState) -> Result<Vec<RootItem>, NotedownError> {
+    let mut blocks = Vec::with_capacity(children.len());
+    for x in children {
+        match x.note_down_block(state) {
+            Ok(o) => blocks.push(o),
+            Err(e) => {
+                state.errors.push(e);
+            }
+        }
+    }
+    Ok(blocks)
 }
 
 #[test]

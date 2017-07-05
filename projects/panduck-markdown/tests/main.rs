@@ -1,16 +1,7 @@
 use panduck_markdown::MarkdownParser;
 
-// use notedown_ast::ASTNode;
-//
-// use panduck_core::Result;
-// use panduck_sycamore::SycamoreConfig;
-//
-// mod docx;
-// mod html;
-// mod jupyter;
-// mod markdown;
-// mod rst;
-//
+mod lists;
+
 #[test]
 fn ready() {
     println!("it works!")
@@ -58,27 +49,3 @@ pub fn test_table() {
     let reader = MarkdownParser::default();
     let _ = reader.load_str(TEST_TABLE1).unwrap();
 }
-
-const TEST_LIST1: &'static str = r#"
-- a
-- b
-- c
-"#;
-
-#[test]
-pub fn test_list() {
-    let reader = MarkdownParser::default();
-    let _ = reader.load_str(TEST_LIST1).unwrap();
-}
-
-
-
-//
-// pub fn html_standalone_builder(parser: fn(&str) -> Result<ASTNode>) -> impl FnOnce(&str, &str) -> Result<()> {
-//     move |source, target| {
-//         let mut builder = SycamoreConfig::default().into_builder();
-//         let ast = parser(source)?;
-//         assert_eq!(builder.render_standalone(ast), target);
-//         Ok(())
-//     }
-// }
