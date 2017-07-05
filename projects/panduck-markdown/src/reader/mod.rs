@@ -1,12 +1,15 @@
-use std::cell::RefCell;
-use markdown::{Constructs, ParseOptions, to_mdast};
-use markdown::mdast::{Math, Node, Paragraph, Root};
-use markdown::unist::Position;
+use crate::utils::{NoteBlock, NoteInline, NoteRoot, ReadState};
+use markdown::{
+    mdast::{Math, Node, Paragraph, Root, Text},
+    to_mdast, Constructs, ParseOptions,
+};
+use wasi_notedown::exports::notedown::core::{
+    syntax_tree::{MathContent, MathDisplay, MathSpan, NotedownRoot, ParagraphBlock, ParagraphItem, RootItem},
+    types::{NotedownError, TextRange},
+};
 
-use wasi_notedown::exports::notedown::core::syntax_tree::{BlockType, MathContent, MathDisplay, MathSpan, NotedownBlock, NotedownRoot, ParagraphBlock, ParagraphTerm};
-use wasi_notedown::exports::notedown::core::types::{NotedownError, TextRange};
-use crate::utils::{ReadState, NoteBlock, NoteRoot, NoteInline};
-
+mod old;
+mod code;
 
 pub struct MarkdownParser {}
 
@@ -62,178 +65,144 @@ impl MarkdownParser {
         };
         let mut state = ReadState::default();
         let root = match to_mdast(input, &config) {
-            Ok(to_mdast) => {
-                match to_mdast.note_down_root(&mut state) {
-                    Ok(o) => { o }
-                    Err(e) => {
-                        todo!()
-                    }
+            Ok(to_mdast) => match to_mdast.note_down_root(&mut state) {
+                Ok(o) => o,
+                Err(e) => {
+                    todo!()
                 }
+            },
+            Err(e) => {
+                todo!()
             }
-            Err(e) => { todo!() }
         };
-        Ok(NotedownRoot { blocks: root, path: None })
+        Ok(root)
     }
 }
 
 impl NoteRoot for Node {
     fn note_down_root(self, state: &mut ReadState) -> Result<NotedownRoot, NotedownError> {
         match self {
-            Self::Root(node) => {}
-            _ => unreachable!("{self:?}")
+            Self::Root(node) => node.note_down_root(state),
+            _ => unreachable!("{self:?}"),
         }
     }
 }
 
-impl NoteBlock for Node {
-    fn note_down_block(self, state: &mut ReadState) -> Result<NotedownBlock, NotedownError> {
-        match self {
-            Node::Root(v) => {
-                v.note_down_root(state)
-            }
-            Node::BlockQuote(_) => { todo!() }
-            Node::FootnoteDefinition(_) => { todo!() }
-            Node::MdxJsxFlowElement(_) => { todo!() }
-            Node::List(_) => { todo!() }
-            Node::MdxjsEsm(_) => { todo!() }
-            Node::Toml(_) => { todo!() }
-            Node::Yaml(_) => { todo!() }
-            Node::Break(_) => { todo!() }
-            Node::InlineCode(_) => { todo!() }
-            Node::InlineMath(_) => { todo!() }
-            Node::Delete(_) => { todo!() }
-            Node::Emphasis(_) => { todo!() }
-            Node::MdxTextExpression(_) => { todo!() }
-            Node::FootnoteReference(_) => { todo!() }
-            Node::Html(_) => { todo!() }
-            Node::Image(_) => { todo!() }
-            Node::ImageReference(_) => { todo!() }
-            Node::MdxJsxTextElement(_) => { todo!() }
-            Node::Link(_) => { todo!() }
-            Node::LinkReference(_) => { todo!() }
-            Node::Strong(_) => { todo!() }
-            Node::Text(_) => { todo!() }
-            Node::Code(_) => { todo!() }
-            Node::Math(_) => { todo!() }
-            Node::MdxFlowExpression(_) => { todo!() }
-            Node::Heading(_) => { todo!() }
-            Node::Table(_) => { todo!() }
-            Node::ThematicBreak(_) => { todo!() }
-            Node::TableRow(_) => { todo!() }
-            Node::TableCell(_) => { todo!() }
-            Node::ListItem(_) => { todo!() }
-            Node::Definition(_) => { todo!() }
-            Node::Paragraph(v) => { todo!() }
-        }
-    }
-}
+
 
 impl NoteInline for Node {
-    fn note_down_inline(self, state: &mut ReadState) -> Result<ParagraphTerm, NotedownError> {
+    fn note_down_inline(self, state: &mut ReadState) -> Result<ParagraphItem, NotedownError> {
         match self {
             Node::Root(_) => {
                 todo!()
             }
-            Node::BlockQuote(_) => { todo!() }
-            Node::FootnoteDefinition(_) => { todo!() }
-            Node::MdxJsxFlowElement(_) => { todo!() }
-            Node::List(_) => { todo!() }
-            Node::MdxjsEsm(_) => { todo!() }
-            Node::Toml(_) => { todo!() }
-            Node::Yaml(_) => { todo!() }
-            Node::Break(_) => { todo!() }
-            Node::InlineCode(_) => { todo!() }
-            Node::InlineMath(_) => { todo!() }
-            Node::Delete(_) => { todo!() }
-            Node::Emphasis(_) => { todo!() }
-            Node::MdxTextExpression(_) => { todo!() }
-            Node::FootnoteReference(_) => { todo!() }
-            Node::Html(_) => { todo!() }
-            Node::Image(_) => { todo!() }
-            Node::ImageReference(_) => { todo!() }
-            Node::MdxJsxTextElement(_) => { todo!() }
-            Node::Link(_) => { todo!() }
-            Node::LinkReference(_) => { todo!() }
-            Node::Strong(_) => { todo!() }
-            Node::Text(_) => { todo!() }
-            Node::Code(_) => { todo!() }
-            Node::Math(_) => { todo!() }
-            Node::MdxFlowExpression(_) => { todo!() }
-            Node::Heading(_) => { todo!() }
-            Node::Table(_) => { todo!() }
-            Node::ThematicBreak(_) => { todo!() }
-            Node::TableRow(_) => { todo!() }
-            Node::TableCell(_) => { todo!() }
-            Node::ListItem(_) => { todo!() }
-            Node::Definition(_) => { todo!() }
-            Node::Paragraph(v) => { todo!() }
+            Node::BlockQuote(_) => {
+                todo!()
+            }
+            Node::FootnoteDefinition(_) => {
+                todo!()
+            }
+            Node::MdxJsxFlowElement(_) => {
+                todo!()
+            }
+            Node::List(_) => {
+                todo!()
+            }
+            Node::MdxjsEsm(_) => {
+                todo!()
+            }
+            Node::Toml(_) => {
+                todo!()
+            }
+            Node::Yaml(_) => {
+                todo!()
+            }
+            Node::Break(_) => {
+                todo!()
+            }
+            Node::InlineCode(v) => v.note_down_inline(state),
+            Node::InlineMath(_) => {
+                todo!()
+            }
+            Node::Delete(v) => v.note_down_inline(state),
+            Node::Emphasis(v) => v.note_down_inline(state),
+            Node::MdxTextExpression(_) => {
+                todo!()
+            }
+            Node::FootnoteReference(_) => {
+                todo!()
+            }
+            Node::Html(_) => {
+                todo!()
+            }
+            Node::Image(_) => {
+                todo!()
+            }
+            Node::ImageReference(_) => {
+                todo!()
+            }
+            Node::MdxJsxTextElement(_) => {
+                todo!()
+            }
+            Node::Link(_) => {
+                todo!()
+            }
+            Node::LinkReference(_) => {
+                todo!()
+            }
+            Node::Strong(v) => v.note_down_inline(state),
+            Node::Text(v) => v.note_down_inline(state),
+            Node::Code(_) => {
+                todo!()
+            }
+            Node::Math(_) => {
+                todo!()
+            }
+            Node::MdxFlowExpression(_) => {
+                todo!()
+            }
+            Node::Heading(_) => {
+                todo!()
+            }
+            Node::Table(_) => {
+                todo!()
+            }
+            Node::ThematicBreak(_) => {
+                todo!()
+            }
+            Node::TableRow(_) => {
+                todo!()
+            }
+            Node::TableCell(_) => {
+                todo!()
+            }
+            Node::ListItem(_) => {
+                todo!()
+            }
+            Node::Definition(_) => {
+                todo!()
+            }
+            Node::Paragraph(v) => {
+                todo!()
+            }
         }
     }
 }
 
-trait GetTextRange {
-    fn get_range(&self) -> TextRange;
-}
 
-impl GetTextRange for Option<Position> {
-    fn get_range(&self) -> TextRange {
-        match self {
-            Some(s) => {
-                TextRange {
-                    head_offset: s.start.offset as u32,
-                    tail_offset: s.end.offset as u32,
-                }
-            }
-            None => {
-                TextRange {
-                    head_offset: 0,
-                    tail_offset: 0,
-                }
-            }
-        }
-    }
-}
-
-impl NoteBlock for Paragraph {
-    fn note_down_block(self, state: &mut ReadState) -> Result<NotedownBlock, NotedownError> {
-        let mut blocks = Vec::with_capacity(self.children.len());
-        for x in self.children {
-            match x.note_down_inline(state) {
-                Ok(o) => { blocks.extend(o) }
-                Err(e) => {
-                    state.errors.push(e);
-                }
-            }
-        }
-        let block = ParagraphBlock { terms: vec![], range: TextRange { head_offset: 0, tail_offset: 0 } };
-
-        Ok(NotedownBlock { type_: BlockType::Paragraph(), range: TextRange { head_offset: 0, tail_offset: 0 } })
-    }
-}
 
 impl NoteRoot for Root {
     fn note_down_root(self, state: &mut ReadState) -> Result<NotedownRoot, NotedownError> {
         let mut blocks = Vec::with_capacity(self.children.len());
         for x in self.children {
             match x.note_down_block(state) {
-                Ok(o) => { blocks.push(o) }
+                Ok(o) => blocks.push(o),
                 Err(e) => {
                     state.errors.push(e);
                 }
             }
         }
         Ok(NotedownRoot { blocks, path: None })
-    }
-}
-
-impl NoteBlock for Math {
-    fn note_down_block(self, _: &mut ReadState) -> Result<MathSpan, NotedownError> {
-        let content = MathContent::Tex(self.value);
-        Ok(MathSpan {
-            display: MathDisplay::Block,
-            content,
-            range: TextRange { head_offset: 0, tail_offset: 0 },
-        })
     }
 }
 

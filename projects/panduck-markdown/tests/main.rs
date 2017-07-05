@@ -1,4 +1,4 @@
-use panduck_markdown::{MarkdownParser};
+use panduck_markdown::MarkdownParser;
 
 // use notedown_ast::ASTNode;
 //
@@ -16,13 +16,26 @@ fn ready() {
     println!("it works!")
 }
 
-
 #[test]
 fn test_normal() {
-    let mut reader = MarkdownParser::default();
+    let reader = MarkdownParser::default();
+    let _ = reader.load_str("Hello World!").unwrap();
 
-    let out = reader.load_str("hello world!").unwrap();
-    println!("{out:#?}")
+    let _ = reader.load_str("*Hello World!*").unwrap();
+    let _ = reader.load_str("**Hello World!**").unwrap();
+    let _ = reader.load_str("***Hello World!***").unwrap();
+
+    let _ = reader.load_str("_Hello World!_").unwrap();
+    let _ = reader.load_str("__Hello World!__").unwrap();
+    let _ = reader.load_str("___Hello World!___").unwrap();
+
+    let _ = reader.load_str("`Hello World!`").unwrap();
+    let _ = reader.load_str("``Hello World!``").unwrap();
+    let _ = reader.load_str("```Hello World!```").unwrap();
+
+    let _ = reader.load_str("~Hello World!~").unwrap();
+    let _ = reader.load_str("~~Hello World!~~").unwrap();
+    let _ = reader.load_str("~~~Hello World!~~~").unwrap();
 }
 
 //
