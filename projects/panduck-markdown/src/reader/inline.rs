@@ -1,3 +1,4 @@
+use wasi_notedown::exports::notedown::core::syntax_tree::TableRow;
 use super::*;
 
 impl NoteInline for Node {
@@ -135,6 +136,8 @@ impl NoteInline for InlineCode {
     }
 }
 
+
+
 impl NoteInline for InlineMath {
     fn note_down_inline(self, _: &mut ReadState) -> Result<ParagraphItem, NotedownError> {
         let content = MathContent::Tex(self.value);
@@ -143,15 +146,3 @@ impl NoteInline for InlineMath {
     }
 }
 
-fn paragraph_items(children: Vec<Node>, state: &mut ReadState) -> Result<Vec<ParagraphItem>, NotedownError> {
-    let mut items = Vec::with_capacity(children.len());
-    for x in children {
-        match x.note_down_inline(state) {
-            Ok(o) => items.push(o),
-            Err(e) => {
-                state.errors.push(e);
-            }
-        }
-    }
-    Ok(items)
-}

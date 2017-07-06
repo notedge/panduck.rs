@@ -23,12 +23,6 @@ impl NoteBlock for Node {
             Node::Break(_) => {
                 todo!()
             }
-            Node::InlineCode(_) => {
-                todo!()
-            }
-            Node::InlineMath(_) => {
-                todo!()
-            }
             Node::Delete(_) => {
                 todo!()
             }
@@ -59,9 +53,6 @@ impl NoteBlock for Node {
             Node::LinkReference(_) => {
                 todo!()
             }
-            Node::Strong(_) => {
-                todo!()
-            }
             Node::Text(_) => {
                 todo!()
             }
@@ -75,16 +66,10 @@ impl NoteBlock for Node {
             Node::Heading(_) => {
                 todo!()
             }
-
             Node::ThematicBreak(_) => {
                 todo!()
             }
             Node::Table(table) => table.note_down_block(state),
-            Node::TableRow(table) => table.note_down_block(state),
-            Node::TableCell(table) => table.note_down_block(state),
-            Node::ListItem(_) => {
-                todo!()
-            }
             Node::Definition(_) => {
                 todo!()
             }
@@ -100,7 +85,7 @@ impl NoteBlock for Paragraph {
             match x.note_down_inline(state) {
                 Ok(o) => blocks.push(o),
                 Err(e) => {
-                    state.errors.push(e);
+                    state.note_error(e);
                 }
             }
         }

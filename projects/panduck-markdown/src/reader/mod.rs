@@ -1,17 +1,21 @@
-use crate::utils::{GetTextRange, NoteBlock, NoteInline, NoteRoot, ReadState};
+use crate::utils::{paragraph_items, root_items, GetTextRange, NoteBlock, NoteInline, NoteRoot, ReadState};
 use markdown::{
-    mdast::{Code, Delete, Emphasis, InlineCode, InlineMath, List, Math, Node, Paragraph, Root, Strong, Table, Text},
+    mdast::{
+        BlockQuote, Code, Delete, Emphasis, InlineCode, InlineMath, List, Math, Node, Paragraph, Root, Strong, Table, Text,
+    },
     to_mdast, Constructs, ParseOptions,
 };
 use wasi_notedown::exports::notedown::core::{
     syntax_tree::{
-        CodeAction, CodeEnvironment, CodeHighlight, MathContent, MathDisplay, MathEnvironment, NormalText, NotedownRoot,
-        ParagraphBlock, ParagraphItem, RootItem, StyleType, StyledText,
+        CodeAction, CodeEnvironment, CodeHighlight, ListEnvironment, ListItem, MathContent, MathDisplay, MathEnvironment,
+        NormalText, NotedownRoot, ParagraphBlock, ParagraphItem, RootItem, StyleType, StyledText, TableCell, TableEnvironment,
+        TableRow,
     },
     types::{NotedownError, TextRange},
 };
 
-mod code;
+mod blocks;
+mod html;
 mod inline;
 mod list;
 mod table;
@@ -98,19 +102,6 @@ impl NoteRoot for Root {
         let blocks = root_items(self.children, state)?;
         Ok(NotedownRoot { blocks, path: None })
     }
-}
-
-fn root_items(children: Vec<Node>, state: &mut ReadState) -> Result<Vec<RootItem>, NotedownError> {
-    let mut blocks = Vec::with_capacity(children.len());
-    for x in children {
-        match x.note_down_block(state) {
-            Ok(o) => blocks.push(o),
-            Err(e) => {
-                state.errors.push(e);
-            }
-        }
-    }
-    Ok(blocks)
 }
 
 #[test]
