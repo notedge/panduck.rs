@@ -1,5 +1,6 @@
-use wasi_notedown::exports::notedown::core::syntax_tree::TableRow;
 use super::*;
+use markdown::mdast::{Image, Link};
+use wasi_notedown::exports::notedown::core::syntax_tree::{ImageReference, LinkReference, TableRow};
 
 impl NoteInline for Node {
     fn note_down_inline(self, state: &mut ReadState) -> Result<ParagraphItem, NotedownError> {
@@ -31,10 +32,10 @@ impl NoteInline for Node {
             Node::Break(_) => {
                 todo!()
             }
-            Node::InlineCode(v) => v.note_down_inline(state),
-            Node::InlineMath(v) => v.note_down_inline(state),
-            Node::Delete(v) => v.note_down_inline(state),
-            Node::Emphasis(v) => v.note_down_inline(state),
+            Node::InlineCode(style) => style.note_down_inline(state),
+            Node::InlineMath(style) => style.note_down_inline(state),
+            Node::Delete(style) => style.note_down_inline(state),
+            Node::Emphasis(style) => style.note_down_inline(state),
             Node::MdxTextExpression(_) => {
                 todo!()
             }
@@ -44,21 +45,14 @@ impl NoteInline for Node {
             Node::Html(_) => {
                 todo!()
             }
-            Node::Image(_) => {
-                todo!()
-            }
-            Node::ImageReference(_) => {
-                todo!()
-            }
+            Node::Link(link) => link.note_down_inline(state),
+            Node::LinkReference(link) => link.note_down_inline(state),
+            Node::Image(image) => image.note_down_inline(state),
+            Node::ImageReference(image) => image.note_down_inline(state),
             Node::MdxJsxTextElement(_) => {
                 todo!()
             }
-            Node::Link(_) => {
-                todo!()
-            }
-            Node::LinkReference(_) => {
-                todo!()
-            }
+
             Node::Strong(v) => v.note_down_inline(state),
             Node::Text(v) => v.note_down_inline(state),
             Node::Code(_) => {
@@ -136,8 +130,6 @@ impl NoteInline for InlineCode {
     }
 }
 
-
-
 impl NoteInline for InlineMath {
     fn note_down_inline(self, _: &mut ReadState) -> Result<ParagraphItem, NotedownError> {
         let content = MathContent::Tex(self.value);
@@ -146,3 +138,30 @@ impl NoteInline for InlineMath {
     }
 }
 
+impl NoteInline for Image {
+    fn note_down_inline(self, _: &mut ReadState) -> Result<ParagraphItem, NotedownError> {
+        let image = ImageReference { url: Some(self.url), alternative: self.alt, range: self.position.as_range() };
+        Ok(ParagraphItem::Image(image))
+    }
+}
+
+impl NoteInline for markdown::mdast::ImageReference {
+    fn note_down_inline(self, _: &mut ReadState) -> Result<ParagraphItem, NotedownError> {
+        let image = ImageReference { url: None, alternative: "".to_string(), range: self.position.as_range() };
+        Ok(ParagraphItem::Image(image))
+    }
+}
+impl NoteInline for Link {
+    fn note_down_inline(self, _: &mut ReadState) -> Result<ParagraphItem, NotedownError> {
+        let image =
+            LinkReference { url: Some(self.url), title: self.title.unwrap_or_default(), range: self.position.as_range() };
+        Ok(ParagraphItem::Link(image))
+    }
+}
+
+impl NoteInline for markdown::mdast::LinkReference {
+    fn note_down_inline(self, _: &mut ReadState) -> Result<ParagraphItem, NotedownError> {
+        let image = LinkReference { url: None, title: "".to_string(), range: self.position.as_range() };
+        Ok(ParagraphItem::Link(image))
+    }
+}
