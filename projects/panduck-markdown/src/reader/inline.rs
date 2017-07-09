@@ -5,19 +5,7 @@ use wasi_notedown::exports::notedown::core::syntax_tree::{ImageReference, LinkRe
 impl NoteInline for Node {
     fn note_down_inline(self, state: &mut ReadState) -> Result<ParagraphItem, NotedownError> {
         match self {
-            Node::Root(_) => {
-                todo!()
-            }
-            Node::BlockQuote(_) => {
-                todo!()
-            }
-            Node::FootnoteDefinition(_) => {
-                todo!()
-            }
             Node::MdxJsxFlowElement(_) => {
-                todo!()
-            }
-            Node::List(_) => {
                 todo!()
             }
             Node::MdxjsEsm(_) => {
@@ -52,42 +40,15 @@ impl NoteInline for Node {
             Node::MdxJsxTextElement(_) => {
                 todo!()
             }
-
             Node::Strong(v) => v.note_down_inline(state),
             Node::Text(v) => v.note_down_inline(state),
-            Node::Code(_) => {
-                todo!()
-            }
-            Node::Math(_) => {
-                todo!()
-            }
             Node::MdxFlowExpression(_) => {
-                todo!()
-            }
-            Node::Heading(_) => {
-                todo!()
-            }
-            Node::Table(_) => {
                 todo!()
             }
             Node::ThematicBreak(_) => {
                 todo!()
             }
-            Node::TableRow(_) => {
-                todo!()
-            }
-            Node::TableCell(_) => {
-                todo!()
-            }
-            Node::ListItem(_) => {
-                todo!()
-            }
-            Node::Definition(_) => {
-                todo!()
-            }
-            Node::Paragraph(v) => {
-                todo!()
-            }
+            _ => unreachable!()
         }
     }
 }

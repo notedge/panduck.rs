@@ -9,6 +9,8 @@ const TEST_LINK: &'static str = r#"
 [block]
 [name](link)
 [[double]]
+
+[^a]: b
 "#;
 
 

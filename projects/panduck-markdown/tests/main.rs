@@ -1,8 +1,8 @@
 use panduck_markdown::MarkdownParser;
 
+mod links;
 mod lists;
 mod tables;
-mod links;
 
 #[test]
 fn ready() {
@@ -39,3 +39,14 @@ pub fn test_styles() {
     let _ = reader.load_str("$$$Hello World!$$$").unwrap();
 }
 
+#[test]
+pub fn test_heading() {
+    let reader = MarkdownParser::default();
+    let _ = reader.load_str("# Hello World!").unwrap();
+    let _ = reader.load_str("## Hello World!").unwrap();
+    let _ = reader.load_str("### Hello World!").unwrap();
+    let _ = reader.load_str("#### Hello World!").unwrap();
+    let _ = reader.load_str("##### Hello World!").unwrap();
+    let _ = reader.load_str("###### Hello World!").unwrap();
+    let _ = reader.load_str("####### Hello World!").unwrap();
+}

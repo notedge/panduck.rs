@@ -92,7 +92,7 @@ impl NoteRoot for Node {
     fn note_down_root(self, state: &mut ReadState) -> Result<NotedownRoot, NotedownError> {
         match self {
             Self::Root(node) => node.note_down_root(state),
-            _ => unreachable!("{self:?}"),
+            _ => unreachable!(),
         }
     }
 }
