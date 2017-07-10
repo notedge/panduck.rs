@@ -6,11 +6,14 @@ const TEST_IMAGE: &'static str = r#"
 "#;
 
 const TEST_LINK: &'static str = r#"
-[block]
 [name](link)
 [[double]]
 
+[block]
+[^a]
+
 [^a]: b
+[a]: b
 "#;
 
 

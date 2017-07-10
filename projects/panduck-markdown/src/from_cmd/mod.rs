@@ -13,6 +13,7 @@ use wasi_notedown::exports::notedown::core::{
     },
     types::{NotedownError, TextRange},
 };
+use wasi_notedown::exports::notedown::core::types::Object;
 
 mod blocks;
 mod html;
@@ -100,7 +101,7 @@ impl NoteRoot for Node {
 impl NoteRoot for Root {
     fn note_down_root(self, state: &mut ReadState) -> Result<NotedownRoot, NotedownError> {
         let blocks = root_items(self.children, state)?;
-        Ok(NotedownRoot { blocks, path: None })
+        Ok(NotedownRoot { blocks, config: Object { map: vec![] }, path: None })
     }
 }
 

@@ -35,6 +35,9 @@ pub trait NoteBlock {
 pub trait NoteInline {
     fn note_down_inline(self, state: &mut ReadState) -> Result<ParagraphItem, NotedownError>;
 }
+pub trait NoteInlineList {
+    fn note_down_inline(self, state: &mut ReadState) -> Result<Vec<ParagraphItem>, NotedownError>;
+}
 
 pub trait GetTextRange {
     fn as_range(&self) -> TextRange;

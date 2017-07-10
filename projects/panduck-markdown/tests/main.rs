@@ -39,6 +39,15 @@ pub fn test_styles() {
     let _ = reader.load_str("$$$Hello World!$$$").unwrap();
 }
 
+
+#[test]
+pub fn test_expression() {
+    let reader = MarkdownParser::default();
+    let _ = reader.load_str("a {b} c").unwrap();
+}
+
+
+
 #[test]
 pub fn test_heading() {
     let reader = MarkdownParser::default();

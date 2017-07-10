@@ -9,8 +9,9 @@ license = "MPL-2.0"
 edition = "2018"
 
 [dependencies]
-#comrak = { version = "0.22.0", features = ["shortcodes"]}
+toml = "0.8.12"
 markdown = "1.0.0-alpha.16"
+pandoc_ast = "0.8.6"
 
 [dependencies.notedown-wasi]
 version = "0.0.*"
