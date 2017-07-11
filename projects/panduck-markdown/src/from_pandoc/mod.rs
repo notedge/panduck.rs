@@ -1,11 +1,15 @@
 use crate::utils::{NoteBlock, NoteInline, NoteInlineList, ReadState};
 use pandoc_ast::{Block, Inline, MathType};
-use wasi_notedown::exports::notedown::core::{
-    syntax_tree::{ParagraphItem, RootItem},
-    types::NotedownError,
+use std::str::FromStr;
+use wasi_notedown::{
+    exports::notedown::core::{
+        syntax_tree::{
+            HeadingBlock, ImageReference, LinkReference, ParagraphBlock, ParagraphItem, RootItem, StyleType, StyledText,
+        },
+        types::{NotedownError, TextRange, Url},
+    },
+    UrlNative,
 };
-use wasi_notedown::exports::notedown::core::syntax_tree::{HeadingBlock, ParagraphBlock};
-use wasi_notedown::exports::notedown::core::types::TextRange;
 
 impl NoteBlock for Vec<Block> {
     fn note_down_block(self, state: &mut ReadState) -> Result<RootItem, NotedownError> {
@@ -24,7 +28,7 @@ impl NoteBlock for Block {
             Self::LineBlock(_) => {
                 unimplemented!()
             }
-            Self::CodeBlock(_, code) => unimplemented!(),
+            Self::CodeBlock(attr, code) => unimplemented!(),
             Self::RawBlock(_, _) => {
                 unimplemented!()
             }
@@ -41,16 +45,16 @@ impl NoteBlock for Block {
                 unimplemented!()
             }
             Self::Header(level, attr, children) => {
-
                 let heading = HeadingBlock {
                     level: level as u8,
-                    title: ParagraphBlock { terms: vec![], range: TextRange { head_offset: 0, tail_offset: 0 } },
-                    range: TextRange { head_offset: 0, tail_offset: 0 } ,
+                    title: ParagraphBlock {
+                        terms: children.note_down_inline(state),
+                        range: TextRange { head_offset: 0, tail_offset: 0 },
+                    },
+                    range: TextRange { head_offset: 0, tail_offset: 0 },
                 };
                 RootItem::Heading(heading)
-                
-                
-            },
+            }
             Self::HorizontalRule => unimplemented!(),
             Self::Table(_, _, _, _, _, _) => {
                 unimplemented!()
@@ -67,20 +71,41 @@ impl NoteBlock for Block {
 }
 
 impl NoteInlineList for Vec<Inline> {
-    fn note_down_inline(self, state: &mut ReadState) -> Result<Vec<ParagraphItem>, NotedownError> {
-        todo!()
+    fn note_down_inline(self, state: &mut ReadState) -> Vec<ParagraphItem> {
+        let mut list = Vec::with_capacity(self.len());
+        for item in self {
+            match item.note_down_inline(state) {
+                Ok(o) => list.push(o),
+                Err(e) => state.note_error(e),
+            }
+        }
+        list
     }
 }
 
 impl NoteInline for Inline {
     fn note_down_inline(self, state: &mut ReadState) -> Result<ParagraphItem, NotedownError> {
-        match self {
+        let item = match self {
             Self::Str(s) => unimplemented!(),
-            Self::Emph(v) => unimplemented!(),
-            Self::Underline(v) => unimplemented!(),
-            Self::Strong(v) => unimplemented!(),
-            Self::Strikeout(_) => {
-                unimplemented!()
+            Self::Emph(v) => {
+                let items = v.note_down_inline(state);
+                let style = StyledText { type_: StyleType::ITALIC, range: TextRange { head_offset: 0, tail_offset: 0 } };
+                ParagraphItem::Style(style)
+            }
+            Self::Underline(v) => {
+                let items = v.note_down_inline(state);
+                let style = StyledText { type_: StyleType::UNDERLINE, range: TextRange { head_offset: 0, tail_offset: 0 } };
+                ParagraphItem::Style(style)
+            }
+            Self::Strong(v) => {
+                let items = v.note_down_inline(state);
+                let style = StyledText { type_: StyleType::BOLD, range: TextRange { head_offset: 0, tail_offset: 0 } };
+                ParagraphItem::Style(style)
+            }
+            Self::Strikeout(v) => {
+                let items = v.note_down_inline(state);
+                let style = StyledText { type_: StyleType::STRIKETHROUGH, range: TextRange { head_offset: 0, tail_offset: 0 } };
+                ParagraphItem::Style(style)
             }
             Self::Superscript(v) => unimplemented!(),
             Self::Subscript(v) => unimplemented!(),
@@ -93,7 +118,7 @@ impl NoteInline for Inline {
             Self::Cite(_, _) => {
                 unimplemented!()
             }
-            Self::Code(_, code) => unimplemented!(),
+            Self::Code(attr, code) => unimplemented!(),
             Self::Space => unimplemented!(),
             Self::SoftBreak => unimplemented!(),
             Self::LineBreak => unimplemented!(),
@@ -104,11 +129,18 @@ impl NoteInline for Inline {
             Self::RawInline(_, _) => {
                 unimplemented!()
             }
-            Self::Link(_, _, _) => {
-                unimplemented!()
+            Self::Link(attr, text, (url, title)) => {
+                let url = Url::new(UrlNative::from_str(&url)?);
+
+                let link = LinkReference { url: Some(url), title, range: TextRange { head_offset: 0, tail_offset: 0 } };
+                ParagraphItem::Link(link)
             }
-            Self::Image(_, _, _) => {
-                unimplemented!()
+            Self::Image(attr, text, (url, title)) => {
+                let url = Url::new(UrlNative::from_str(&url)?);
+
+                let link =
+                    ImageReference { url: Some(url), range: TextRange { head_offset: 0, tail_offset: 0 }, alternative: title };
+                ParagraphItem::Image(link)
             }
             Self::Note(_) => {
                 unimplemented!()
@@ -116,6 +148,13 @@ impl NoteInline for Inline {
             Self::Span(_, _) => {
                 unimplemented!()
             }
-        }
+        };
+        Ok(item)
     }
+}
+
+fn make_styled(children: Vec<Inline>, state: &mut ReadState) -> ParagraphItem {
+    let items = children.note_down_inline(state);
+    let style = StyledText { type_: StyleType::UNDERLINE, range: TextRange { head_offset: 0, tail_offset: 0 } };
+    ParagraphItem::Style(style)
 }
