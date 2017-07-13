@@ -1,21 +1,6 @@
-use std::{collections::BTreeSet, iter::FromIterator};
-
-use notedown_ast::ASTKind;
-use serde_json::{Map, Value};
-
-use crate::{ExtensionHandler, ExtensionRegistrar, NoteError, Result};
-
 use super::*;
 
-pub fn register_jupyter(r: &mut ExtensionRegistrar) {
-    let ext = vec!["ipynb"];
-    let new = ExtensionHandler {
-        name: String::from("jupyter"),
-        try_extension: BTreeSet::from_iter(ext.into_iter().map(String::from)),
-        parser: parse_jupyter,
-    };
-    r.insert(new)
-}
+use serde_json::Value;
 
 pub fn parse_jupyter(text: &str) -> Result<ASTNode> {
     let v: Value = serde_json::from_str(text)?;
