@@ -1,4 +1,4 @@
-use markdown::{mdast::Node, unist::Position};
+
 use wasi_notedown::exports::notedown::core::{
     syntax_tree::{NotedownRoot, ParagraphItem, RootItem},
     types::{NotedownError, TextRange},

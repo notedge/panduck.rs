@@ -14,7 +14,7 @@ serde_json = "1.0.115"
 [dependencies.notedown-wasi]
 version = "0.0.*"
 path = 'C:\Users\Dell\CLionProjects\notedown-rs\projects\notedown-wasi'
-
+features = []
 
 [features]
 default = []

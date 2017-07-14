@@ -1,36 +1,52 @@
-use super::*;
+use serde_json::{Map, Value};
+use wasi_notedown::exports::notedown::core::syntax_tree::NotedownRoot;
+use wasi_notedown::{NotedownError, Result};
+use wasi_notedown::exports::notedown::core::types::{Object, SyntaxError, TextRange};
 
-use serde_json::Value;
-
-pub fn parse_jupyter(text: &str) -> Result<ASTNode> {
-    let v: Value = serde_json::from_str(text)?;
-    Ok(jupyter_from_json(&v)?)
+pub fn parse_jupyter(text: &str) -> Result<NotedownRoot> {
+    match serde_json::from_str::<Value>(text) {
+        Ok(o) => {Ok(jupyter_from_json(o)?)}
+        Err(e) => Err(NotedownError::Syntax(SyntaxError {
+            reason: e.to_string(),
+            file: None,
+            range: TextRange { head_offset: 0, tail_offset: 0 },
+        }))?,
+    }
+    
 }
 
-pub fn jupyter_from_json(root: &Value) -> Result<ASTNode> {
+pub fn jupyter_from_json(root: Value) -> Result<NotedownRoot> {
     match root {
         Value::Object(o) => Ok(jupyter_root(o)),
-        _ => Err(NoteError::syntax_error("Not a valid jupyter json")),
+        _ => Err(panic!("Not a valid jupyter json")),
     }
 }
 
-fn jupyter_root(dict: &Map<String, Value>) -> ASTNode {
+fn jupyter_root(dict: Map<String, Value>) -> NotedownRoot {
     if let Some(cells) = dict.get("cells") {
         if let Value::Array(v) = cells {
             return jupyter_cells(v);
         }
     }
-    ASTKind::statements(vec![], None)
+    NotedownRoot {
+        blocks: vec![],
+        config: Object { map: vec![] },
+        path: None,
+    }
 }
 
-fn jupyter_cells(cells: &Vec<Value>) -> ASTNode {
+fn jupyter_cells(cells: &Vec<Value>) -> NotedownRoot {
     let mut out = vec![];
     for cell in cells {
         if let Value::Object(o) = cell {
             out.extend(jupyter_cell(o))
         }
     }
-    ASTKind::statements(out, None)
+    NotedownRoot {
+        blocks: vec![],
+        config: Object { map: vec![] },
+        path: None,
+    }
 }
 
 fn jupyter_cell(dict: &Map<String, Value>) -> Vec<ASTNode> {
@@ -51,13 +67,16 @@ fn jupyter_markdown(dict: &Value) -> Vec<ASTNode> {
         Value::Array(v) => v.into_iter().map(|v| jupyter_string(v)).collect(),
         _ => vec![],
     };
-    if let Ok(o) = parse_common_markdown(&lines.join("\n")) {
-        match o.value {
-            ASTKind::Statements(v) => {
-                return v;
+    match parse_common_markdown(&lines.join("\n")) {
+        Ok(o) => {
+            match o.value {
+                ASTKind::Statements(v) => {
+                    return v;
+                }
+                _ => {}
             }
-            _ => {}
         }
+        _ => {}
     }
     vec![]
 }
