@@ -1,1 +1,0 @@
-Find test at: [github/cmark-gfm/test](https://github.com/github/cmark-gfm/tree/master/test)
