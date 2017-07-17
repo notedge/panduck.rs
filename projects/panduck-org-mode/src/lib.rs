@@ -1,5 +1,4 @@
-mod from_cmd;
-mod from_pandoc;
+mod from_org;
 mod utils;
 
-pub use from_cmd::MarkdownParser;
+pub use from_org::MarkdownParser;

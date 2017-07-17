@@ -1,23 +1,17 @@
-use crate::utils::{ root_items, GetTextRange, NoteBlock, NoteInline, NoteInlineList, NoteRoot, ReadState};
-use markdown::{
-    mdast::{
-        BlockQuote, Code, Delete, Emphasis, InlineCode, InlineMath, List, Math, Node, Paragraph, Root, Strong, Table, Text,
-    },
-    to_mdast, Constructs, ParseOptions,
-};
+use crate::utils::{NoteBlock, NoteBlockList, NoteInline, NoteInlineList, NoteRoot, ReadState};
+use orgize::{rowan::ast::AstNode, ParseConfig, SyntaxKind, SyntaxNode, SyntaxNodeChildren};
+use orgize::ast::HeadlineTitle;
 use wasi_notedown::exports::notedown::core::{
-    syntax_tree::{
-        CodeEnvironment, CodeHighlight, ListEnvironment, ListItem, MathContent, MathDisplay, MathEnvironment, NormalText,
-        NotedownRoot, ParagraphBlock, ParagraphItem, RootItem, StyleType, StyledText, TableCell, TableEnvironment, TableRow,
-    },
-    types::{NotedownError, Object, TextRange},
+    syntax_tree::{NotedownRoot, RootItem},
+    types::{NotedownError, Object},
 };
+use wasi_notedown::exports::notedown::core::syntax_tree::ParagraphItem;
 
-mod blocks;
-mod html;
-mod inline;
-mod list;
-mod table;
+// mod blocks;
+// mod html;
+// mod inline;
+// mod list;
+// mod table;
 
 pub struct MarkdownParser {}
 
@@ -29,57 +23,13 @@ impl Default for MarkdownParser {
 
 impl MarkdownParser {
     pub fn load_str(&self, input: &str) -> Result<NotedownRoot, Vec<NotedownError>> {
-        let config = ParseOptions {
-            constructs: Constructs {
-                attention: true,
-                autolink: true,
-                block_quote: true,
-                character_escape: true,
-                character_reference: true,
-                code_indented: true,
-                code_fenced: true,
-                code_text: true,
-                definition: true,
-                frontmatter: true,
-                gfm_autolink_literal: true,
-                gfm_footnote_definition: true,
-                gfm_label_start_footnote: true,
-                gfm_strikethrough: true,
-                gfm_table: true,
-                gfm_task_list_item: true,
-                hard_break_escape: true,
-                hard_break_trailing: true,
-                heading_atx: true,
-                heading_setext: true,
-                html_flow: true,
-                html_text: true,
-                label_start_image: true,
-                label_start_link: true,
-                label_end: true,
-                list_item: true,
-                math_flow: true,
-                math_text: true,
-                mdx_esm: true,
-                mdx_expression_flow: true,
-                mdx_expression_text: true,
-                mdx_jsx_flow: true,
-                mdx_jsx_text: true,
-                thematic_break: true,
-            },
-            gfm_strikethrough_single_tilde: false,
-            math_text_single_dollar: false,
-            mdx_expression_parse: None,
-            mdx_esm_parse: None,
-        };
+        let config = ParseConfig { ..Default::default() };
         let mut state = ReadState::default();
-        let root = match to_mdast(input, &config) {
-            Ok(to_mdast) => match to_mdast.note_down_root(&mut state) {
-                Ok(o) => o,
-                Err(e) => {
-                    todo!()
-                }
-            },
-            Err(e) => {
+        let org = config.parse(input);
+        let doc = org.document();
+        let root = match doc.syntax().note_down_root(&mut state) {
+            Ok(o) => o,
+            Err(_) => {
                 todo!()
             }
         };
@@ -87,34 +37,77 @@ impl MarkdownParser {
     }
 }
 
-impl NoteRoot for Node {
+impl<'i> NoteRoot for &'i SyntaxNode {
     fn note_down_root(self, state: &mut ReadState) -> Result<NotedownRoot, NotedownError> {
-        match self {
-            Self::Root(node) => node.note_down_root(state),
-            _ => unreachable!(),
+        match self.kind() {
+            SyntaxKind::DOCUMENT => {
+                let blocks = self.children().note_down_block(state);
+                Ok(NotedownRoot { blocks, config: Object { map: vec![] }, path: None })
+            }
+            _ => unreachable!("SyntaxKind::{:?} => {{}}", self.kind()),
         }
     }
 }
 
-impl NoteRoot for Root {
-    fn note_down_root(self, state: &mut ReadState) -> Result<NotedownRoot, NotedownError> {
-        let blocks = root_items(self.children, state)?;
-        Ok(NotedownRoot { blocks, config: Object { map: vec![] }, path: None })
-    }
-}
-
-impl NoteInlineList for Vec<Node> {
-    fn note_down_inline(self, state: &mut ReadState) -> Vec<ParagraphItem> {
-        let mut items = Vec::with_capacity(self.len());
-        for x in self {
-            match x.note_down_inline(state) {
-                Ok(o) => items.push(o),
+impl NoteBlockList for SyntaxNodeChildren {
+    fn note_down_block(self, state: &mut ReadState) -> Vec<RootItem> {
+        let mut out = Vec::with_capacity(self.size_hint().0);
+        for node in self {
+            match node.note_down_block(state) {
+                Ok(o) => out.push(o),
                 Err(e) => state.note_error(e),
             }
         }
-        items
+        out
     }
 }
+
+impl NoteInlineList for SyntaxNodeChildren {
+    fn note_down_inline(self, state: &mut ReadState) -> Vec<ParagraphItem> {
+        let mut out = Vec::with_capacity(self.size_hint().0);
+        for node in self {
+            match node.note_down_inline(state) {
+                Ok(o) => out.push(o),
+                Err(e) => state.note_error(e),
+            }
+        }
+        out
+    }
+}
+
+impl NoteBlock for SyntaxNode {
+    fn note_down_block(self, state: &mut ReadState) -> Result<RootItem, NotedownError> {
+        match self.kind() {
+            SyntaxKind::SECTION => {
+                Ok(RootItem::Placeholder)
+            }
+            SyntaxKind::HEADLINE => {
+                let inline = self.children().note_down_inline(state);
+                todo!()
+            }
+            _ => unreachable!("SyntaxKind::{:?} => {{}}", self.kind()),
+        }
+    }
+}
+
+
+impl NoteInline for SyntaxNode {
+    fn note_down_inline(self, state: &mut ReadState) -> Result<ParagraphItem, NotedownError> {
+        match self.kind() {
+            SyntaxKind::HEADLINE => {
+                Ok(ParagraphItem::Placeholder)
+            }
+            SyntaxKind::HEADLINE_TITLE => {
+                Ok(ParagraphItem::Placeholder)
+            }
+            _ => unreachable!("SyntaxKind::{:?} => {{}}", self.kind()),
+        }
+    }
+}
+
+
+
+
 
 #[test]
 fn ready() {

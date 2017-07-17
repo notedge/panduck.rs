@@ -1,4 +1,4 @@
-use panduck_markdown::MarkdownParser;
+use panduck_org_mode::MarkdownParser;
 
 const TEST_LIST1: &'static str = r#"
 - a

@@ -1,4 +1,3 @@
-use markdown::{mdast::Node, unist::Position};
 use wasi_notedown::exports::notedown::core::{
     syntax_tree::{NotedownRoot, ParagraphItem, RootItem},
     types::{NotedownError, TextRange},
@@ -31,6 +30,9 @@ pub trait NoteRoot {
 pub trait NoteBlock {
     fn note_down_block(self, state: &mut ReadState) -> Result<RootItem, NotedownError>;
 }
+pub trait NoteBlockList {
+    fn note_down_block(self, state: &mut ReadState) -> Vec<RootItem>;
+}
 
 pub trait NoteInline {
     fn note_down_inline(self, state: &mut ReadState) -> Result<ParagraphItem, NotedownError>;
@@ -43,25 +45,11 @@ pub trait GetTextRange {
     fn as_range(&self) -> TextRange;
 }
 
-impl GetTextRange for Option<Position> {
-    fn as_range(&self) -> TextRange {
-        match self {
-            Some(s) => TextRange { head_offset: s.start.offset as u32, tail_offset: s.end.offset as u32 },
-            None => TextRange { head_offset: 0, tail_offset: 0 },
-        }
-    }
-}
-
-pub fn root_items(children: Vec<Node>, state: &mut ReadState) -> Result<Vec<RootItem>, NotedownError> {
-    let mut blocks = Vec::with_capacity(children.len());
-    for x in children {
-        match x.note_down_block(state) {
-            Ok(o) => blocks.push(o),
-            Err(e) => {
-                state.errors.push(e);
-            }
-        }
-    }
-    Ok(blocks)
-}
-
+// impl GetTextRange for Option<Position> {
+//     fn as_range(&self) -> TextRange {
+//         match self {
+//             Some(s) => TextRange { head_offset: s.start.offset as u32, tail_offset: s.end.offset as u32 },
+//             None => TextRange { head_offset: 0, tail_offset: 0 },
+//         }
+//     }
+// }

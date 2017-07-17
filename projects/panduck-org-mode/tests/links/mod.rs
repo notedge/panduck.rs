@@ -1,4 +1,4 @@
-use panduck_markdown::MarkdownParser;
+use panduck_org_mode::MarkdownParser;
 
 const TEST_IMAGE: &'static str = r#"
 ![image-reference]
