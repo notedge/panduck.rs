@@ -2,11 +2,7 @@
 resolver = "2"
 members = ["projects/*"]
 default-members = [
-    "projects/panduck-online",
-    "projects/panduck-core",
-    "projects/panduck-pdf",
-    "projects/panduck-html",
-    "projects/panduck-sycamore",
+    "projects/panduck-markdown",
 ]
 
 [profile.release]

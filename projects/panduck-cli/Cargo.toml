@@ -17,10 +17,6 @@ serde_yaml = "0.9.13"
 
 panduck-html = { version = "0.1", path = "../panduck-html" }
 
-[dependencies.panduck-sycamore]
-version = "0.8.0"
-path = "../panduck-sycamore"
-
 [dependencies.clap]
 version = "4.0.0-rc.2"
 features = ["derive", "unicode"]
