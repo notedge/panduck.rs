@@ -14,7 +14,7 @@ orgize = "0.10.0-alpha.7"
 
 [dependencies.notedown-wasi]
 version = "0.0.*"
-path = 'C:\Users\Dell\CLionProjects\notedown-rs\projects\notedown-wasi'
+#path = 'C:\Users\Dell\CLionProjects\notedown-rs\projects\notedown-wasi'
 
 
 [features]

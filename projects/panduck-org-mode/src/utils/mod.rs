@@ -21,6 +21,22 @@ impl ReadState {
             }
         }
     }
+    pub fn finish(mut self, result: Result<NotedownRoot, NotedownError>) -> Result<NotedownRoot, Vec<NotedownError>> {
+        match result {
+            Ok(o) => {
+                if self.errors.is_empty() {
+                    Ok(o)
+                }
+                else {
+                    Err(self.errors)
+                }
+            }
+            Err(e) => {
+                self.note_error(e);
+                Err(self.errors)
+            }
+        }
+    }
 }
 
 pub trait NoteRoot {

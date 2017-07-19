@@ -15,7 +15,7 @@ pandoc_ast = "0.8.6"
 
 [dependencies.notedown-wasi]
 version = "0.0.*"
-path = 'C:\Users\Dell\CLionProjects\notedown-rs\projects\notedown-wasi'
+#path = 'C:\Users\Dell\CLionProjects\notedown-rs\projects\notedown-wasi'
 
 
 [features]
