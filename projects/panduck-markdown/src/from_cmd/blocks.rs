@@ -1,6 +1,10 @@
 use super::*;
-use markdown::mdast::{Definition, FootnoteDefinition, Heading, Toml, Yaml};
-use wasi_notedown::exports::notedown::core::syntax_tree::{CommandAction, HeadingBlock};
+
+impl NoteBlockList for Vec<Node> {
+    fn note_down_block(self, state: &mut ReadState) -> Vec<RootItem> {
+        group_block(self, state)
+    }
+}
 
 impl NoteBlock for Node {
     fn note_down_block(self, state: &mut ReadState) -> Result<RootItem, NotedownError> {
@@ -48,6 +52,7 @@ impl NoteBlock for Node {
 
 impl NoteBlock for Toml {
     fn note_down_block(self, state: &mut ReadState) -> Result<RootItem, NotedownError> {
+
         Ok(RootItem::Placeholder)
     }
 }

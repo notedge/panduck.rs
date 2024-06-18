@@ -1,16 +1,22 @@
-use crate::utils::{ root_items, GetTextRange, NoteBlock, NoteInline, NoteInlineList, NoteRoot, ReadState};
+use crate::utils::{GetTextRange, group_block, group_inline, NoteBlock, NoteBlockList, NoteInline, NoteInlineList, NoteRoot, ReadState};
 use markdown::{
     mdast::{
-        BlockQuote, Code, Delete, Emphasis, InlineCode, InlineMath, List, Math, Node, Paragraph, Root, Strong, Table, Text,
+        BlockQuote, Code, Definition, Delete, Emphasis, FootnoteDefinition, FootnoteReference, Heading, Image, InlineCode,
+        InlineMath, Link, List, Math, MdxTextExpression, Node, Paragraph,  Strong, Table, Text, Toml, Yaml,
     },
     to_mdast, Constructs, ParseOptions,
 };
-use wasi_notedown::exports::notedown::core::{
-    syntax_tree::{
-        CodeEnvironment, CodeHighlight, ListEnvironment, ListItem, MathContent, MathDisplay, MathEnvironment, NormalText,
-        NotedownRoot, ParagraphBlock, ParagraphItem, RootItem, StyleType, StyledText, TableCell, TableEnvironment, TableRow,
+use std::str::FromStr;
+use wasi_notedown::{
+    exports::notedown::core::{
+        syntax_tree::{
+            CodeEnvironment, CodeHighlight, CommandAction, HeadingBlock, ImageReference, LinkReference, ListEnvironment,
+            ListItem, MathContent, MathDisplay, MathEnvironment, NormalText, NotedownRoot, ParagraphBlock, ParagraphItem,
+            RootItem, StyleType, StyledText, TableCell, TableEnvironment, TableRow,
+        },
+        types::{NotedownError,  TextRange, Url},
     },
-    types::{NotedownError, Object, TextRange},
+    UrlNative,
 };
 
 mod blocks;
@@ -66,21 +72,16 @@ impl MarkdownParser {
                 mdx_jsx_text: true,
                 thematic_break: true,
             },
-            gfm_strikethrough_single_tilde: false,
-            math_text_single_dollar: false,
+            gfm_strikethrough_single_tilde: true,
+            math_text_single_dollar: true,
             mdx_expression_parse: None,
             mdx_esm_parse: None,
         };
         let mut state = ReadState::default();
         let root = match to_mdast(input, &config) {
-            Ok(to_mdast) => match to_mdast.note_down_root(&mut state) {
-                Ok(o) => o,
-                Err(e) => {
-                    todo!()
-                }
-            },
+            Ok(to_mdast) => to_mdast.note_down_root(&mut state),
             Err(e) => {
-                todo!()
+                todo!("{}", e)
             }
         };
         Ok(root)
@@ -88,33 +89,17 @@ impl MarkdownParser {
 }
 
 impl NoteRoot for Node {
-    fn note_down_root(self, state: &mut ReadState) -> Result<NotedownRoot, NotedownError> {
-        match self {
-            Self::Root(node) => node.note_down_root(state),
+    fn note_down_root(self, state: &mut ReadState) -> NotedownRoot {
+        let blocks = match self {
+            Self::Root(node) => node.children.note_down_block(state),
             _ => unreachable!(),
-        }
+        };
+        NotedownRoot { blocks, config: state.get_object(), path: state.get_path() }
     }
 }
 
-impl NoteRoot for Root {
-    fn note_down_root(self, state: &mut ReadState) -> Result<NotedownRoot, NotedownError> {
-        let blocks = root_items(self.children, state)?;
-        Ok(NotedownRoot { blocks, config: Object { map: vec![] }, path: None })
-    }
-}
 
-impl NoteInlineList for Vec<Node> {
-    fn note_down_inline(self, state: &mut ReadState) -> Vec<ParagraphItem> {
-        let mut items = Vec::with_capacity(self.len());
-        for x in self {
-            match x.note_down_inline(state) {
-                Ok(o) => items.push(o),
-                Err(e) => state.note_error(e),
-            }
-        }
-        items
-    }
-}
+
 
 #[test]
 fn ready() {

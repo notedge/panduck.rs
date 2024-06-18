@@ -23,6 +23,6 @@ impl NoteBlock for List {
 }
 
 fn list_item(item: markdown::mdast::ListItem, state: &mut ReadState) -> Option<ListItem> {
-    let items = root_items(item.children, state).unwrap();
+    let items = item.children.note_down_block(state);
     Some(ListItem { level: 0, checked: item.checked, range: item.position.as_range() })
 }

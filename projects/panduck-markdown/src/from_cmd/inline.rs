@@ -1,14 +1,9 @@
 use super::*;
-use markdown::mdast::{FootnoteReference, Image, Link, MdxTextExpression};
-use std::str::FromStr;
-use wasi_notedown::{
-    exports::notedown::core::{
-        syntax_tree::{ImageReference, LinkReference},
-        types::Url,
-    },
-    UrlNative,
-};
-use wasi_notedown::exports::notedown::core::syntax_tree::CommandAction;
+impl NoteInlineList for Vec<Node> {
+    fn note_down_inline(self, state: &mut ReadState) -> Vec<ParagraphItem> {
+        group_inline(self, state)
+    }
+}
 
 impl NoteInline for Node {
     fn note_down_inline(self, state: &mut ReadState) -> Result<ParagraphItem, NotedownError> {
@@ -58,9 +53,17 @@ impl NoteInline for Text {
     }
 }
 
+impl NoteInline for Emphasis {
+    fn note_down_inline(self, state: &mut ReadState) -> Result<ParagraphItem, NotedownError> {
+        let _ = self.children.note_down_inline(state);
+        let text = StyledText { type_: StyleType::ITALIC, range: self.position.as_range() };
+        Ok(ParagraphItem::Style(text))
+    }
+}
+
 impl NoteInline for Strong {
     fn note_down_inline(self, state: &mut ReadState) -> Result<ParagraphItem, NotedownError> {
-        // let mut blocks = paragraph_items(self.children, state)?;
+        let _ = self.children.note_down_inline(state);
         let text = StyledText { type_: StyleType::BOLD, range: self.position.as_range() };
         Ok(ParagraphItem::Style(text))
     }
@@ -68,16 +71,8 @@ impl NoteInline for Strong {
 
 impl NoteInline for Delete {
     fn note_down_inline(self, state: &mut ReadState) -> Result<ParagraphItem, NotedownError> {
-        // let mut blocks = paragraph_items(self.children, state)?;
-        let text = StyledText { type_: StyleType::ITALIC, range: self.position.as_range() };
-        Ok(ParagraphItem::Style(text))
-    }
-}
-
-impl NoteInline for Emphasis {
-    fn note_down_inline(self, _: &mut ReadState) -> Result<ParagraphItem, NotedownError> {
-        // let mut blocks = paragraph_items(self.children, state)?;
-        let text = StyledText { type_: StyleType::ITALIC, range: self.position.as_range() };
+        let _ = self.children.note_down_inline(state);
+        let text = StyledText { type_: StyleType::STRIKETHROUGH, range: self.position.as_range() };
         Ok(ParagraphItem::Style(text))
     }
 }

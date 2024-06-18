@@ -12,3 +12,7 @@ opt-level = "s"
 [workspace.metadata.release]
 push = false
 tag = false
+
+[workspace.dependencies.notedown-wasi]
+version = "0.0.*"
+path = 'C:\Users\Dell\CLionProjects\notedown-rs\projects\notedown-wasi'

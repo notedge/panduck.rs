@@ -9,12 +9,8 @@ license = "MPL-2.0"
 edition = "2018"
 
 [dependencies]
-toml = "0.8.12"
+notedown-wasi = { workspace = true }
 orgize = "0.10.0-alpha.7"
-
-[dependencies.notedown-wasi]
-version = "0.0.*"
-#path = 'C:\Users\Dell\CLionProjects\notedown-rs\projects\notedown-wasi'
 
 
 [features]

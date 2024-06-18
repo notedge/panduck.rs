@@ -1,22 +1,24 @@
-use crate::utils::{NoteBlock, NoteInline, NoteInlineList, ReadState};
+use crate::utils::{group_block, group_inline, NoteBlock, NoteBlockList, NoteInline, NoteInlineList, ReadState};
 use pandoc_ast::{Block, Inline, MathType};
 use std::str::FromStr;
 use wasi_notedown::{
     exports::notedown::core::{
         syntax_tree::{
-            HeadingBlock, ImageReference, LinkReference, ParagraphBlock, ParagraphItem, RootItem, StyleType, StyledText,
+            CodeEnvironment, CommandAction, HeadingBlock, ImageReference, LinkReference, ParagraphBlock, ParagraphItem,
+            RootItem, StyleType, StyledText,
         },
         types::{NotedownError, TextRange, Url},
     },
     UrlNative,
 };
 
-impl NoteBlock for Vec<Block> {
-    fn note_down_block(self, state: &mut ReadState) -> Result<RootItem, NotedownError> {
-        todo!()
+impl NoteBlockList for Vec<Block> {
+    fn note_down_block(self, state: &mut ReadState) -> Vec<RootItem> {
+        group_block(self, state)
     }
 }
 
+#[allow(unused)]
 impl NoteBlock for Block {
     fn note_down_block(self, state: &mut ReadState) -> Result<RootItem, NotedownError> {
         let item = match self {
@@ -24,11 +26,20 @@ impl NoteBlock for Block {
                 unimplemented!()
             }
             Self::Para(v) => unimplemented!(),
-            Self::Div(_, children) => unimplemented!(),
+            Self::Div(attr, children) =>  {
+                unimplemented!()
+            },
             Self::LineBlock(_) => {
                 unimplemented!()
             }
-            Self::CodeBlock(attr, code) => unimplemented!(),
+            Self::CodeBlock(attr, code) => {
+                let code = CodeEnvironment {
+                    action: CommandAction::Anonymous,
+                    lines: code,
+                    range: TextRange { head_offset: 0, tail_offset: 0 },
+                };
+                RootItem::Code(code)
+            }
             Self::RawBlock(_, _) => {
                 unimplemented!()
             }
@@ -56,14 +67,14 @@ impl NoteBlock for Block {
                 RootItem::Heading(heading)
             }
             Self::HorizontalRule => unimplemented!(),
-            Self::Table(_, _, _, _, _, _) => {
+            Self::Table(attr, _, _, _, _, _) => {
                 unimplemented!()
             }
-            Self::Figure(_, _, _) => {
+            Self::Figure(attr, cap, children) => {
                 unimplemented!()
             }
             Self::Null => {
-                unimplemented!()
+               RootItem::Placeholder
             }
         };
         Ok(item)
@@ -72,14 +83,7 @@ impl NoteBlock for Block {
 
 impl NoteInlineList for Vec<Inline> {
     fn note_down_inline(self, state: &mut ReadState) -> Vec<ParagraphItem> {
-        let mut list = Vec::with_capacity(self.len());
-        for item in self {
-            match item.note_down_inline(state) {
-                Ok(o) => list.push(o),
-                Err(e) => state.note_error(e),
-            }
-        }
-        list
+        group_inline(self, state)
     }
 }
 
